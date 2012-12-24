@@ -2,7 +2,7 @@
 /*
 Plugin Name: WooCommerce Stock Synchronization
 Plugin URI: 
-Description: 
+Description: Synchronizes stock with sites that are connected to one another, using WooCommerce Stock Synchronization.
 
 Version: 0.1
 Requires at least: 3.0
