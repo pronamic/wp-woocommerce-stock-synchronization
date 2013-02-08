@@ -70,8 +70,8 @@ class Stock_Synchronization {
 
 		self::autoload();
 		
-		self::$synced_sites				=	Stock_Synchronization_Admin::get_synced_sites();
-		self::$synced_sites_password	=	Stock_Synchronization_Admin::get_synced_sites_password();
+		self::$synced_sites          = Stock_Synchronization_Admin::get_synced_sites();
+		self::$synced_sites_password = Stock_Synchronization_Admin::get_synced_sites_password();
 		
 		Stock_Synchronization_Synchronizer::Bootstrap();
 		

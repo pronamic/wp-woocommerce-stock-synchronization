@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class Stock_Synchronization_Synchronizer contains functions to notify
  * and be notified by other websites that it's synced with.

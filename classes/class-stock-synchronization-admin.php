@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Provides the settings and admin page
  */
