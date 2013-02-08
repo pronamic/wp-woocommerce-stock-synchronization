@@ -70,12 +70,12 @@ class Stock_Synchronization {
 
 		self::autoload();
 		
-		self::$synced_sites          = Stock_Synchronization_Admin::get_synced_sites();
-		self::$synced_sites_password = Stock_Synchronization_Admin::get_synced_sites_password();
+		self::$synced_sites          = get_option( 'woocommerce_stock_sync_urls', array() );
+		self::$synced_sites_password = get_option( 'woocommerce_stock_sync_password' );
 		
 		Stock_Synchronization_Synchronizer::Bootstrap();
 		
-		if( is_admin() ) {
+		if ( is_admin() ) {
 			Stock_Synchronization_Admin::Bootstrap();
 		}
 
@@ -88,7 +88,7 @@ class Stock_Synchronization {
 	 * Initialize
 	 */
 	public static function init() {
-		load_plugin_textdomain( 'stock-synchronization', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+		load_plugin_textdomain( 'woocommerce_stock_sync', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 
 	//////////////////////////////////////////////////
