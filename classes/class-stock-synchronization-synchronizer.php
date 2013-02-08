@@ -71,7 +71,7 @@ class Stock_Synchronization_Synchronizer {
 			count( Stock_Synchronization::$synced_sites )
 		) );
 	}
-	
+
 	/**
 	 * Contacts synced sites to notify them of the order action (reduce or restore of stock)
 	 * 
