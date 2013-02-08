@@ -39,6 +39,7 @@ class Stock_Synchronization_Synchronizer {
 	 */
 	public static function Bootstrap() {
 		add_action( 'init',								array( __CLASS__, 'maybe_synchronize' ) );
+
 		add_action( 'woocommerce_reduce_order_stock',	array( __CLASS__, 'reduce_order_stock' ) );
 		add_action( 'woocommerce_restore_order_stock',	array( __CLASS__, 'restore_order_stock' ) );
 	}
@@ -49,10 +50,9 @@ class Stock_Synchronization_Synchronizer {
 	 * @param WC_Order $order
 	 */
 	public static function reduce_order_stock( $order ) {
-		
 		$success = self::synchronize_order( $order, self::$reduce_stock_action_name );
 		
-		self::log_message( sprintf( __( 'Reduced order stock - %d out of %d sites responded with success.', 'synchronize-stock' ),
+		self::log_message( sprintf( __( 'Reduced order stock - %d out of %d sites responded with success.', 'woocommerce_stock_sync' ),
 			$success,
 			count( Stock_Synchronization::$synced_sites )
 		) );
@@ -64,10 +64,9 @@ class Stock_Synchronization_Synchronizer {
 	 * @param WC_Order $order
 	 */
 	public static function restore_order_stock( $order ) {
-
 		$success = self::synchronize_order( $order, self::$restore_stock_action_name );
 		
-		self::log_message( sprintf( __( 'Restored order stock - %d out of %d sites responded with success.', 'synchronize-stock' ),
+		self::log_message( sprintf( __( 'Restored order stock - %d out of %d sites responded with success.', 'woocommerce_stock_sync' ),
 			$success,
 			count( Stock_Synchronization::$synced_sites )
 		) );
@@ -81,41 +80,42 @@ class Stock_Synchronization_Synchronizer {
 	 * @return int $succes sites confirmed succesful synchronization
 	 */
 	private static function synchronize_order( $order, $action ) {
-		
 		$success = 0;
 		
 		// Build products array: sku => quantity
 		$items = $order->get_items();
-		$skus = array();
-		if( is_array( $items ) && count( $items ) > 0 ) {
-			
-			foreach( $items as $item ) {
-				
+		$skus  = array();
+
+		if ( is_array( $items ) && count( $items ) > 0 ) {
+			foreach ( $items as $item ) {
 				$product = new WC_Product( $item[ 'id' ] );
 				
 				$skus[ $product->get_sku() ] = $item[ 'qty' ];
 			}
+		} else {
+			return 0;
 		}
-		else return 0;
 		
 		// Notify synced websites
-		if( count( Stock_Synchronization::$synced_sites ) > 0 ) {
+		if ( count( Stock_Synchronization::$synced_sites ) > 0 ) {
 			
 			foreach( Stock_Synchronization::$synced_sites as $site ) {
 				
 				// Remote post
 				$result = wp_remote_post( $site, array( 'body' => array(
-					'source'	=>	get_bloginfo( 'wpurl' ),
-					'password'	=>	Stock_Synchronization::$synced_sites_password,
-					'action'	=>	$action,
-					'skus'		=>	$skus
+					'source'   => get_bloginfo( 'wpurl' ),
+					'password' => Stock_Synchronization::$synced_sites_password,
+					'action'   => $action,
+					'skus'     => $skus
 				) ) );
 				
-				if( ! ( $result instanceof WP_Error ) && strpos( $result[ 'body' ], self::$synchronization_success_message ) !== false )
+				if( ! is_wp_error( $result ) && strpos( $result[ 'body' ], self::$synchronization_success_message ) !== false ) {
 					$success++;
+				}
 			}
+		} else {
+			return 0;
 		}
-		else return 0;
 		
 		return $success;
 	}
@@ -127,47 +127,48 @@ class Stock_Synchronization_Synchronizer {
 	 * command and a list of SKUs with their stock quantities (SKU => stock quantitty) 
 	 */
 	public static function synchronize_all_stock() {
-		
 		$success = 0;
-		$skus = array();
+		$skus    = array();
 		
 		// Get all products and product variations
 		$query = new WP_Query( array(
 			'posts_per_page' => -1,
-			'post_type' => array(
+			'post_type'      => array(
 				'product',
 				'product_variation'
 			)
 		) );
 		
 		// Loop through query results, building the SKUs array
-		while( $query->have_posts() ) {
-			
+		while ( $query->have_posts() ) {
 			$query->next_post();
-			
+
 			$skus[ get_post_meta( $query->post->ID, '_sku', true ) ] = get_post_meta( $query->post->ID, '_stock', true );
 		}
 		
 		// Notify synced websites
-		if( count( Stock_Synchronization::$synced_sites ) > 0 ) {
-			
-			foreach( Stock_Synchronization::$synced_sites as $site ) {
+		if ( count( Stock_Synchronization::$synced_sites ) > 0 ) {
+
+			foreach ( Stock_Synchronization::$synced_sites as $site ) {
 				
 				// Remote post
 				$result = wp_remote_post( $site, array( 'body' => array(
-					'source'	=>	get_bloginfo( 'wpurl' ),
-					'password'	=>	Stock_Synchronization::$synced_sites_password,
-					'action'	=>	self::$synchronize_all_stock_action_name,
-					'skus'		=>	$skus
+					'source'   => get_bloginfo( 'wpurl' ),
+					'password' => Stock_Synchronization::$synced_sites_password,
+					'action'   => self::$synchronize_all_stock_action_name,
+					'skus'     => $skus
 				) ) );
 				
-				if( strpos( $result[ 'body' ], self::$synchronization_success_message ) !== false )
+				if( strpos( $result[ 'body' ], self::$synchronization_success_message ) !== false ) {
 					$success++;
+				}
+
 			}
+		} else {
+			return 0;
 		}
-		else return 0;
 		
-		self::log_message( sprintf( __( 'Synchronized all stock - %d out of %d sites responded with success.', 'synchronize-stock' ),
+		self::log_message( sprintf( __( 'Synchronized all stock - %d out of %d sites responded with success.', 'woocommerce_stock_sync' ),
 			$success,
 			count( Stock_Synchronization::$synced_sites )
 		) );
@@ -186,24 +187,23 @@ class Stock_Synchronization_Synchronizer {
 		// Get all products and product variations by SKU
 		$query = new WP_Query( array(
 			'posts_per_page' => -1,
-			'post_type' => array(
+			'post_type'      => array(
 				'product',
 				'product_variation'
 			),
-			'meta_query' => array(
+			'meta_query'     => array(
 				array(
-					'key' => '_sku',
+					'key'   => '_sku',
 					'value' => array_keys( $_POST[ 'skus' ] )
 				)
 			)
 		) );
 		
 		// Loop through query results, increase or decrease stock according to given stock quantities
-		while( $query->have_posts() ) {
-			
+		while ( $query->have_posts() ) {
 			$query->next_post();
 			
-			if( $query->post->post_type == 'product' )
+			if ( $query->post->post_type == 'product' )
 				$product = new WC_Product( $query->post->ID );
 			else if( $query->post->post_type == 'product_variation' )
 				$product = new WC_Product_Variation( $query->post->ID );
@@ -212,29 +212,28 @@ class Stock_Synchronization_Synchronizer {
 			
 			$sku = $product->get_sku();
 			
-			if( empty( $sku ) )
+			if ( empty( $sku ) )
 				continue;
 			
 			$qty = $_POST[ 'skus' ][ $sku ];
 			
 			// Choose action
-			if( $_POST[ 'action' ]			==	self::$reduce_stock_action_name )
+			if ( $_POST[ 'action' ]			==	self::$reduce_stock_action_name )
 				$product->reduce_stock( $qty );
 			else if ( $_POST[ 'action' ]	==	self::$restore_stock_action_name )
 				$product->increase_stock( $qty );
 			else if ( $_POST[ 'action' ]	==	self::$synchronize_all_stock_action_name ) {
-				
 				$qty = $qty - $product->get_stock_quantity();
 				
-				if( $qty > 0 )
+				if ( $qty > 0 )
 					$product->increase_stock( $qty );
-				else if( $qty < 0 )
+				else if ( $qty < 0 )
 					$product->reduce_stock( abs( $qty ) );
 			}
 		}
 		
 		// Log
-		self::log_message( sprintf( __( 'Stock %s request by %s granted.', 'synchronize-stock' ),
+		self::log_message( sprintf( __( 'Stock %s request by %s granted.', 'woocommerce_stock_sync' ),
 			( $_POST[ 'action' ] == self::$reduce_stock_action_name ? 'reduce' : '' ) .
 			( $_POST[ 'action' ] == self::$restore_stock_action_name ? 'restore' : '' ) .
 			( $_POST[ 'action' ] == self::$synchronize_all_stock_action_name ? 'synchronization' : '' ),
@@ -243,6 +242,7 @@ class Stock_Synchronization_Synchronizer {
 		
 		// TODO Check more?
 		echo self::$synchronization_success_message;
+
 		die;
 	}
 	
@@ -252,11 +252,7 @@ class Stock_Synchronization_Synchronizer {
 	 * @return mixed
 	 */
 	public static function get_log(){
-		$log = maybe_unserialize( get_option( Stock_Synchronization::$log_option_name, '' ) );
-		
-		if( is_array( $log ) )
-			return $log;
-		return array();
+		return get_option( Stock_Synchronization::$log_option_name, array() );
 	}
 	
 	/**

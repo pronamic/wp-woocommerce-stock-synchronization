@@ -1,7 +1,7 @@
 <?php 
 
 // Synchronize all
-if( ! empty( $_POST ) &&
+if ( ! empty( $_POST ) &&
 	isset( $_POST[ 'stock-synchronization-synchroniza-all-nonce' ] ) &&
 	wp_verify_nonce( $_POST[ 'stock-synchronization-synchroniza-all-nonce' ], 'stock-synchronization-synchronize-all' ) ) {
 
@@ -11,78 +11,51 @@ if( ! empty( $_POST ) &&
 // Get log
 $log = Stock_Synchronization_Synchronizer::get_log();
 
-// Settings
-$synced_sites = get_option( 'stock-synchronization-synced-sites' );
-$synced_sites_password = get_option( 'stock-synchronization-synced-sites-password' );
-
 ?>
-<h3>
-	<?php _e( 'Settings', 'stock-synchronizer' ); ?>
-</h3>
+<div class="wrap">
+	<?php screen_icon(); ?>
 
-<form method="post" action="options.php">
-	<?php settings_fields('stock-synchronization-settings'); ?>
+	<h2><?php echo get_admin_page_title(); ?></h2>
 
-	<table class="form-table">
-		<tr>
-			<td>
-				<?php _e( 'URLs to synchronize and be synchronized with, one site per line.', 'stock-synchronizer' ); ?>
-			</td>
-			<td>
-				<textarea
-					id="stock-synchronization-synced-sites"
-					name="stock-synchronization-synced-sites"
-					cols="40"
-					rows="10"
-				><?php echo $synced_sites; ?></textarea>
-			</td>
-			<td>
-				<i><?php _e( 'Example: http://www.pronamic.eu', 'stock-synchronizer' ); ?></i>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<?php _e( 'Password shared amongst synchronized sites', 'stock-synchronizer' ); ?>
-			</td>
-			<td>
-				<input
-					type="text"
-					id="stock-synchronization-synced-sites-password"
-					name="stock-synchronization-synced-sites-password"
-					value="<?php echo $synced_sites_password; ?>"
-				/>
-			</td>
-		</tr>
-	</table>
+	<form action="options.php" method="post">
+		<?php settings_fields( 'woocommerce_stock_sync' ); ?>
 
-	<?php submit_button(); ?>
-</form>
+		<?php do_settings_sections( 'woocommerce_stock_sync' ); ?>
 
-<h3>
-	<?php _e( 'Synchronize all', 'stock-synchronization' ) ?>
-</h3>
+		<?php submit_button(); ?>
+	</form>
+	
+	<h3>
+		<?php _e( 'Synchronize all', 'woocommerce_stock_sync' ) ?>
+	</h3>
+	
+	<form method="post" action="">
+		<?php wp_nonce_field( 'stock-synchronization-synchronize-all', 'stock-synchronization-synchroniza-all-nonce' ); ?>
+		
+		<p>
+			<?php _e( "This will push the stock if all the WooCommerce products on this website to the URL's specified.", 'woocommerce_stock_sync' ); ?>
+		</p>
 
-<form method="post" action="">
-	<?php wp_nonce_field( 'stock-synchronization-synchronize-all', 'stock-synchronization-synchroniza-all-nonce' ); ?>
+		<?php submit_button( __( 'Synchronize all', 'woocommerce_stock_sync' ) ); ?>
+	</form>
 	
-	<?php submit_button( __( 'Synchronize all', 'stock-synchronization' ) ); ?>
-</form>
-
-<h3>
-	<?php _e( 'Activity log', 'stock-synchronization' ) ?>
-</h3>
-<p>
-	<?php if( count( $log ) > 0 ): ?>
+	<h3>
+		<?php _e( 'Activity log', 'woocommerce_stock_sync' ) ?>
+	</h3>
 	
-	<?php foreach( $log as $message ): ?>
-	
-	<?php echo $message; ?><br />
-	
-	<?php endforeach; ?>
-	
-	<?php else: ?>
-	
-	<?php _e( 'No entries found', 'stock-synchronization' ); ?>
-	
-	<?php endif; ?>
-</p>
+	<p>
+		<?php if( is_array( $log ) && ! empty( $log ) ) : ?>
+		
+			<?php foreach( $log as $message ) : ?>
+		
+				<?php echo $message; ?><br />
+		
+			<?php endforeach; ?>
+		
+		<?php else : ?>
+		
+			<?php _e( 'No entries found.', 'woocommerce_stock_sync' ); ?>
+		
+		<?php endif; ?>
+	</p>
+</div>

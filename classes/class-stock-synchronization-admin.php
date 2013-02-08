@@ -17,8 +17,84 @@ class Stock_Synchronization_Admin {
 	 * Initializes admin
 	 */
 	public static function init() {
-		register_setting( 'stock-synchronization-settings', 'stock-synchronization-synced-sites', array( __CLASS__, 'sanitize_synced_sites' ) );
-		register_setting( 'stock-synchronization-settings', 'stock-synchronization-synced-sites-password' );
+		// Settings - Pages
+		add_settings_section(
+			'woocommerce_stock_sync_general', // id
+			__( 'General', 'woocommerce_stock_sync' ), // title
+			'__return_false', // callback
+			'woocommerce_stock_sync' // page
+		);
+
+		add_settings_field(
+			'woocommerce_stock_sync_urls', // id
+			__( 'URLs', 'pronamic_companies' ), // title
+			array( __CLASS__, 'input_urls' ), // callback
+			'woocommerce_stock_sync', // page
+			'woocommerce_stock_sync_general', // section
+			array( 'label_for' => 'woocommerce_stock_sync_urls' ) // args
+		);
+
+		add_settings_field(
+			'woocommerce_stock_sync_password', // id
+			__( 'Password', 'woocommerce_stock_sync' ), // title
+			array( __CLASS__, 'input_password' ), // callback
+			'woocommerce_stock_sync', // page
+			'woocommerce_stock_sync_general', // section
+			array( 'label_for' => 'woocommerce_stock_sync_password' ) // args
+		);
+
+		register_setting( 'woocommerce_stock_sync', 'woocommerce_stock_sync_urls', array( __CLASS__, 'sanitize_urls' ) );
+		register_setting( 'woocommerce_stock_sync', 'woocommerce_stock_sync_password' );
+	}
+
+	/**
+	 * Input text
+	 *
+	 * @param array $args
+	 */
+	public static function input_password( $args ) {
+		printf(
+			'<input name="%s" id="%s" type="text" value="%s" class="%s" />',
+			esc_attr( $args['label_for'] ),
+			esc_attr( $args['label_for'] ),
+			esc_attr( get_option( $args['label_for'] ) ),
+			'regular-text code'
+		);
+	}
+
+	/**
+	 * Input text
+	 *
+	 * @param array $args
+	 */
+	public static function input_urls( $args ) {
+		$name = $args['label_for'];
+
+		$urls = get_option( $name, array() );
+
+		$i = '';
+
+		foreach ( $urls as $url ) {
+			printf(
+				'<input name="%s[]" id="%s" type="url" value="%s" class="%s" />',
+				esc_attr( $name ),
+				esc_attr( $name . $i ),
+				esc_attr( $url ),
+				'regular-text code'
+			);
+
+			echo '<br />';
+			
+			$i++;
+		}
+		
+		printf(
+			'<input name="%s[]" id="%s" type="url" value="%s" class="%s" />',
+			esc_attr( $name ),
+			esc_attr( $name . $i++ ),
+			esc_attr( '' ),
+			'regular-text code'
+		);
 	}
 
 	/**
@@ -26,11 +102,11 @@ class Stock_Synchronization_Admin {
 	 */
 	public static function admin_menu() {
 		add_submenu_page(
-			'tools.php', // parent_slug
-			__( 'Stock synchronization', 'stock-synchronization' ), // page_title
-			__( 'Stock synchronization', 'stock-synchronization' ), // menu_title
+			'woocommerce', // parent_slug
+			__( 'WooCommerce Stock Synchronization', 'woocommerce_stock_sync' ), // page_title
+			__( 'Stock Synchronization', 'woocommerce_stock_sync' ), // menu_title
 			'manage_options', // capability
-			'stock-synchronization-settings', // menu_slug
+			'woocommerce_stock_sync', // menu_slug
 			array( __CLASS__, 'settings_page' ) // function
 		);
 	}
@@ -45,30 +121,19 @@ class Stock_Synchronization_Admin {
 	/**
 	 * Sanitizes list of synched sites, unifying all newline characters to the same newline character
 	 */
-	public static function sanitize_synced_sites( $synced_sites ) { // TODO Sanitize better
-		// Unify newline character
-		return str_replace(
-			array( "\r", "\n", "\r\n", "\n\r" ),
-			"\r\n",
-			$synced_sites
-		);
-	}
-	
-	/**
-	 * Get synced sites
-	 * 
-	 * @return array
-	 */
-	public static function get_synced_sites() {
-		return explode( "\r\n", get_option( 'stock-synchronization-synced-sites', '' ) );
-	}
-	
-	/**
-	 * Get synced sites password
-	 *
-	 * @return string
-	 */
-	public static function get_synced_sites_password() {
-		return get_option( 'stock-synchronization-synced-sites-password', '' );
+	public static function sanitize_urls( $data ) {
+		$urls = array();
+		
+		if ( is_array( $data ) ) {
+			foreach ( $data as $value ) {
+				$url = filter_var( $value, FILTER_VALIDATE_URL );
+				
+				if ( $url ) {
+					$urls[] = $url;
+				}
+			}
+		}
+		
+		return $urls;
 	}
 }
