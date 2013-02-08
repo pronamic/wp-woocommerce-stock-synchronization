@@ -153,11 +153,14 @@ class Stock_Synchronization_Synchronizer {
 				
 				// Remote post
 				$result = wp_remote_post( $site, array( 'body' => array(
-					'source'   => get_bloginfo( 'wpurl' ),
-					'password' => Stock_Synchronization::$synced_sites_password,
-					'action'   => self::$synchronize_all_stock_action_name,
-					'skus'     => $skus
+					'woocommerce_stock_sync' => true,
+					'source'                 => site_url( '/' ),
+					'password'               => Stock_Synchronization::$synced_sites_password,
+					'action'                 => self::$synchronize_all_stock_action_name,
+					'skus'                   => $skus
 				) ) );
+
+				$body = wp_remote_retrieve_body( $result );
 				
 				if( strpos( $result[ 'body' ], self::$synchronization_success_message ) !== false ) {
 					$success++;
@@ -178,11 +181,26 @@ class Stock_Synchronization_Synchronizer {
 	 * Receives all synchronization requests and handles them if source and password are correct.
 	 */
 	public static function maybe_synchronize() {
-		if( ! isset( $_POST[ 'source' ] )	||	! in_array( $_POST[ 'source' ], Stock_Synchronization::$synced_sites )	||
-			! isset( $_POST[ 'password' ] )	||	$_POST[ 'password' ] != Stock_Synchronization::$synced_sites_password	||
-			! isset( $_POST[ 'action' ] )	||	( $_POST[ 'action' ] != self::$reduce_stock_action_name 				&&	$_POST[ 'action' ] != self::$restore_stock_action_name	&&	$_POST[ 'action' ] != self::$synchronize_all_stock_action_name ) ||
-			! isset( $_POST[ 'skus' ] )		||	empty( $_POST[ 'skus' ] )												||	! is_array( $_POST[ 'skus' ] ) )
+		if ( ! isset( $_POST['woocommerce_stock_sync'] ) ) {
 			return;
+		}
+
+		$source   = filter_input( INPUT_POST, 'source', FILTER_SANITIZE_STRING );
+		$password = filter_input( INPUT_POST, 'password', FILTER_SANITIZE_STRING );
+		$action   = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING );
+		$skus     = filter_input( INPUT_POST, 'skus', FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY );
+
+		if ( ! in_array( $source, Stock_Synchronization::$synced_sites ) ) {
+			return;
+		}
+		
+		if ( $password != Stock_Synchronization::$synced_sites_password ) {
+			return;
+		}
+		
+		if ( ! is_array( $skus ) ) {
+			$skus = array();
+		}
 		
 		// Get all products and product variations by SKU
 		$query = new WP_Query( array(
@@ -194,7 +212,7 @@ class Stock_Synchronization_Synchronizer {
 			'meta_query'     => array(
 				array(
 					'key'   => '_sku',
-					'value' => array_keys( $_POST[ 'skus' ] )
+					'value' => array_keys( $skus )
 				)
 			)
 		) );
@@ -215,29 +233,44 @@ class Stock_Synchronization_Synchronizer {
 			if ( empty( $sku ) )
 				continue;
 			
-			$qty = $_POST[ 'skus' ][ $sku ];
+			$qty = $skus[$sku];
 			
 			// Choose action
-			if ( $_POST[ 'action' ]			==	self::$reduce_stock_action_name )
-				$product->reduce_stock( $qty );
-			else if ( $_POST[ 'action' ]	==	self::$restore_stock_action_name )
-				$product->increase_stock( $qty );
-			else if ( $_POST[ 'action' ]	==	self::$synchronize_all_stock_action_name ) {
-				$qty = $qty - $product->get_stock_quantity();
-				
-				if ( $qty > 0 )
+			$name = __( 'unknown', 'woocommerce_stock_sync' );
+
+			switch ( $action ) {
+				case self::$reduce_stock_action_name:
+					$name = __( 'reduce', 'woocommerce_stock_sync' );
+
+					$product->reduce_stock( $qty );
+
+					break;
+				case self::$restore_stock_action_name:
+					$name = __( 'restore', 'woocommerce_stock_sync' );
+
 					$product->increase_stock( $qty );
-				else if ( $qty < 0 )
-					$product->reduce_stock( abs( $qty ) );
+					
+					break;
+				case self::$synchronize_all_stock_action_name:
+					$name = __( 'synchronization', 'woocommerce_stock_sync' );
+
+					$qty = $qty - $product->get_stock_quantity();
+					
+					if ( $qty > 0 ) {
+						$product->increase_stock( $qty );
+					} else if ( $qty < 0 ) {
+						$product->reduce_stock( abs( $qty ) );
+					}
+					
+					break;
 			}
 		}
 		
 		// Log
-		self::log_message( sprintf( __( 'Stock %s request by %s granted.', 'woocommerce_stock_sync' ),
-			( $_POST[ 'action' ] == self::$reduce_stock_action_name ? 'reduce' : '' ) .
-			( $_POST[ 'action' ] == self::$restore_stock_action_name ? 'restore' : '' ) .
-			( $_POST[ 'action' ] == self::$synchronize_all_stock_action_name ? 'synchronization' : '' ),
-			$_POST[ 'source' ]
+		self::log_message( sprintf(
+			__( 'Stock %s request by %s granted.', 'woocommerce_stock_sync' ),
+			$name,
+			$source
 		) );
 		
 		// TODO Check more?

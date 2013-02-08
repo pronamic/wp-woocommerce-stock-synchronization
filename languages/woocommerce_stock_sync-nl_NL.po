@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Pronamic Google Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-08 10:35+0100\n"
-"PO-Revision-Date: 2013-02-08 10:44+0100\n"
+"POT-Creation-Date: 2013-02-08 12:15+0100\n"
+"PO-Revision-Date: 2013-02-08 12:15+0100\n"
 "Last-Translator: Remco Tolsma <info@remcotolsma.nl>\n"
 "Language-Team: Pronamic <info@pronamic.nl>\n"
 "Language: nl_NL\n"
@@ -68,13 +68,29 @@ msgid "Restored order stock - %d out of %d sites responded with success."
 msgstr ""
 "Bestelling voorraad hersteld -  %d out of %d sites responded with success."
 
-#: classes/class-stock-synchronization-synchronizer.php:171
+#: classes/class-stock-synchronization-synchronizer.php:174
 #, php-format
 msgid "Synchronized all stock - %d out of %d sites responded with success."
 msgstr ""
 "Synchroniseer alle voorraad - %d van de %d websites reageerde met succes."
 
-#: classes/class-stock-synchronization-synchronizer.php:236
+#: classes/class-stock-synchronization-synchronizer.php:239
+msgid "unknown"
+msgstr "onbekend"
+
+#: classes/class-stock-synchronization-synchronizer.php:243
+msgid "reduce"
+msgstr "verminder"
+
+#: classes/class-stock-synchronization-synchronizer.php:249
+msgid "restore"
+msgstr "herstel"
+
+#: classes/class-stock-synchronization-synchronizer.php:255
+msgid "synchronization"
+msgstr "synchronisatie"
+
+#: classes/class-stock-synchronization-synchronizer.php:271
 #, php-format
 msgid "Stock %s request by %s granted."
 msgstr "Voorraad %s verzoek door %s toegestaan."
