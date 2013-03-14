@@ -107,7 +107,8 @@ class Stock_Synchronization_Synchronizer {
 
 				// Remote post
 				$result = wp_remote_post( $site, array( 'body' => array(
-					'source'   => get_bloginfo( 'wpurl' ),
+					'woocommerce_stock_sync' => true,
+					'source'   => site_url('/'),
 					'password' => Stock_Synchronization::$synced_sites_password,
 					'action'   => $action,
 					'skus'     => $skus
