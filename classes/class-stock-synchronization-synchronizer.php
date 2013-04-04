@@ -92,8 +92,7 @@ class Stock_Synchronization_Synchronizer {
 
 		if ( is_array( $items ) && count( $items ) > 0 ) {
 			foreach ( $items as $item ) {
-				$product = new WC_Product( $item[ 'id' ] );
-
+				$product = $order->get_product_from_item($item);
 				$skus[ $product->get_sku() ] = $item[ 'qty' ];
 			}
 		} else {
@@ -190,10 +189,14 @@ class Stock_Synchronization_Synchronizer {
 			return;
 		}
 
+
+
 		$source   = filter_input( INPUT_POST, 'source', FILTER_SANITIZE_STRING );
 		$password = filter_input( INPUT_POST, 'password', FILTER_SANITIZE_STRING );
 		$action   = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING );
 		$skus     = filter_input( INPUT_POST, 'skus', FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY );
+
+		self::log_message(serialize($skus));
 
 		if ( ! in_array( $source, Stock_Synchronization::$synced_sites ) ) {
 			return;
