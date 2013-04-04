@@ -189,8 +189,6 @@ class Stock_Synchronization_Synchronizer {
 			return;
 		}
 
-
-
 		$source   = filter_input( INPUT_POST, 'source', FILTER_SANITIZE_STRING );
 		$password = filter_input( INPUT_POST, 'password', FILTER_SANITIZE_STRING );
 		$action   = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING );
@@ -229,11 +227,16 @@ class Stock_Synchronization_Synchronizer {
 		while ( $query->have_posts() ) {
 			$query->next_post();
 
-			if ( $query->post->post_type == 'product' )
-				$product = new WC_Product( $query->post->ID );
-			else if( $query->post->post_type == 'product_variation' )
-				$product = new WC_Product_Variation( $query->post->ID );
-			else
+			if ( version_compare( '2.0', WOOCOMMERCE_VERSION, '<') ) {
+				if ( $query->post->post_type == 'product' )
+					$product = new WC_Product( $query->post->ID );
+				else if( $query->post->post_type == 'product_variation' )
+					$product = new WC_Product_Variation( $query->post->ID );
+			} else {
+				$product = get_product( $query->post->ID );
+			}
+
+			if ( ! $product instanceof WC_Product )
 				continue;
 
 			$sku = $product->get_sku();
