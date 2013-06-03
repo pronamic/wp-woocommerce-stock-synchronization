@@ -193,10 +193,8 @@ class Stock_Synchronization_Synchronizer {
 		$password = filter_input( INPUT_POST, 'password', FILTER_SANITIZE_STRING );
 		$action   = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING );
 		$skus     = filter_input( INPUT_POST, 'skus', FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY );
-
-		self::log_message(serialize($skus));
-
-		if ( ! in_array( $source, Stock_Synchronization::$synced_sites ) ) {
+				
+		if ( ! in_array( trailingslashit( $source ), Stock_Synchronization::$synced_sites ) ) {
 			return;
 		}
 
@@ -222,7 +220,7 @@ class Stock_Synchronization_Synchronizer {
 				)
 			)
 		) );
-
+		
 		// Loop through query results, increase or decrease stock according to given stock quantities
 		while ( $query->have_posts() ) {
 			$query->next_post();
@@ -245,7 +243,7 @@ class Stock_Synchronization_Synchronizer {
 				continue;
 
 			$qty = $skus[$sku];
-
+			
 			// Choose action
 			$name = __( 'unknown', 'woocommerce_stock_sync' );
 
