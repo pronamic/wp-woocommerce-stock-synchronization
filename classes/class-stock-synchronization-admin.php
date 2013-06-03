@@ -129,7 +129,7 @@ class Stock_Synchronization_Admin {
 				$url = filter_var( $value, FILTER_VALIDATE_URL );
 				
 				if ( $url ) {
-					$urls[] = $url;
+					$urls[] = trailingslashit( $url );
 				}
 			}
 		}
