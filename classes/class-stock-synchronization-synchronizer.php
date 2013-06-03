@@ -112,7 +112,7 @@ class Stock_Synchronization_Synchronizer {
 					'action'   => $action,
 					'skus'     => $skus
 				) ) );
-
+				
 				if( ! is_wp_error( $result ) && strpos( $result[ 'body' ], self::$synchronization_success_message ) !== false ) {
 					$success++;
 				}
@@ -188,7 +188,7 @@ class Stock_Synchronization_Synchronizer {
 		if ( ! isset( $_POST['woocommerce_stock_sync'] ) ) {
 			return;
 		}
-
+		
 		$source   = filter_input( INPUT_POST, 'source', FILTER_SANITIZE_STRING );
 		$password = filter_input( INPUT_POST, 'password', FILTER_SANITIZE_STRING );
 		$action   = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING );
@@ -226,8 +226,8 @@ class Stock_Synchronization_Synchronizer {
 		// Loop through query results, increase or decrease stock according to given stock quantities
 		while ( $query->have_posts() ) {
 			$query->next_post();
-
-			if ( version_compare( '2.0', WOOCOMMERCE_VERSION, '<') ) {
+			
+			if ( version_compare( WOOCOMMERCE_VERSION, '2.0.0', '<') ) {
 				if ( $query->post->post_type == 'product' )
 					$product = new WC_Product( $query->post->ID );
 				else if( $query->post->post_type == 'product_variation' )
@@ -235,12 +235,12 @@ class Stock_Synchronization_Synchronizer {
 			} else {
 				$product = get_product( $query->post->ID );
 			}
-
+			
 			if ( ! $product instanceof WC_Product )
 				continue;
-
+			
 			$sku = $product->get_sku();
-
+			
 			if ( empty( $sku ) )
 				continue;
 
@@ -276,7 +276,7 @@ class Stock_Synchronization_Synchronizer {
 					break;
 			}
 		}
-
+		
 		// Log
 		self::log_message( sprintf(
 			__( 'Stock %s request by %s granted.', 'woocommerce_stock_sync' ),
