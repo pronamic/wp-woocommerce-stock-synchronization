@@ -134,20 +134,35 @@ class Stock_Synchronization_Synchronizer {
 		$success = 0;
 		$skus    = array();
 
-		// Get all products and product variations
-		$query = new WP_Query( array(
-			'posts_per_page' => -1,
-			'post_type'      => array(
-				'product',
-				'product_variation'
-			)
-		) );
-
-		// Loop through query results, building the SKUs array
-		while ( $query->have_posts() ) {
-			$query->next_post();
-
-			$skus[ get_post_meta( $query->post->ID, '_sku', true ) ] = get_post_meta( $query->post->ID, '_stock', true );
+		global $wpdb;
+		
+		$sql_query = "
+			
+			SELECT
+				{$wpdb->posts}.ID , 
+				MAX(IF({$wpdb->postmeta}.meta_key = '_sku', {$wpdb->postmeta}.meta_value, NULL)) AS sku, 
+				MAX(IF({$wpdb->postmeta}.meta_key = '_stock', {$wpdb->postmeta}.meta_value, NULL)) AS stock
+			FROM
+				{$wpdb->posts}
+			LEFT JOIN
+				{$wpdb->postmeta}
+						ON pro_posts.ID = {$wpdb->postmeta}.post_id
+			WHERE
+				{$wpdb->posts}.post_type = 'product'
+			OR
+				{$wpdb->posts}.post_type = 'product_variant'
+			GROUP BY
+				{$wpdb->posts}.ID
+			ORDER BY
+				{$wpdb->posts}.ID ASC
+			;
+		";
+				
+		$products = $wpdb->get_results( $sql_query, OBJECT );	
+		
+		foreach ( $products as $product ) {
+			if ( ! empty( $product->sku ) )
+				$skus[$product->sku] = $product->stock;
 		}
 
 		// Notify synced websites
