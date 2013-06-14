@@ -147,6 +147,7 @@ class Stock_Synchronization_Admin {
 		
 		wp_localize_script( 'woocommerce_stock_sync_admin', 'StockSynchronizationVars', array( 
 			'single_product' => array(
+				'spinner' => admin_url( 'images/wpspin_light.gif' ),
 				'sync_success_success_message' => __( 'Synchronization was successful!', 'woocommerce_stock_sync' ) 
 			) 
 		) );
@@ -158,19 +159,19 @@ class Stock_Synchronization_Admin {
 			__( 'Stock Synchronization', 'woocommerce-stock-synchronization' ),
 			array( __CLASS__, 'view_stock_synchronization_meta_box' ),
 			'product',
-			'normal'
+			'side'
 		);
 	}
 	
 	public static function view_stock_synchronization_meta_box() {
-		
-		
 		?>
 		<script type="text/javascript">
 			jQuery(StockSynchronizationAdmin.single_product.ready);
 		</script>
-		<div class="stock_synchronization_holder jStockSync">
-			<button class="jSyncSingleProductButton"><?php _e( 'Synchronize', 'woocommerce-stock-synchronization' ); ?></button>
+		<div class="stock_synchronization_holder">
+			<div class="jStockSync"></div>
+			<button class="jSyncSingleProductButton button button-primary"><?php _e( 'Synchronize', 'woocommerce_stock_sync' ); ?></button>
+			<span class="jSync_spinner_holder"></span>
 		</div>
 
 		<?php

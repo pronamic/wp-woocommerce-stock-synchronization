@@ -13,6 +13,7 @@ var StockSynchronizationAdmin = {
 		
 		,ready: function() {
 			StockSynchronizationAdmin.single_product.config.dom.sync_holder = jQuery('.jStockSync');
+			StockSynchronizationAdmin.single_product.config.dom.sync_spinner_holder = jQuery('.jSync_spinner_holder');
 			StockSynchronizationAdmin.single_product.config.dom.sync_button = jQuery('.jSyncSingleProductButton');
 			
 			StockSynchronizationAdmin.single_product.binds();
@@ -29,6 +30,13 @@ var StockSynchronizationAdmin = {
 			
 			var post_id   = jQuery('#post_ID').val(),
 				post_type = jQuery('#post_type').val();
+			
+			var spinner_img = new Image();
+			spinner_img.src = StockSynchronizationVars.single_product.spinner;
+			
+			StockSynchronizationAdmin.single_product.config.dom.sync_spinner_holder.html(
+				spinner_img
+			);
 			
 			jQuery.ajax({
 				 type:'POST'
@@ -58,6 +66,8 @@ var StockSynchronizationAdmin = {
 					errorMsg
 				);
 			}
+			
+			StockSynchronizationAdmin.single_product.config.dom.sync_spinner_holder.empty();
 		}
 		
 		
