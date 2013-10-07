@@ -11,6 +11,11 @@ class Stock_Synchronization_Admin {
 	public static function Bootstrap() {
 		add_action( 'admin_init', array( __CLASS__, 'init' ) );
 		add_action( 'admin_menu', array( __CLASS__, 'admin_menu' ) );
+		
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_scripts' ) );
+		
+		add_action( 'add_meta_boxes', array( __CLASS__, 'meta_boxes' ) );
+		add_action( 'wp_ajax_stock_sync_single_product', array( __CLASS__, 'ajax_stock_synchronization' ) );
 	}
 	
 	/**
@@ -135,5 +140,70 @@ class Stock_Synchronization_Admin {
 		}
 		
 		return $urls;
+	}
+	
+	public static function enqueue_scripts() {
+		wp_enqueue_script( 'woocommerce_stock_sync_admin', plugins_url( 'assets/stock-synchronization-admin.js', Stock_Synchronization::$file ) );
+		
+		wp_localize_script( 'woocommerce_stock_sync_admin', 'StockSynchronizationVars', array( 
+			'single_product' => array(
+				'spinner' => admin_url( 'images/wpspin_light.gif' ),
+				'sync_success_success_message' => __( 'Synchronization was successful!', 'woocommerce_stock_sync' ) 
+			) 
+		) );
+	}
+	
+	public static function meta_boxes() {
+		add_meta_box(
+			'stock_synchronization',
+			__( 'Stock Synchronization', 'woocommerce-stock-synchronization' ),
+			array( __CLASS__, 'view_stock_synchronization_meta_box' ),
+			'product',
+			'side'
+		);
+	}
+	
+	public static function view_stock_synchronization_meta_box() {
+		?>
+		<script type="text/javascript">
+			jQuery(StockSynchronizationAdmin.single_product.ready);
+		</script>
+		<div class="stock_synchronization_holder">
+			<div class="jStockSync"></div>
+			<button class="jSyncSingleProductButton button button-primary"><?php _e( 'Synchronize', 'woocommerce_stock_sync' ); ?></button>
+			<span class="jSync_spinner_holder"></span>
+		</div>
+
+		<?php
+	}
+	
+	public static function ajax_stock_synchronization() {
+		$post_type = filter_input( INPUT_POST, 'post_type', FILTER_SANITIZE_STRING );
+		$post_id = filter_input( INPUT_POST, 'post_id', FILTER_VALIDATE_INT );
+		
+		if ( version_compare( WOOCOMMERCE_VERSION, '2.0.0', '<') ) {
+			if ( $post_type == 'product' )
+				$product = new WC_Product( $post_id );
+			else if( $post_type == 'product_variation' )
+				$product = new WC_Product_Variation( $post_id );
+		} else {
+			$product = get_product( $post_id );
+		}
+	
+		foreach ( Stock_Synchronization::$synced_sites as $site ) {
+			
+			$result = Stock_Synchronization_Synchronizer::synchronize_product($product, $site);
+			
+			if ( $result instanceof WP_Error ) {
+				echo json_encode( array( 'url' => $site, 'resp' => false, 'errors' => $result->get_error_messages() ) );
+			} else {
+				echo json_encode( array( 'url' => $site, 'resp' => true ) );
+			}
+			
+			
+		}
+		
+		exit;
+		
 	}
 }

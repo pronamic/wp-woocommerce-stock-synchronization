@@ -75,6 +75,27 @@ class Stock_Synchronization_Synchronizer {
 			count( Stock_Synchronization::$synced_sites )
 		) );
 	}
+	
+	public static function synchronize_product( $product, $site ) {
+		$skus = array();
+		// Get the quantity
+		$skus[$product->get_sku()] = $product->get_stock_quantity();
+		
+		// Remote post
+		$result = wp_remote_post( $site, array( 'body' => array(
+			'woocommerce_stock_sync' => true,
+			'source'   => site_url( '/' ),
+			'password' => Stock_Synchronization::$synced_sites_password,
+			'action'   => self::$synchronize_all_stock_action_name,
+			'skus'     => $skus
+		) ) );
+		
+		if( ! is_wp_error( $result ) && strpos( $result[ 'body' ], self::$synchronization_success_message ) !== false ) {
+			return true;
+		} else {
+			return $result;
+		}
+	}
 
 	/**
 	 * Contacts synced sites to notify them of the order action (reduce or restore of stock)
@@ -134,20 +155,35 @@ class Stock_Synchronization_Synchronizer {
 		$success = 0;
 		$skus    = array();
 
-		// Get all products and product variations
-		$query = new WP_Query( array(
-			'posts_per_page' => -1,
-			'post_type'      => array(
-				'product',
-				'product_variation'
-			)
-		) );
-
-		// Loop through query results, building the SKUs array
-		while ( $query->have_posts() ) {
-			$query->next_post();
-
-			$skus[ get_post_meta( $query->post->ID, '_sku', true ) ] = get_post_meta( $query->post->ID, '_stock', true );
+		global $wpdb;
+		
+		$sql_query = "
+			
+			SELECT
+				{$wpdb->posts}.ID , 
+				MAX(IF({$wpdb->postmeta}.meta_key = '_sku', {$wpdb->postmeta}.meta_value, NULL)) AS sku, 
+				MAX(IF({$wpdb->postmeta}.meta_key = '_stock', {$wpdb->postmeta}.meta_value, NULL)) AS stock
+			FROM
+				{$wpdb->posts}
+			LEFT JOIN
+				{$wpdb->postmeta}
+						ON {$wpdb->posts}.ID = {$wpdb->postmeta}.post_id
+			WHERE
+				{$wpdb->posts}.post_type = 'product'
+			OR
+				{$wpdb->posts}.post_type = 'product_variant'
+			GROUP BY
+				{$wpdb->posts}.ID
+			ORDER BY
+				{$wpdb->posts}.ID ASC
+			;
+		";
+				
+		$products = $wpdb->get_results( $sql_query, OBJECT );	
+		
+		foreach ( $products as $product ) {
+			if ( ! empty( $product->sku ) )
+				$skus[$product->sku] = $product->stock;
 		}
 
 		// Notify synced websites
@@ -161,11 +197,12 @@ class Stock_Synchronization_Synchronizer {
 					'source'                 => site_url( '/' ),
 					'password'               => Stock_Synchronization::$synced_sites_password,
 					'action'                 => self::$synchronize_all_stock_action_name,
-					'skus'                   => $skus
+					'skus'                   => $skus,
+					'timeout'                => 300
 				) ) );
 
 				$body = wp_remote_retrieve_body( $result );
-
+				
 				if( strpos( $result[ 'body' ], self::$synchronization_success_message ) !== false ) {
 					$success++;
 				}
@@ -189,6 +226,8 @@ class Stock_Synchronization_Synchronizer {
 			return;
 		}
 		
+		set_time_limit(0);
+		
 		$source   = filter_input( INPUT_POST, 'source', FILTER_SANITIZE_STRING );
 		$password = filter_input( INPUT_POST, 'password', FILTER_SANITIZE_STRING );
 		$action   = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING );
@@ -205,33 +244,39 @@ class Stock_Synchronization_Synchronizer {
 		if ( ! is_array( $skus ) ) {
 			$skus = array();
 		}
-
+		
+		if ( empty( $skus ) )
+			return;
+		
+		global $wpdb;
+		$sql_query = "
+			
+			SELECT
+				{$wpdb->posts}.ID
+			FROM
+				{$wpdb->posts}
+			WHERE
+				{$wpdb->posts}.post_type = 'product'
+			OR
+				{$wpdb->posts}.post_type = 'product_variant'
+			ORDER BY
+				{$wpdb->posts}.ID ASC
+			;
+		";
+	
 		// Get all products and product variations by SKU
-		$query = new WP_Query( array(
-			'posts_per_page' => -1,
-			'post_type'      => array(
-				'product',
-				'product_variation'
-			),
-			'meta_query'     => array(
-				array(
-					'key'   => '_sku',
-					'value' => array_keys( $skus )
-				)
-			)
-		) );
+		$products = $wpdb->get_results( $sql_query, OBJECT );	
 		
 		// Loop through query results, increase or decrease stock according to given stock quantities
-		while ( $query->have_posts() ) {
-			$query->next_post();
+		foreach ( $products as $query ) {
 			
 			if ( version_compare( WOOCOMMERCE_VERSION, '2.0.0', '<') ) {
-				if ( $query->post->post_type == 'product' )
-					$product = new WC_Product( $query->post->ID );
-				else if( $query->post->post_type == 'product_variation' )
-					$product = new WC_Product_Variation( $query->post->ID );
+				if ( $query-post_type == 'product' )
+					$product = new WC_Product( $query->ID );
+				else if( $query->post_type == 'product_variation' )
+					$product = new WC_Product_Variation( $query->ID );
 			} else {
-				$product = get_product( $query->post->ID );
+				$product = get_product( $query->ID );
 			}
 			
 			if ( ! $product instanceof WC_Product )
@@ -240,6 +285,9 @@ class Stock_Synchronization_Synchronizer {
 			$sku = $product->get_sku();
 			
 			if ( empty( $sku ) )
+				continue;
+			
+			if ( ! array_key_exists( $sku, $skus ) )
 				continue;
 
 			$qty = $skus[$sku];

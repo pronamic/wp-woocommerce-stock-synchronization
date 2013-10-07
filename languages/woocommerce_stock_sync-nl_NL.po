@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Pronamic Google Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-08 12:15+0100\n"
-"PO-Revision-Date: 2013-02-08 12:15+0100\n"
-"Last-Translator: Remco Tolsma <info@remcotolsma.nl>\n"
+"POT-Creation-Date: 2013-06-14 09:29+0100\n"
+"PO-Revision-Date: 2013-06-14 09:29+0100\n"
+"Last-Translator: \n"
 "Language-Team: Pronamic <info@pronamic.nl>\n"
 "Language: nl_NL\n"
 "MIME-Version: 1.0\n"
@@ -36,61 +36,74 @@ msgstr "Activiteiten log"
 msgid "No entries found."
 msgstr "Geen items gevonden."
 
-#: classes/class-stock-synchronization-admin.php:23
+#: classes/class-stock-synchronization-admin.php:28
 msgid "General"
 msgstr "Algemeen"
 
-#: classes/class-stock-synchronization-admin.php:30
+#: classes/class-stock-synchronization-admin.php:35
 msgid "URLs"
 msgstr "URL's"
 
-#: classes/class-stock-synchronization-admin.php:39
+#: classes/class-stock-synchronization-admin.php:44
 msgid "Password"
 msgstr "Wachtwoord"
 
-#: classes/class-stock-synchronization-admin.php:106
+#: classes/class-stock-synchronization-admin.php:111
 msgid "WooCommerce Stock Synchronization"
 msgstr "WooCommerce voorraad synchronisatie"
 
-#: classes/class-stock-synchronization-admin.php:107
+#: classes/class-stock-synchronization-admin.php:112
+#: classes/class-stock-synchronization-admin.php:158
 msgid "Stock Synchronization"
 msgstr "Voorraad synchronisatie"
 
+#: classes/class-stock-synchronization-admin.php:150
+msgid "Synchronization was successful!"
+msgstr "Synchronisatie was succesvol!"
+
+#: classes/class-stock-synchronization-admin.php:171
+msgid "Synchronize"
+msgstr "Synchroniseren"
+
 #: classes/class-stock-synchronization-synchronizer.php:55
-#, php-format
-msgid "Reduced order stock - %d out of %d sites responded with success."
+#, fuzzy, php-format
+msgid ""
+"Reduced order stock -[<a href=\"%s\">%d</a>]- %d out of %d sites responded "
+"with success."
 msgstr ""
 "Bestelling voorraad verminderd - %d van de %d websites reageerde met succes."
 
-#: classes/class-stock-synchronization-synchronizer.php:69
-#, php-format
-msgid "Restored order stock - %d out of %d sites responded with success."
+#: classes/class-stock-synchronization-synchronizer.php:71
+#, fuzzy, php-format
+msgid ""
+"Restored order stock -[<a href=\"%s\">%d</a>]- out of %d sites responded "
+"with success."
 msgstr ""
 "Bestelling voorraad hersteld -  %d out of %d sites responded with success."
 
-#: classes/class-stock-synchronization-synchronizer.php:174
+#: classes/class-stock-synchronization-synchronizer.php:215
 #, php-format
 msgid "Synchronized all stock - %d out of %d sites responded with success."
 msgstr ""
 "Synchroniseer alle voorraad - %d van de %d websites reageerde met succes."
 
-#: classes/class-stock-synchronization-synchronizer.php:239
+#: classes/class-stock-synchronization-synchronizer.php:296
 msgid "unknown"
 msgstr "onbekend"
 
-#: classes/class-stock-synchronization-synchronizer.php:243
+#: classes/class-stock-synchronization-synchronizer.php:300
 msgid "reduce"
 msgstr "verminder"
 
-#: classes/class-stock-synchronization-synchronizer.php:249
+#: classes/class-stock-synchronization-synchronizer.php:306
 msgid "restore"
 msgstr "herstel"
 
-#: classes/class-stock-synchronization-synchronizer.php:255
+#: classes/class-stock-synchronization-synchronizer.php:312
 msgid "synchronization"
 msgstr "synchronisatie"
 
-#: classes/class-stock-synchronization-synchronizer.php:271
+#: classes/class-stock-synchronization-synchronizer.php:328
 #, php-format
 msgid "Stock %s request by %s granted."
 msgstr "Voorraad %s verzoek door %s toegestaan."
