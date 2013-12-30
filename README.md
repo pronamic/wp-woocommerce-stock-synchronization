@@ -13,3 +13,6 @@ Please show support for this plugin if you plan on using it, by buying it from C
 [Remco Tolsma](http://remcotolsma.nl) [@remcotolsma](http://twitter.com/remcotolsma)
 
 [Leon Rowland](http://leon.rowland.nl) [@leonrowland](http://twitter.com/leonrowland)
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/pronamic/wp-woocommerce-stock-synchronization/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
