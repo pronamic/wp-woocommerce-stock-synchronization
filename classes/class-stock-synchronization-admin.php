@@ -190,20 +190,39 @@ class Stock_Synchronization_Admin {
 			$product = get_product( $post_id );
 		}
 	
+		// Get all variations
+		$variations = get_posts( 'post_parent=' . $post_id . '&post_type=product_variation&orderby=menu_order&order=ASC&fields=ids&post_status=any&numberposts=-1' );
+		
 		foreach ( Stock_Synchronization::$synced_sites as $site ) {
 			
 			$result = Stock_Synchronization_Synchronizer::synchronize_product($product, $site);
 			
 			if ( $result instanceof WP_Error ) {
-				echo json_encode( array( 'url' => $site, 'resp' => false, 'errors' => $result->get_error_messages() ) );
+				$response = array( 'url' => $site, 'resp' => false, 'errors' => $result->get_error_messages() );
 			} else {
-				echo json_encode( array( 'url' => $site, 'resp' => true ) );
+				$response = array( 'url' => $site, 'resp' => true );
 			}
 			
-			
+			if ( ! empty( $variations ) ) {
+				foreach ( $variations as $variation ) {
+					
+					if ( version_compare( WOOCOMMERCE_VERSION, '2.0.0', '<') ) {
+						$variation_product = new WC_Product_Variation( $variation );
+					} else {
+						$variation_product = get_product( $variation );
+					}
+					
+					$result = Stock_Synchronization_Synchronizer::synchronize_product( $variation_product, $site );
+					
+					if ( $result instanceof WP_Error ) {
+						$response['variations'][] = array( 'url' => $site, 'resp' => false, 'errors' => $result->get_error_messages() );
+					} else {
+						$response['variations'][] = array( 'url' => $site, 'resp' => true );
+					}
+				}
+			}
 		}
 		
-		exit;
-		
+		wp_send_json( $response );
 	}
 }
