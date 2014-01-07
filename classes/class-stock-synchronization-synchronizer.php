@@ -38,6 +38,7 @@ class Stock_Synchronization_Synchronizer {
 	 * Bootstraps the synchronizer
 	 */
 	public static function Bootstrap() {
+		add_action( 'init', array( __CLASS__, 'debug_response' ) );
 		add_action( 'init',								array( __CLASS__, 'maybe_synchronize' ) );
 
 		add_action( 'woocommerce_reduce_order_stock',	array( __CLASS__, 'reduce_order_stock' ) );
@@ -334,6 +335,47 @@ class Stock_Synchronization_Synchronizer {
 		echo self::$synchronization_success_message;
 
 		die;
+	}
+	
+	/**
+	 * Can be used by support staff to determine some of the useful information
+	 * that relates to common Stock Sync problems.
+	 * 
+	 * A typical response would come back in json form with the following keys.
+	 * This details what those keys mean and what the values are.
+	 * 
+	 * {
+	 *		url: // the site url. This must match the other synced sites [sites]
+	 *		sites: // an array of all sites connected
+	 *		log: // the recent log of syncs
+	 * }
+	 */
+	public static function debug_response() {
+		if ( ! filter_has_var( INPUT_POST, 'stock_sync_debug' ) ) {
+			return;
+		}
+		
+		// Get the password posted
+		$stock_sync_debug = filter_input( INPUT_POST, 'stock_sync_debug', FILTER_SANITIZE_STRING );
+		
+		// Verify the password matches
+		if ( $stock_sync_debug !== Stock_Synchronization::$synced_sites_password ) {
+			wp_send_json( array( 'failed' => 'Invalid Password' ) );
+		}
+		
+		// Hold the response array
+		$response = array();
+		
+		// The current sites WP URL
+		$response['url'] = site_url( '/' );
+		
+		// Get all sites connected
+		$response['sites'] = Stock_Synchronization::$synced_sites;
+		
+		// The log
+		$response['log'] = self::get_log();
+		
+		wp_send_json( $response );
 	}
 
 	/**
