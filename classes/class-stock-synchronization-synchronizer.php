@@ -260,6 +260,8 @@ class Stock_Synchronization_Synchronizer {
 				{$wpdb->posts}.post_type = 'product'
 			OR
 				{$wpdb->posts}.post_type = 'product_variant'
+			OR
+				{$wpdb->posts}.post_type = 'product_variation'
 			ORDER BY
 				{$wpdb->posts}.ID ASC
 			;
