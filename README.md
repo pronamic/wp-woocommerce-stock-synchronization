@@ -2,7 +2,7 @@
 The WooCommerce Stock Synchronization Plugin allows you to synchronize the stock values of the same products across multiple WooCommerce websites.
 
 Please show support for this plugin if you plan on using it, by buying it from HappyWP: 
-[www.happywp.com/plugins/woocommerce-stock-synchronization/](www.happywp.com/plugins/woocommerce-stock-synchronization/)
+[http://www.happywp.com/plugins/woocommerce-stock-synchronization/](www.happywp.com/plugins/woocommerce-stock-synchronization/)
 
 ## Documentation and Usage Instructions
 [http://www.happywp.com/manuals/woocommerce-stock-synchronization/](http://www.happywp.com/manuals/woocommerce-stock-synchronization/)
