@@ -10,7 +10,7 @@ Requires at least: 3.0
 Author: Pronamic
 Author URI: http://www.pronamic.eu/
 
-Text Domain: stock-synchronization
+Text Domain: woocommerce_stock_sync
 Domain Path: /languages/
 
 License: GPLv2
