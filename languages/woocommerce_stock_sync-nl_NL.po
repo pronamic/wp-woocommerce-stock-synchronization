@@ -1,10 +1,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Pronamic Google Maps\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-14 09:29+0100\n"
-"PO-Revision-Date: 2013-06-14 09:29+0100\n"
-"Last-Translator: \n"
+"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/stock-"
+"synchronization\n"
+"POT-Creation-Date: 2014-06-06 14:59:29+00:00\n"
+"PO-Revision-Date: 2014-06-06 17:02+0100\n"
+"Last-Translator: Remco Tolsma <remco@pronamic.nl>\n"
 "Language-Team: Pronamic <info@pronamic.nl>\n"
 "Language: nl_NL\n"
 "MIME-Version: 1.0\n"
@@ -13,14 +14,14 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: ../\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.6.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: admin/settings.php:29 admin/settings.php:39
+#: admin/settings.php:26 admin/settings.php:36
 msgid "Synchronize all"
 msgstr "Synchroniseer alles"
 
-#: admin/settings.php:36
+#: admin/settings.php:33
 msgid ""
 "This will push the stock if all the WooCommerce products on this website to "
 "the URL's specified."
@@ -28,11 +29,11 @@ msgstr ""
 "Dit zal de voorraad van alle WooCommerce producten op deze website doorgeven "
 "aan de gespecificeerde URL's."
 
-#: admin/settings.php:43
+#: admin/settings.php:40
 msgid "Activity log"
 msgstr "Activiteiten log"
 
-#: admin/settings.php:57
+#: admin/settings.php:54
 msgid "No entries found."
 msgstr "Geen items gevonden."
 
@@ -48,65 +49,83 @@ msgstr "URL's"
 msgid "Password"
 msgstr "Wachtwoord"
 
-#: classes/class-stock-synchronization-admin.php:111
+#. Plugin Name of the plugin/theme
 msgid "WooCommerce Stock Synchronization"
 msgstr "WooCommerce voorraad synchronisatie"
 
 #: classes/class-stock-synchronization-admin.php:112
-#: classes/class-stock-synchronization-admin.php:158
+#: classes/class-stock-synchronization-admin.php:159
 msgid "Stock Synchronization"
 msgstr "Voorraad synchronisatie"
 
-#: classes/class-stock-synchronization-admin.php:150
+#: classes/class-stock-synchronization-admin.php:151
 msgid "Synchronization was successful!"
 msgstr "Synchronisatie was succesvol!"
 
-#: classes/class-stock-synchronization-admin.php:171
+#: classes/class-stock-synchronization-admin.php:173
 msgid "Synchronize"
 msgstr "Synchroniseren"
 
-#: classes/class-stock-synchronization-synchronizer.php:55
-#, fuzzy, php-format
+#: classes/class-stock-synchronization-synchronizer.php:56
 msgid ""
 "Reduced order stock -[<a href=\"%s\">%d</a>]- %d out of %d sites responded "
 "with success."
 msgstr ""
-"Bestelling voorraad verminderd - %d van de %d websites reageerde met succes."
+"Bestelling voorraad verminderd -[<a href=\"%s\">%d</a>]- %d van de %d "
+"websites reageerde met succes."
 
-#: classes/class-stock-synchronization-synchronizer.php:71
-#, fuzzy, php-format
+#: classes/class-stock-synchronization-synchronizer.php:72
 msgid ""
 "Restored order stock -[<a href=\"%s\">%d</a>]- out of %d sites responded "
 "with success."
 msgstr ""
-"Bestelling voorraad hersteld -  %d out of %d sites responded with success."
+"Bestelling voorraad hersteld -[<a href=\"%s\">%d</a>]- van de %d websites "
+"antwoorden met succes."
 
-#: classes/class-stock-synchronization-synchronizer.php:215
-#, php-format
+#: classes/class-stock-synchronization-synchronizer.php:222
 msgid "Synchronized all stock - %d out of %d sites responded with success."
 msgstr ""
 "Synchroniseer alle voorraad - %d van de %d websites reageerde met succes."
 
-#: classes/class-stock-synchronization-synchronizer.php:296
+#: classes/class-stock-synchronization-synchronizer.php:310
 msgid "unknown"
 msgstr "onbekend"
 
-#: classes/class-stock-synchronization-synchronizer.php:300
+#: classes/class-stock-synchronization-synchronizer.php:314
 msgid "reduce"
 msgstr "verminder"
 
-#: classes/class-stock-synchronization-synchronizer.php:306
+#: classes/class-stock-synchronization-synchronizer.php:320
 msgid "restore"
 msgstr "herstel"
 
-#: classes/class-stock-synchronization-synchronizer.php:312
+#: classes/class-stock-synchronization-synchronizer.php:326
 msgid "synchronization"
 msgstr "synchronisatie"
 
-#: classes/class-stock-synchronization-synchronizer.php:328
-#, php-format
+#: classes/class-stock-synchronization-synchronizer.php:342
 msgid "Stock %s request by %s granted."
 msgstr "Voorraad %s verzoek door %s toegestaan."
+
+#. Plugin URI of the plugin/theme
+msgid "http://www.happywp.com/plugins/woocommerce-stock-synchronization/"
+msgstr "http://www.happywp.com/plugins/woocommerce-stock-synchronization/"
+
+#. Description of the plugin/theme
+msgid ""
+"Synchronizes stock with sites that are connected to one another, using "
+"WooCommerce Stock Synchronization."
+msgstr ""
+"Synchroniseer voorraad met websites die met elkaar verbonden zijn met "
+"WooCommerce voorraad synchronisatie."
+
+#. Author of the plugin/theme
+msgid "Pronamic"
+msgstr "Pronamic"
+
+#. Author URI of the plugin/theme
+msgid "http://www.pronamic.eu/"
+msgstr "http://www.pronamic.nl/"
 
 #~ msgid "Google Maps"
 #~ msgstr "Google Maps"
@@ -212,9 +231,6 @@ msgstr "Voorraad %s verzoek door %s toegestaan."
 
 #~ msgid "Height"
 #~ msgstr "Hoogte"
-
-#~ msgid "Dynamic"
-#~ msgstr "Dynamisch"
 
 #~ msgid "Static"
 #~ msgstr "Statisch"

@@ -63,4 +63,5 @@ module.exports = function( grunt ) {
 
 	// Default task(s).
 	grunt.registerTask( 'default', [ 'phplint', 'phpcs', 'checkwpversion' ] );
+	grunt.registerTask( 'pot', [ 'makepot' ] );
 };
