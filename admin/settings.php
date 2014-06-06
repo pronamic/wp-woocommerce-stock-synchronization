@@ -1,7 +1,7 @@
 <?php
 
 // Synchronize all
-if ( filter_has( INPUT_POST, 'stock-synchronization-synchroniza-all-nonce' ) &&
+if ( filter_has_var( INPUT_POST, 'stock-synchronization-synchroniza-all-nonce' ) &&
 	wp_verify_nonce( filter_input( INPUT_POST, 'stock-synchronization-synchroniza-all-nonce', FILTER_SANITIZE_STRING ), 'stock-synchronization-synchronize-all' ) ) {
 
 	Stock_Synchronization_Synchronizer::synchronize_all_stock();
