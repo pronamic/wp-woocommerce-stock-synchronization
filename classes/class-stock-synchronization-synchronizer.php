@@ -281,7 +281,7 @@ class Stock_Synchronization_Synchronizer {
 		foreach ( $products as $query ) {
 
 			if ( version_compare( WOOCOMMERCE_VERSION, '2.0.0', '<' ) ) {
-				if ( $query-post_type == 'product' ) {
+				if ( $query->post_type == 'product' ) {
 					$product = new WC_Product( $query->ID );
 				} else if ( $query->post_type == 'product_variation' ) {
 					$product = new WC_Product_Variation( $query->ID );
