@@ -12,8 +12,6 @@ $log = Stock_Synchronization_Synchronizer::get_log();
 
 ?>
 <div class="wrap">
-	<?php screen_icon(); ?>
-
 	<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 
 	<form action="options.php" method="post">
