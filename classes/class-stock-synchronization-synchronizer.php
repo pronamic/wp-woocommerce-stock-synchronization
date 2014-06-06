@@ -37,7 +37,7 @@ class Stock_Synchronization_Synchronizer {
 	/**
 	 * Bootstraps the synchronizer
 	 */
-	public static function Bootstrap() {
+	public static function bootstrap() {
 		add_action( 'init', array( __CLASS__, 'debug_response' ) );
 		add_action( 'init',								array( __CLASS__, 'maybe_synchronize' ) );
 
@@ -229,7 +229,7 @@ class Stock_Synchronization_Synchronizer {
 	 * Receives all synchronization requests and handles them if source and password are correct.
 	 */
 	public static function maybe_synchronize() {
-		if ( ! isset( $_POST['woocommerce_stock_sync'] ) ) {
+		if ( ! filter_has_var( INPUT_POST, 'woocommerce_stock_sync' ) ) {
 			return;
 		}
 
@@ -290,18 +290,21 @@ class Stock_Synchronization_Synchronizer {
 				$product = get_product( $query->ID );
 			}
 
-			if ( ! $product instanceof WC_Product )
+			if ( ! $product instanceof WC_Product ) {
 				continue;
+			}
 
 			$sku = $product->get_sku();
 
-			if ( empty( $sku ) )
+			if ( empty( $sku ) ) {
 				continue;
+			}
 
-			if ( ! array_key_exists( $sku, $skus ) )
+			if ( ! array_key_exists( $sku, $skus ) ) {
 				continue;
+			}
 
-			$qty = $skus[$sku];
+			$qty = $skus[ $sku ];
 
 			// Choose action
 			$name = __( 'unknown', 'woocommerce_stock_sync' );
@@ -342,7 +345,7 @@ class Stock_Synchronization_Synchronizer {
 		) );
 
 		// TODO Check more?
-		echo self::$synchronization_success_message;
+		echo esc_html( self::$synchronization_success_message );
 
 		die;
 	}
@@ -407,7 +410,7 @@ class Stock_Synchronization_Synchronizer {
 
 		// Reverse array, add to end and reverse again to have added the message to the front.
 		$log = array_reverse( $log );
-		$log[] = date('d-m-o H:i:s') . ' - ' . $message;
+		$log[] = date( 'd-m-o H:i:s' ) . ' - ' . $message;
 		$log = array_reverse( $log );
 
 		// Slice to maximum size

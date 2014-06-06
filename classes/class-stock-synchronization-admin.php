@@ -8,7 +8,7 @@ class Stock_Synchronization_Admin {
 	/**
 	 * Bootstraps the admin part
 	 */
-	public static function Bootstrap() {
+	public static function bootstrap() {
 		add_action( 'admin_init', array( __CLASS__, 'init' ) );
 		add_action( 'admin_menu', array( __CLASS__, 'admin_menu' ) );
 
@@ -181,11 +181,12 @@ class Stock_Synchronization_Admin {
 		$post_type = filter_input( INPUT_POST, 'post_type', FILTER_SANITIZE_STRING );
 		$post_id = filter_input( INPUT_POST, 'post_id', FILTER_VALIDATE_INT );
 
-		if ( version_compare( WOOCOMMERCE_VERSION, '2.0.0', '<') ) {
-			if ( $post_type == 'product' )
+		if ( version_compare( WOOCOMMERCE_VERSION, '2.0.0', '<' ) ) {
+			if ( $post_type == 'product' ) {
 				$product = new WC_Product( $post_id );
-			else if( $post_type == 'product_variation' )
+			} else if ( $post_type == 'product_variation' ) {
 				$product = new WC_Product_Variation( $post_id );
+			}
 		} else {
 			$product = get_product( $post_id );
 		}
@@ -195,7 +196,7 @@ class Stock_Synchronization_Admin {
 
 		foreach ( Stock_Synchronization::$synced_sites as $site ) {
 
-			$result = Stock_Synchronization_Synchronizer::synchronize_product($product, $site);
+			$result = Stock_Synchronization_Synchronizer::synchronize_product( $product, $site );
 
 			if ( $result instanceof WP_Error ) {
 				$response = array( 'url' => $site, 'resp' => false, 'errors' => $result->get_error_messages() );
@@ -206,7 +207,7 @@ class Stock_Synchronization_Admin {
 			if ( ! empty( $variations ) ) {
 				foreach ( $variations as $variation ) {
 
-					if ( version_compare( WOOCOMMERCE_VERSION, '2.0.0', '<') ) {
+					if ( version_compare( WOOCOMMERCE_VERSION, '2.0.0', '<' ) ) {
 						$variation_product = new WC_Product_Variation( $variation );
 					} else {
 						$variation_product = get_product( $variation );

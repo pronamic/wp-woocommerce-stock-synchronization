@@ -72,10 +72,10 @@ class Stock_Synchronization {
 		self::$synced_sites          = get_option( 'woocommerce_stock_sync_urls', array() );
 		self::$synced_sites_password = get_option( 'woocommerce_stock_sync_password' );
 
-		Stock_Synchronization_Synchronizer::Bootstrap();
+		Stock_Synchronization_Synchronizer::bootstrap();
 
 		if ( is_admin() ) {
-			Stock_Synchronization_Admin::Bootstrap();
+			Stock_Synchronization_Admin::bootstrap();
 		}
 
 		add_action( 'init', array( __CLASS__, 'init' ) );
