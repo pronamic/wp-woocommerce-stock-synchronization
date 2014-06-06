@@ -4,7 +4,6 @@
  * Provides the settings and admin page
  */
 class Stock_Synchronization_Admin {
-
 	/**
 	 * Bootstraps the admin part
 	 */

@@ -5,7 +5,6 @@
  * and be notified by other websites that it's synced with.
  */
 class Stock_Synchronization_Synchronizer {
-
 	/**
 	 * Reduce stock action name
 	 *
@@ -39,7 +38,7 @@ class Stock_Synchronization_Synchronizer {
 	 */
 	public static function bootstrap() {
 		add_action( 'init', array( __CLASS__, 'debug_response' ) );
-		add_action( 'init',								array( __CLASS__, 'maybe_synchronize' ) );
+		add_action( 'init',	array( __CLASS__, 'maybe_synchronize' ) );
 
 		add_action( 'woocommerce_reduce_order_stock',	array( __CLASS__, 'reduce_order_stock' ) );
 		add_action( 'woocommerce_restore_order_stock',	array( __CLASS__, 'restore_order_stock' ) );
@@ -163,19 +162,18 @@ class Stock_Synchronization_Synchronizer {
 		global $wpdb;
 
 		$sql_query = "
-
 			SELECT
 				{$wpdb->posts}.ID ,
-				MAX(IF({$wpdb->postmeta}.meta_key = '_sku', {$wpdb->postmeta}.meta_value, NULL)) AS sku,
-				MAX(IF({$wpdb->postmeta}.meta_key = '_stock', {$wpdb->postmeta}.meta_value, NULL)) AS stock
+				MAX( IF( {$wpdb->postmeta}.meta_key = '_sku', {$wpdb->postmeta}.meta_value, NULL ) ) AS sku,
+				MAX( IF( {$wpdb->postmeta}.meta_key = '_stock', {$wpdb->postmeta}.meta_value, NULL ) ) AS stock
 			FROM
 				{$wpdb->posts}
-			LEFT JOIN
+					LEFT JOIN
 				{$wpdb->postmeta}
 						ON {$wpdb->posts}.ID = {$wpdb->postmeta}.post_id
 			WHERE
 				{$wpdb->posts}.post_type = 'product'
-			OR
+					OR
 				{$wpdb->posts}.post_type = 'product_variant'
 			GROUP BY
 				{$wpdb->posts}.ID
@@ -194,9 +192,7 @@ class Stock_Synchronization_Synchronizer {
 
 		// Notify synced websites
 		if ( count( Stock_Synchronization::$synced_sites ) > 0 ) {
-
 			foreach ( Stock_Synchronization::$synced_sites as $site ) {
-
 				// Remote post
 				$result = wp_remote_post( $site, array(
 					'body' => array(
@@ -265,9 +261,9 @@ class Stock_Synchronization_Synchronizer {
 				{$wpdb->posts}
 			WHERE
 				{$wpdb->posts}.post_type = 'product'
-			OR
+					OR
 				{$wpdb->posts}.post_type = 'product_variant'
-			OR
+					OR
 				{$wpdb->posts}.post_type = 'product_variation'
 			ORDER BY
 				{$wpdb->posts}.ID ASC
@@ -279,7 +275,6 @@ class Stock_Synchronization_Synchronizer {
 
 		// Loop through query results, increase or decrease stock according to given stock quantities
 		foreach ( $products as $query ) {
-
 			if ( version_compare( WOOCOMMERCE_VERSION, '2.0.0', '<' ) ) {
 				if ( $query->post_type == 'product' ) {
 					$product = new WC_Product( $query->ID );
@@ -408,10 +403,9 @@ class Stock_Synchronization_Synchronizer {
 	public static function log_message( $message ) {
 		$log = self::get_log();
 
-		// Reverse array, add to end and reverse again to have added the message to the front.
-		$log = array_reverse( $log );
-		$log[] = date( 'd-m-o H:i:s' ) . ' - ' . $message;
-		$log = array_reverse( $log );
+		$message = date( 'd-m-o H:i:s' ) . ' - ' . $message;
+
+		array_unshift( $log, $message );
 
 		// Slice to maximum size
 		$log = array_slice( $log, 0, Stock_Synchronization::$max_log_length );
