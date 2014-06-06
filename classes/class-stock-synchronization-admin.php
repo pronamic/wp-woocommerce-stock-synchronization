@@ -4,20 +4,20 @@
  * Provides the settings and admin page
  */
 class Stock_Synchronization_Admin {
-	
+
 	/**
 	 * Bootstraps the admin part
 	 */
 	public static function Bootstrap() {
 		add_action( 'admin_init', array( __CLASS__, 'init' ) );
 		add_action( 'admin_menu', array( __CLASS__, 'admin_menu' ) );
-		
+
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_scripts' ) );
-		
+
 		add_action( 'add_meta_boxes', array( __CLASS__, 'meta_boxes' ) );
 		add_action( 'wp_ajax_stock_sync_single_product', array( __CLASS__, 'ajax_stock_synchronization' ) );
 	}
-	
+
 	/**
 	 * Initializes admin
 	 */
@@ -89,10 +89,10 @@ class Stock_Synchronization_Admin {
 			);
 
 			echo '<br />';
-			
+
 			$i++;
 		}
-		
+
 		printf(
 			'<input name="%s[]" id="%s" type="url" value="%s" class="%s" />',
 			esc_attr( $name ),
@@ -115,44 +115,44 @@ class Stock_Synchronization_Admin {
 			array( __CLASS__, 'settings_page' ) // function
 		);
 	}
-	
+
 	/**
 	 * Settings page
 	 */
 	public static function settings_page() {
 		include( Stock_Synchronization::get_plugin_path() . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'settings.php' );
 	}
-	
+
 	/**
 	 * Sanitizes list of synched sites, unifying all newline characters to the same newline character
 	 */
 	public static function sanitize_urls( $data ) {
 		$urls = array();
-		
+
 		if ( is_array( $data ) ) {
 			foreach ( $data as $value ) {
 				$url = filter_var( $value, FILTER_VALIDATE_URL );
-				
+
 				if ( $url ) {
 					$urls[] = trailingslashit( $url );
 				}
 			}
 		}
-		
+
 		return $urls;
 	}
-	
+
 	public static function enqueue_scripts() {
 		wp_enqueue_script( 'woocommerce_stock_sync_admin', plugins_url( 'assets/stock-synchronization-admin.js', Stock_Synchronization::$file ) );
-		
-		wp_localize_script( 'woocommerce_stock_sync_admin', 'StockSynchronizationVars', array( 
+
+		wp_localize_script( 'woocommerce_stock_sync_admin', 'StockSynchronizationVars', array(
 			'single_product' => array(
 				'spinner' => admin_url( 'images/wpspin_light.gif' ),
-				'sync_success_success_message' => __( 'Synchronization was successful!', 'woocommerce_stock_sync' ) 
-			) 
+				'sync_success_success_message' => __( 'Synchronization was successful!', 'woocommerce_stock_sync' )
+			)
 		) );
 	}
-	
+
 	public static function meta_boxes() {
 		add_meta_box(
 			'stock_synchronization',
@@ -162,7 +162,7 @@ class Stock_Synchronization_Admin {
 			'side'
 		);
 	}
-	
+
 	public static function view_stock_synchronization_meta_box() {
 		?>
 		<script type="text/javascript">
@@ -176,11 +176,11 @@ class Stock_Synchronization_Admin {
 
 		<?php
 	}
-	
+
 	public static function ajax_stock_synchronization() {
 		$post_type = filter_input( INPUT_POST, 'post_type', FILTER_SANITIZE_STRING );
 		$post_id = filter_input( INPUT_POST, 'post_id', FILTER_VALIDATE_INT );
-		
+
 		if ( version_compare( WOOCOMMERCE_VERSION, '2.0.0', '<') ) {
 			if ( $post_type == 'product' )
 				$product = new WC_Product( $post_id );
@@ -189,31 +189,31 @@ class Stock_Synchronization_Admin {
 		} else {
 			$product = get_product( $post_id );
 		}
-	
+
 		// Get all variations
 		$variations = get_posts( 'post_parent=' . $post_id . '&post_type=product_variation&orderby=menu_order&order=ASC&fields=ids&post_status=any&numberposts=-1' );
-		
+
 		foreach ( Stock_Synchronization::$synced_sites as $site ) {
-			
+
 			$result = Stock_Synchronization_Synchronizer::synchronize_product($product, $site);
-			
+
 			if ( $result instanceof WP_Error ) {
 				$response = array( 'url' => $site, 'resp' => false, 'errors' => $result->get_error_messages() );
 			} else {
 				$response = array( 'url' => $site, 'resp' => true );
 			}
-			
+
 			if ( ! empty( $variations ) ) {
 				foreach ( $variations as $variation ) {
-					
+
 					if ( version_compare( WOOCOMMERCE_VERSION, '2.0.0', '<') ) {
 						$variation_product = new WC_Product_Variation( $variation );
 					} else {
 						$variation_product = get_product( $variation );
 					}
-					
+
 					$result = Stock_Synchronization_Synchronizer::synchronize_product( $variation_product, $site );
-					
+
 					if ( $result instanceof WP_Error ) {
 						$response['variations'][] = array( 'url' => $site, 'resp' => false, 'errors' => $result->get_error_messages() );
 					} else {
@@ -222,7 +222,7 @@ class Stock_Synchronization_Admin {
 				}
 			}
 		}
-		
+
 		wp_send_json( $response );
 	}
 }

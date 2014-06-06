@@ -115,8 +115,9 @@ class Stock_Synchronization {
 			$name = strtolower( str_replace( '_', '-', $name ) );
 			$file = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'classes' . DIRECTORY_SEPARATOR . 'class-' . $name . '.php';
 
-			if( is_file( $file ) )
+			if ( is_file( $file ) ) {
 				require_once $file;
+			}
 		}
 
 		spl_autoload_register( 'stock_synchronization_autoload' );
