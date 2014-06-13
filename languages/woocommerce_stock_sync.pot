@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce Stock Synchronization 1.1.2\n"
 "Report-Msgid-Bugs-To: "
 "http://wordpress.org/support/plugin/stock-synchronization\n"
-"POT-Creation-Date: 2014-06-06 14:59:29+00:00\n"
+"POT-Creation-Date: 2014-06-13 12:11:17+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -31,15 +31,15 @@ msgstr ""
 msgid "No entries found."
 msgstr ""
 
-#: classes/class-stock-synchronization-admin.php:28
+#: classes/class-stock-synchronization-admin.php:27
 msgid "General"
 msgstr ""
 
-#: classes/class-stock-synchronization-admin.php:35
+#: classes/class-stock-synchronization-admin.php:34
 msgid "URLs"
 msgstr ""
 
-#: classes/class-stock-synchronization-admin.php:44
+#: classes/class-stock-synchronization-admin.php:43
 msgid "Password"
 msgstr ""
 
@@ -47,26 +47,26 @@ msgstr ""
 msgid "WooCommerce Stock Synchronization"
 msgstr ""
 
-#: classes/class-stock-synchronization-admin.php:112
-#: classes/class-stock-synchronization-admin.php:159
+#: classes/class-stock-synchronization-admin.php:111
+#: classes/class-stock-synchronization-admin.php:158
 msgid "Stock Synchronization"
 msgstr ""
 
-#: classes/class-stock-synchronization-admin.php:151
+#: classes/class-stock-synchronization-admin.php:150
 msgid "Synchronization was successful!"
 msgstr ""
 
-#: classes/class-stock-synchronization-admin.php:173
-msgid "Synchronize"
+#: classes/class-stock-synchronization-admin.php:172
+msgid "Push Stock"
 msgstr ""
 
-#: classes/class-stock-synchronization-synchronizer.php:56
+#: classes/class-stock-synchronization-synchronizer.php:55
 msgid ""
 "Reduced order stock -[<a href=\"%s\">%d</a>]- %d out of %d sites responded "
 "with success."
 msgstr ""
 
-#: classes/class-stock-synchronization-synchronizer.php:72
+#: classes/class-stock-synchronization-synchronizer.php:71
 msgid ""
 "Restored order stock -[<a href=\"%s\">%d</a>]- out of %d sites responded "
 "with success."
@@ -76,23 +76,23 @@ msgstr ""
 msgid "Synchronized all stock - %d out of %d sites responded with success."
 msgstr ""
 
-#: classes/class-stock-synchronization-synchronizer.php:310
+#: classes/class-stock-synchronization-synchronizer.php:309
 msgid "unknown"
 msgstr ""
 
-#: classes/class-stock-synchronization-synchronizer.php:314
+#: classes/class-stock-synchronization-synchronizer.php:313
 msgid "reduce"
 msgstr ""
 
-#: classes/class-stock-synchronization-synchronizer.php:320
+#: classes/class-stock-synchronization-synchronizer.php:319
 msgid "restore"
 msgstr ""
 
-#: classes/class-stock-synchronization-synchronizer.php:326
+#: classes/class-stock-synchronization-synchronizer.php:325
 msgid "synchronization"
 msgstr ""
 
-#: classes/class-stock-synchronization-synchronizer.php:342
+#: classes/class-stock-synchronization-synchronizer.php:341
 msgid "Stock %s request by %s granted."
 msgstr ""
 

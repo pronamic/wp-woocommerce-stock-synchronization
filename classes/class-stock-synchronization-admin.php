@@ -155,7 +155,7 @@ class Stock_Synchronization_Admin {
 	public static function meta_boxes() {
 		add_meta_box(
 			'stock_synchronization',
-			__( 'Stock Synchronization', 'woocommerce-stock-synchronization' ),
+			__( 'Stock Synchronization', 'woocommerce_stock_sync' ),
 			array( __CLASS__, 'view_stock_synchronization_meta_box' ),
 			'product',
 			'side'
@@ -169,7 +169,7 @@ class Stock_Synchronization_Admin {
 		</script>
 		<div class="stock_synchronization_holder">
 			<div class="jStockSync"></div>
-			<button class="jSyncSingleProductButton button button-primary"><?php _e( 'Synchronize', 'woocommerce_stock_sync' ); ?></button>
+			<button class="jSyncSingleProductButton button"><?php _e( 'Push Stock', 'woocommerce_stock_sync' ); ?></button>
 			<span class="jSync_spinner_holder"></span>
 		</div>
 

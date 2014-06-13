@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Pronamic Google Maps\n"
+"Project-Id-Version: WooCommerce Stock Synchronization\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/stock-"
 "synchronization\n"
-"POT-Creation-Date: 2014-06-06 14:59:29+00:00\n"
-"PO-Revision-Date: 2014-06-06 17:02+0100\n"
+"POT-Creation-Date: 2014-06-13 12:11:17+00:00\n"
+"PO-Revision-Date: 2014-06-13 14:13+0100\n"
 "Last-Translator: Remco Tolsma <remco@pronamic.nl>\n"
 "Language-Team: Pronamic <info@pronamic.nl>\n"
 "Language: nl_NL\n"
@@ -12,10 +12,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: __;_e\n"
-"X-Poedit-Basepath: ../\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Poedit 1.6.4\n"
-"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin/settings.php:26 admin/settings.php:36
 msgid "Synchronize all"
@@ -37,15 +36,15 @@ msgstr "Activiteiten log"
 msgid "No entries found."
 msgstr "Geen items gevonden."
 
-#: classes/class-stock-synchronization-admin.php:28
+#: classes/class-stock-synchronization-admin.php:27
 msgid "General"
 msgstr "Algemeen"
 
-#: classes/class-stock-synchronization-admin.php:35
+#: classes/class-stock-synchronization-admin.php:34
 msgid "URLs"
 msgstr "URL's"
 
-#: classes/class-stock-synchronization-admin.php:44
+#: classes/class-stock-synchronization-admin.php:43
 msgid "Password"
 msgstr "Wachtwoord"
 
@@ -53,20 +52,20 @@ msgstr "Wachtwoord"
 msgid "WooCommerce Stock Synchronization"
 msgstr "WooCommerce voorraad synchronisatie"
 
-#: classes/class-stock-synchronization-admin.php:112
-#: classes/class-stock-synchronization-admin.php:159
+#: classes/class-stock-synchronization-admin.php:111
+#: classes/class-stock-synchronization-admin.php:158
 msgid "Stock Synchronization"
 msgstr "Voorraad synchronisatie"
 
-#: classes/class-stock-synchronization-admin.php:151
+#: classes/class-stock-synchronization-admin.php:150
 msgid "Synchronization was successful!"
 msgstr "Synchronisatie was succesvol!"
 
-#: classes/class-stock-synchronization-admin.php:173
-msgid "Synchronize"
-msgstr "Synchroniseren"
+#: classes/class-stock-synchronization-admin.php:172
+msgid "Push Stock"
+msgstr "Voorraad doorsturen"
 
-#: classes/class-stock-synchronization-synchronizer.php:56
+#: classes/class-stock-synchronization-synchronizer.php:55
 msgid ""
 "Reduced order stock -[<a href=\"%s\">%d</a>]- %d out of %d sites responded "
 "with success."
@@ -74,7 +73,7 @@ msgstr ""
 "Bestelling voorraad verminderd -[<a href=\"%s\">%d</a>]- %d van de %d "
 "websites reageerde met succes."
 
-#: classes/class-stock-synchronization-synchronizer.php:72
+#: classes/class-stock-synchronization-synchronizer.php:71
 msgid ""
 "Restored order stock -[<a href=\"%s\">%d</a>]- out of %d sites responded "
 "with success."
@@ -87,23 +86,23 @@ msgid "Synchronized all stock - %d out of %d sites responded with success."
 msgstr ""
 "Synchroniseer alle voorraad - %d van de %d websites reageerde met succes."
 
-#: classes/class-stock-synchronization-synchronizer.php:310
+#: classes/class-stock-synchronization-synchronizer.php:309
 msgid "unknown"
 msgstr "onbekend"
 
-#: classes/class-stock-synchronization-synchronizer.php:314
+#: classes/class-stock-synchronization-synchronizer.php:313
 msgid "reduce"
 msgstr "verminder"
 
-#: classes/class-stock-synchronization-synchronizer.php:320
+#: classes/class-stock-synchronization-synchronizer.php:319
 msgid "restore"
 msgstr "herstel"
 
-#: classes/class-stock-synchronization-synchronizer.php:326
+#: classes/class-stock-synchronization-synchronizer.php:325
 msgid "synchronization"
 msgstr "synchronisatie"
 
-#: classes/class-stock-synchronization-synchronizer.php:342
+#: classes/class-stock-synchronization-synchronizer.php:341
 msgid "Stock %s request by %s granted."
 msgstr "Voorraad %s verzoek door %s toegestaan."
 
@@ -126,6 +125,9 @@ msgstr "Pronamic"
 #. Author URI of the plugin/theme
 msgid "http://www.pronamic.eu/"
 msgstr "http://www.pronamic.nl/"
+
+#~ msgid "Synchronize"
+#~ msgstr "Synchroniseren"
 
 #~ msgid "Google Maps"
 #~ msgstr "Google Maps"
