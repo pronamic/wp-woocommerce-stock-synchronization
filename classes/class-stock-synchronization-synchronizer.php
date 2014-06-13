@@ -92,7 +92,9 @@ class Stock_Synchronization_Synchronizer {
 			),
 		) );
 
-		if ( ! is_wp_error( $result ) && strpos( $result['body'], self::$synchronization_success_message ) !== false ) {
+		$body = wp_remote_retrieve_body( $result );
+
+		if ( ! is_wp_error( $result ) && strpos( $body, self::$synchronization_success_message ) !== false ) {
 			return true;
 		} else {
 			return $result;
@@ -138,7 +140,9 @@ class Stock_Synchronization_Synchronizer {
 					),
 				) );
 
-				if ( ! is_wp_error( $result ) && strpos( $result['body'], self::$synchronization_success_message ) !== false ) {
+				$body = wp_remote_retrieve_body( $result );
+
+				if ( ! is_wp_error( $result ) && strpos( $body, self::$synchronization_success_message ) !== false ) {
 					$success++;
 				}
 			}
@@ -207,7 +211,7 @@ class Stock_Synchronization_Synchronizer {
 
 				$body = wp_remote_retrieve_body( $result );
 
-				if ( strpos( $result['body'], self::$synchronization_success_message ) !== false ) {
+				if ( strpos( $body, self::$synchronization_success_message ) !== false ) {
 					$success++;
 				}
 			}
