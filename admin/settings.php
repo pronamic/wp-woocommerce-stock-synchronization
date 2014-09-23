@@ -41,19 +41,20 @@ $log = get_option( 'wc_stock_sync_log', array() );
 	</h3>
 
 	<p>
-		<?php if ( is_array( $log ) && ! empty( $log ) ) : ?>
+		<?php
 
-			<?php foreach ( $log as $message ) : ?>
+		if ( is_array( $log ) && ! empty( $log ) ) {
+			foreach ( $log as $message ) {
+				echo $message, '<br />';
+			}
+		} else {
+			_e( 'No entries found.', 'woocommerce_stock_sync' );
+		}
 
-				<?php echo esc_html( $message ); ?><br />
-
-			<?php endforeach; ?>
-
-		<?php else : ?>
-
-			<?php _e( 'No entries found.', 'woocommerce_stock_sync' ); ?>
-
-		<?php endif; ?>
-
+		?>
 	</p>
+
+	<form method="post" action="">
+		<?php submit_button( __( 'Empty Log', 'woocommerce_stock_sync' ), 'delete', 'pronamic_wc_stock_sync_empty_log' ); ?>
+	</form>
 </div>

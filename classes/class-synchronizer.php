@@ -6,32 +6,11 @@
  */
 class Pronamic_WP_WC_StockSyncSynchronizer {
 	/**
-	 * Reduce stock action name
+	 * Queue for the stock to synchronize
 	 *
 	 * @var string
 	 */
-	private static $reduce_stock_action_name = 'reduce_stock';
-
-	/**
-	 * Restore stock action name
-	 *
-	 * @var string
-	 */
-	private static $restore_stock_action_name = 'restore_stock';
-
-	/**
-	 * Synchronize all stock action name
-	 *
-	 * @var string
-	 */
-	private static $synchronize_all_stock_action_name = 'synchronize_all';
-
-	/**
-	 * Synchronization success message
-	 *
-	 * @var string
-	 */
-	private static $synchronization_success_message = '!synchronization_success!';
+	private $queue_stock;
 
 	//////////////////////////////////////////////////
 
@@ -41,31 +20,153 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 	public function __construct( $plugin ) {
 		$this->plugin = $plugin;
 
+		$this->queue_stock = array();
+
 		// Actions
-		add_action( 'init', array( $this, 'debug_response' ) );
+		// add_action( 'init', array( $this, 'debug_response' ) );
+		// add_action( 'init',	array( $this, 'maybe_synchronize' ) );
 		add_action( 'init',	array( $this, 'maybe_synchronize' ) );
 
-		add_action( 'woocommerce_reduce_order_stock',	array( $this, 'reduce_order_stock' ) );
-		add_action( 'woocommerce_restore_order_stock',	array( $this, 'restore_order_stock' ) );
+		// Synchronize actions
+
+		// Product - Set Stock
+		// @see https://github.com/woothemes/woocommerce/blob/v2.2.3/includes/abstracts/abstract-wc-product.php#L164-L206
+		add_action( 'woocommerce_product_set_stock', array( $this, 'product_set_stock' ) );
+
+		// Product Variation - Set Stock
+		// @see https://github.com/woothemes/woocommerce/blob/v2.2.3/includes/class-wc-product-variation.php#L389-L440
+		add_action( 'woocommerce_variation_set_stock', array( $this, 'product_set_stock' ) );
+
+		// Shutdown
+		add_action( 'shutdown', array( $this, 'shutdown' ) );
 	}
 
 	//////////////////////////////////////////////////
 
 	/**
-	 * Called on 'woocommerce_reduce_order_stock'
+	 * Product set stock
 	 *
-	 * @param WC_Order $order
+	 * @param WC_Product $product
 	 */
-	public function reduce_order_stock( $order ) {
-		$success = self::synchronize_order( $order, self::$reduce_stock_action_name );
+	public function product_set_stock( $product ) {
+		// Check if the product variable is indeed an WooCommerce product object
+		// @see https://github.com/woothemes/woocommerce/blob/v2.2.3/includes/abstracts/abstract-wc-product.php#L13
+		if ( $product instanceof WC_Product ) {
 
-		self::log_message( sprintf( __( 'Reduced order stock -[<a href="%s">%d</a>]- %d out of %d sites responded with success.', 'woocommerce_stock_sync' ),
-			get_edit_post_link( $order->id ),
-			$order->id,
-			$success,
-			count( Stock_Synchronization::$synced_sites )
-		) );
+			// Check if the stock is managed so we are sure it should be synchronized
+			// @see https://github.com/woothemes/woocommerce/blob/v2.2.3/includes/abstracts/abstract-wc-product.php#L484-L491
+			if ( $product->managing_stock() ) {
+				// @see https://github.com/woothemes/woocommerce/blob/v2.2.3/includes/abstracts/abstract-wc-product.php#L123-L130
+				$sku = $product->get_sku();
+
+				// Check if the SKU is not empty so we have an unique identifier
+				if ( ! empty( $sku ) ) {
+					// @see https://github.com/woothemes/woocommerce/blob/v2.2.3/includes/abstracts/abstract-wc-product.php#L132-L139
+					$qty = $product->get_stock_quantity();
+
+					// Map
+					$this->queue_stock[ $sku ] = $qty;
+				}
+			}
+		}
 	}
+
+	//////////////////////////////////////////////////
+
+	/**
+	 * Synchronize the stock
+	 *
+	 * @param array $map
+	 */
+	private function synchronize_stock( $stock ) {
+		$urls     = get_option( 'woocommerce_stock_sync_urls', array() );
+		$password = get_option( 'woocommerce_stock_sync_password' );
+
+		if ( is_array( $urls ) ) {
+			foreach ( $urls as $url ) {
+				$request_url = add_query_arg( array(
+					'wc_stock_sync' => true,
+					'source'        => site_url( '/' ),
+					'password'      => $password,
+				), $url );
+
+				$response = wp_remote_post( $request_url, array(
+					'body' => json_encode( $stock ),
+				) );
+
+				// @see https://github.com/WordPress/WordPress/blob/4.0/wp-includes/http.php#L241-L256https://github.com/WordPress/WordPress/blob/4.0/wp-includes/http.php#L241-L256
+				$response_code = wp_remote_retrieve_response_code( $response );
+
+				if ( 200 == $response_code ) {
+					$body = wp_remote_retrieve_body( $result );
+
+					$message = sprintf(
+						__( 'Synced to: %s (response code: %s)', '' ),
+						sprintf( '<code>%s</code>', $url ),
+						sprintf( '<code>%s</code>', $response_code )
+					);
+
+					$this->log_message( $message );
+				} else {
+					$error = '';
+					if ( is_wp_error( $response ) ) {
+						$error = $response->get_error_message();
+					}
+
+					$message = sprintf(
+						__( 'Could not sync to: %s (response code: %s, error: %s)', '' ),
+						sprintf( '<code>%s</code>', $url ),
+						sprintf( '<code>%s</code>', $response_code ),
+						sprintf( '<code>%s</code>', $error )
+					);
+
+					$this->log_message( $message );
+				}
+			}
+		}
+	}
+
+	//////////////////////////////////////////////////
+
+	/**
+	 * Maybe synchronize
+	 */
+	public function maybe_synchronize() {
+		$this->process_sync = filter_has_var( INPUT_GET, 'wc_stock_sync' );
+
+		if ( $this->process_sync ) {
+			// Stock
+			$stock = json_decode( file_get_contents( 'php://input' ), true );
+
+			$this->log_message( 'Maybe sync !!!' );
+			$this->log_message( json_encode( $stock ) );
+
+			if ( is_array( $stock ) ) {
+
+			}
+
+			$object = new stdClass();
+			$object->result = true;
+
+			// Send JSON
+			// @see https://github.com/WordPress/WordPress/blob/4.0/wp-includes/functions.php#L2614-L2629
+			wp_send_json( $object );
+		}
+	}
+
+	//////////////////////////////////////////////////
+
+	/**
+	 * Shutdown
+	 */
+	public function shutdown() {
+		// Queue stock synchronize
+		if ( ! empty( $this->queue_stock ) && ! $this->process_sync ) {
+			$this->synchronize_stock( $this->queue_stock );
+		}
+	}
+
+	//////////////////////////////////////////////////
 
 	/**
 	 * Called on 'woocommerce_restore_order_stock'
@@ -233,168 +334,6 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 	}
 
 	/**
-	 * Receives all synchronization requests and handles them if source and password are correct.
-	 */
-	public function maybe_synchronize() {
-		if ( ! filter_has_var( INPUT_POST, 'woocommerce_stock_sync' ) ) {
-			return;
-		}
-
-		set_time_limit( 0 );
-
-		$source   = filter_input( INPUT_POST, 'source', FILTER_SANITIZE_STRING );
-		$password = filter_input( INPUT_POST, 'password', FILTER_SANITIZE_STRING );
-		$action   = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_STRING );
-		$skus     = filter_input( INPUT_POST, 'skus', FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY );
-
-		if ( ! in_array( trailingslashit( $source ), Stock_Synchronization::$synced_sites ) ) {
-			return;
-		}
-
-		if ( $password != Stock_Synchronization::$synced_sites_password ) {
-			return;
-		}
-
-		if ( ! is_array( $skus ) ) {
-			$skus = array();
-		}
-
-		if ( empty( $skus ) ) {
-			return;
-		}
-
-		global $wpdb;
-
-		$sql_query = "
-			SELECT
-				{$wpdb->posts}.ID
-			FROM
-				{$wpdb->posts}
-			WHERE
-				{$wpdb->posts}.post_type = 'product'
-					OR
-				{$wpdb->posts}.post_type = 'product_variant'
-					OR
-				{$wpdb->posts}.post_type = 'product_variation'
-			ORDER BY
-				{$wpdb->posts}.ID ASC
-			;
-		";
-
-		// Get all products and product variations by SKU
-		$products = $wpdb->get_results( $sql_query, OBJECT );
-
-		// Loop through query results, increase or decrease stock according to given stock quantities
-		foreach ( $products as $query ) {
-			if ( version_compare( WOOCOMMERCE_VERSION, '2.0.0', '<' ) ) {
-				if ( 'product' == $query->post_type ) {
-					$product = new WC_Product( $query->ID );
-				} else if ( 'product_variation' == $query->post_type ) {
-					$product = new WC_Product_Variation( $query->ID );
-				}
-			} else {
-				$product = get_product( $query->ID );
-			}
-
-			if ( ! $product instanceof WC_Product ) {
-				continue;
-			}
-
-			$sku = $product->get_sku();
-
-			if ( empty( $sku ) ) {
-				continue;
-			}
-
-			if ( ! array_key_exists( $sku, $skus ) ) {
-				continue;
-			}
-
-			$qty = $skus[ $sku ];
-
-			// Choose action
-			$name = __( 'unknown', 'woocommerce_stock_sync' );
-
-			switch ( $action ) {
-				case self::$reduce_stock_action_name:
-					$name = __( 'reduce', 'woocommerce_stock_sync' );
-
-					$product->reduce_stock( $qty );
-
-					break;
-				case self::$restore_stock_action_name:
-					$name = __( 'restore', 'woocommerce_stock_sync' );
-
-					$product->increase_stock( $qty );
-
-					break;
-				case self::$synchronize_all_stock_action_name:
-					$name = __( 'synchronization', 'woocommerce_stock_sync' );
-
-					$qty = $qty - $product->get_stock_quantity();
-
-					if ( $qty > 0 ) {
-						$product->increase_stock( $qty );
-					} else if ( $qty < 0 ) {
-						$product->reduce_stock( abs( $qty ) );
-					}
-
-					break;
-			}
-		}
-
-		// Log
-		self::log_message( sprintf(
-			__( 'Stock %s request by %s granted.', 'woocommerce_stock_sync' ),
-			$name,
-			$source
-		) );
-
-		// TODO Check more?
-		echo esc_html( self::$synchronization_success_message );
-
-		die;
-	}
-
-	/**
-	 * Can be used by support staff to determine some of the useful information
-	 * that relates to common Stock Sync problems.
-	 *
-	 * A typical response would come back in json form with the following keys.
-	 * This details what those keys mean and what the values are.
-	 *
-	 * {
-	 *		url: // the site url. This must match the other synced sites [sites]
-	 *		sites: // an array of all sites connected
-	 *		log: // the recent log of syncs
-	 * }
-	 */
-	public static function debug_response() {
-		if ( ! filter_has_var( INPUT_POST, 'stock_sync_debug' ) ) {
-			return;
-		}
-
-		// Get the password posted
-		$stock_sync_debug = filter_input( INPUT_POST, 'stock_sync_debug', FILTER_SANITIZE_STRING );
-
-		// Verify the password matches
-		if ( $stock_sync_debug !== Stock_Synchronization::$synced_sites_password ) {
-			wp_send_json( array( 'failed' => 'Invalid Password' ) );
-		}
-
-		// Hold the response array
-		$response = array();
-
-		// The current sites WP URL
-		$response['url'] = site_url( '/' );
-
-		// Get all sites connected
-		$response['sites'] = Stock_Synchronization::$synced_sites;
-
-		wp_send_json( $response );
-	}
-
-	/**
 	 * Logs a message as a comment that can be read back from the admin screen
 	 *
 	 * @param string $message
@@ -407,7 +346,7 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 		array_unshift( $log, $message );
 
 		// Slice to maximum size
-		$log = array_slice( $log, 0, Stock_Synchronization::$max_log_length );
+		$log = array_slice( $log, 0, 50 );
 
 		// Write to log
 		update_option( 'wc_stock_sync_log', $log );

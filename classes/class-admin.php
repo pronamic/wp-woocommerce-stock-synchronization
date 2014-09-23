@@ -51,6 +51,11 @@ class Pronamic_WP_WC_StockSyncAdmin {
 
 		register_setting( 'woocommerce_stock_sync', 'woocommerce_stock_sync_urls', array( $this, 'sanitize_urls' ) );
 		register_setting( 'woocommerce_stock_sync', 'woocommerce_stock_sync_password' );
+
+		// Empty log
+		if ( filter_has_var( INPUT_POST, 'pronamic_wc_stock_sync_empty_log' ) ) {
+			update_option( 'wc_stock_sync_log', array() );
+		}
 	}
 
 	//////////////////////////////////////////////////
@@ -156,16 +161,6 @@ class Pronamic_WP_WC_StockSyncAdmin {
 	//////////////////////////////////////////////////
 
 	public function meta_boxes() {
-		add_meta_box(
-			'stock_synchronization',
-			__( 'Stock Synchronization', 'woocommerce_stock_sync' ),
-			array( $this, 'meta_box_stock_synchronization' ),
-			'product',
-			'side'
-		);
-	}
-
-	public function meta_box_stock_synchronization() {
 
 	}
 }

@@ -52,9 +52,6 @@ class Pronamic_WP_WC_StockSyncPlugin {
 		$this->file = $file;
 		$this->dir  = plugin_dir_path( $file );
 
-		$this->synced_sites          = get_option( 'woocommerce_stock_sync_urls', array() );
-		$this->synced_sites_password = get_option( 'woocommerce_stock_sync_password' );
-
 		$this->synchronizer = new Pronamic_WP_WC_StockSyncSynchronizer( $this );
 
 		if ( is_admin() ) {
