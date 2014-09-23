@@ -1,8 +1,7 @@
-# Build
-/build/
-
-# Composer
-/vendor/
+# Eclipse
+/.buildpath
+/.project
+/.settings
 
 # Grunt
 /node_modules/
@@ -15,6 +14,3 @@
 
 # PHPUnit
 /phpunit.xml
-
-# WordPress content
-/wp-content/
