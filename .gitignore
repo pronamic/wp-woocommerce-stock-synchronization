@@ -1,2 +1,20 @@
+# Build
+/build/
+
+# Composer
+/vendor/
+
 # Grunt
-node_modules
+/node_modules/
+
+# Deploy
+/deploy/
+
+# WordPress SVN
+/wp-svn/
+
+# PHPUnit
+/phpunit.xml
+
+# WordPress content
+/wp-content/
