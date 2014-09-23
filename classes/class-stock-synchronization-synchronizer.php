@@ -94,7 +94,7 @@ class Stock_Synchronization_Synchronizer {
 
 		$body = wp_remote_retrieve_body( $result );
 
-		if ( ! is_wp_error( $result ) && strpos( $body, self::$synchronization_success_message ) !== false ) {
+		if ( ! is_wp_error( $result ) && false !== strpos( $body, self::$synchronization_success_message ) ) {
 			return true;
 		} else {
 			return $result;
@@ -142,7 +142,7 @@ class Stock_Synchronization_Synchronizer {
 
 				$body = wp_remote_retrieve_body( $result );
 
-				if ( ! is_wp_error( $result ) && strpos( $body, self::$synchronization_success_message ) !== false ) {
+				if ( ! is_wp_error( $result ) && false !== strpos( $body, self::$synchronization_success_message ) ) {
 					$success++;
 				}
 			}
@@ -211,7 +211,7 @@ class Stock_Synchronization_Synchronizer {
 
 				$body = wp_remote_retrieve_body( $result );
 
-				if ( strpos( $body, self::$synchronization_success_message ) !== false ) {
+				if ( false !== strpos( $body, self::$synchronization_success_message ) ) {
 					$success++;
 				}
 			}
@@ -280,9 +280,9 @@ class Stock_Synchronization_Synchronizer {
 		// Loop through query results, increase or decrease stock according to given stock quantities
 		foreach ( $products as $query ) {
 			if ( version_compare( WOOCOMMERCE_VERSION, '2.0.0', '<' ) ) {
-				if ( $query->post_type == 'product' ) {
+				if ( 'product' == $query->post_type ) {
 					$product = new WC_Product( $query->ID );
-				} else if ( $query->post_type == 'product_variation' ) {
+				} else if ( 'product_variation' == $query->post_type ) {
 					$product = new WC_Product_Variation( $query->ID );
 				}
 			} else {

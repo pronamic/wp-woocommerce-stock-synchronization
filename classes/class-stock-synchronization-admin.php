@@ -181,9 +181,9 @@ class Stock_Synchronization_Admin {
 		$post_id = filter_input( INPUT_POST, 'post_id', FILTER_VALIDATE_INT );
 
 		if ( version_compare( WOOCOMMERCE_VERSION, '2.0.0', '<' ) ) {
-			if ( $post_type == 'product' ) {
+			if ( 'product' == $post_type ) {
 				$product = new WC_Product( $post_id );
-			} else if ( $post_type == 'product_variation' ) {
+			} else if ( 'product_variation' == $post_type ) {
 				$product = new WC_Product_Variation( $post_id );
 			}
 		} else {
