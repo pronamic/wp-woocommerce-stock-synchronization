@@ -4,11 +4,11 @@
 if ( filter_has_var( INPUT_POST, 'stock-synchronization-synchroniza-all-nonce' ) &&
 	wp_verify_nonce( filter_input( INPUT_POST, 'stock-synchronization-synchroniza-all-nonce', FILTER_SANITIZE_STRING ), 'stock-synchronization-synchronize-all' ) ) {
 
-	Stock_Synchronization_Synchronizer::synchronize_all_stock();
+	// Stock_Synchronization_Synchronizer::synchronize_all_stock();
 }
 
 // Get log
-$log = Stock_Synchronization_Synchronizer::get_log();
+$log = get_option( 'wc_stock_sync_log', array() );
 
 ?>
 <div class="wrap">
@@ -54,5 +54,6 @@ $log = Stock_Synchronization_Synchronizer::get_log();
 			<?php _e( 'No entries found.', 'woocommerce_stock_sync' ); ?>
 
 		<?php endif; ?>
+
 	</p>
 </div>

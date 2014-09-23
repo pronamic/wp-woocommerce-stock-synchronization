@@ -4,7 +4,7 @@
  * Class Stock_Synchronization_Synchronizer contains functions to notify
  * and be notified by other websites that it's synced with.
  */
-class Stock_Synchronization_Synchronizer {
+class Pronamic_WP_WC_StockSyncSynchronizer {
 	/**
 	 * Reduce stock action name
 	 *
@@ -33,23 +33,30 @@ class Stock_Synchronization_Synchronizer {
 	 */
 	private static $synchronization_success_message = '!synchronization_success!';
 
+	//////////////////////////////////////////////////
+
 	/**
 	 * Bootstraps the synchronizer
 	 */
-	public static function bootstrap() {
-		add_action( 'init', array( __CLASS__, 'debug_response' ) );
-		add_action( 'init',	array( __CLASS__, 'maybe_synchronize' ) );
+	public function __construct( $plugin ) {
+		$this->plugin = $plugin;
 
-		add_action( 'woocommerce_reduce_order_stock',	array( __CLASS__, 'reduce_order_stock' ) );
-		add_action( 'woocommerce_restore_order_stock',	array( __CLASS__, 'restore_order_stock' ) );
+		// Actions
+		add_action( 'init', array( $this, 'debug_response' ) );
+		add_action( 'init',	array( $this, 'maybe_synchronize' ) );
+
+		add_action( 'woocommerce_reduce_order_stock',	array( $this, 'reduce_order_stock' ) );
+		add_action( 'woocommerce_restore_order_stock',	array( $this, 'restore_order_stock' ) );
 	}
+
+	//////////////////////////////////////////////////
 
 	/**
 	 * Called on 'woocommerce_reduce_order_stock'
 	 *
 	 * @param WC_Order $order
 	 */
-	public static function reduce_order_stock( $order ) {
+	public function reduce_order_stock( $order ) {
 		$success = self::synchronize_order( $order, self::$reduce_stock_action_name );
 
 		self::log_message( sprintf( __( 'Reduced order stock -[<a href="%s">%d</a>]- %d out of %d sites responded with success.', 'woocommerce_stock_sync' ),
@@ -65,7 +72,7 @@ class Stock_Synchronization_Synchronizer {
 	 *
 	 * @param WC_Order $order
 	 */
-	public static function restore_order_stock( $order ) {
+	public function restore_order_stock( $order ) {
 		$success = self::synchronize_order( $order, self::$restore_stock_action_name );
 
 		self::log_message( sprintf( __( 'Restored order stock -[<a href="%s">%d</a>]- out of %d sites responded with success.', 'woocommerce_stock_sync' ),
@@ -76,7 +83,7 @@ class Stock_Synchronization_Synchronizer {
 		) );
 	}
 
-	public static function synchronize_product( $product, $site ) {
+	public function synchronize_product( $product, $site ) {
 		$skus = array();
 		// Get the quantity
 		$skus[ $product->get_sku() ] = $product->get_stock_quantity();
@@ -108,7 +115,7 @@ class Stock_Synchronization_Synchronizer {
 	 * @param string $action
 	 * @return int $succes sites confirmed succesful synchronization
 	 */
-	private static function synchronize_order( $order, $action ) {
+	private function synchronize_order( $order, $action ) {
 		$success = 0;
 
 		// Build products array: sku => quantity
@@ -159,7 +166,7 @@ class Stock_Synchronization_Synchronizer {
 	 * The data send consists of the source website, a password, an action
 	 * command and a list of SKUs with their stock quantities (SKU => stock quantitty)
 	 */
-	public static function synchronize_all_stock() {
+	public function synchronize_all_stock() {
 		$success = 0;
 		$skus    = array();
 
@@ -228,7 +235,7 @@ class Stock_Synchronization_Synchronizer {
 	/**
 	 * Receives all synchronization requests and handles them if source and password are correct.
 	 */
-	public static function maybe_synchronize() {
+	public function maybe_synchronize() {
 		if ( ! filter_has_var( INPUT_POST, 'woocommerce_stock_sync' ) ) {
 			return;
 		}
@@ -384,19 +391,7 @@ class Stock_Synchronization_Synchronizer {
 		// Get all sites connected
 		$response['sites'] = Stock_Synchronization::$synced_sites;
 
-		// The log
-		$response['log'] = self::get_log();
-
 		wp_send_json( $response );
-	}
-
-	/**
-	 * Get message log
-	 *
-	 * @return mixed
-	 */
-	public static function get_log(){
-		return get_option( Stock_Synchronization::$log_option_name, array() );
 	}
 
 	/**
@@ -404,8 +399,8 @@ class Stock_Synchronization_Synchronizer {
 	 *
 	 * @param string $message
 	 */
-	public static function log_message( $message ) {
-		$log = self::get_log();
+	public function log_message( $message ) {
+		$log = get_option( 'wc_stock_sync_log', array() );
 
 		$message = date( 'd-m-o H:i:s' ) . ' - ' . $message;
 
@@ -415,9 +410,6 @@ class Stock_Synchronization_Synchronizer {
 		$log = array_slice( $log, 0, Stock_Synchronization::$max_log_length );
 
 		// Write to log
-		update_option(
-			Stock_Synchronization::$log_option_name,
-			$log
-		);
+		update_option( 'wc_stock_sync_log', $log );
 	}
 }
