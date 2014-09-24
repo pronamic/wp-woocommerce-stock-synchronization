@@ -15,9 +15,9 @@ if ( ! is_array( $urls ) ) {
 	<thead>
 		<tr>
 			<th scope="col"><?php _e( 'URL', 'woocommerce_stock_sync' ); ?></th>
-			<th scope="col"><?php _e( 'Error', 'woocommerce_stock_sync' ); ?></th>
-			<th scope="col"><?php _e( 'Version', 'woocommerce_stock_sync' ); ?></th>
 			<th scope="col"><?php _e( 'Status', 'woocommerce_stock_sync' ); ?></th>
+			<th scope="col"><?php _e( 'Version', 'woocommerce_stock_sync' ); ?></th>
+			<th scope="col"><?php _e( 'Error', 'woocommerce_stock_sync' ); ?></th>
 		</tr>
 	</thead>
 
@@ -72,20 +72,6 @@ if ( ! is_array( $urls ) ) {
 					<td>
 						<?php
 
-						if ( is_wp_error( $result ) ) {
-							echo esc_html( $result->get_error_message() );
-						} else {
-							echo '&mdash;';
-						}
-
-						?>
-					</td>
-					<td>
-						<?php echo esc_html( $version ); ?>
-					</td>
-					<td>
-						<?php
-
 						$dashicon = 'no';
 						if ( 200 == $response_code ) {
 							$dashicon = 'yes';
@@ -93,6 +79,20 @@ if ( ! is_array( $urls ) ) {
 
 						?>
 						<div class="dashicons dashicons-<?php echo esc_attr( $dashicon ); ?>"></div>
+					</td>
+					<td>
+						<?php echo esc_html( $version ); ?>
+					</td>
+					<td>
+						<?php
+
+						if ( is_wp_error( $result ) ) {
+							echo esc_html( $result->get_error_message() );
+						} else {
+							echo '&mdash;';
+						}
+
+						?>
 					</td>
 				</tr>
 
