@@ -52,7 +52,6 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 		// Check if the product variable is indeed an WooCommerce product object
 		// @see https://github.com/woothemes/woocommerce/blob/v2.2.3/includes/abstracts/abstract-wc-product.php#L13
 		if ( $product instanceof WC_Product ) {
-
 			// Check if the stock is managed so we are sure it should be synchronized
 			// @see https://github.com/woothemes/woocommerce/blob/v2.2.3/includes/abstracts/abstract-wc-product.php#L484-L491
 			if ( $product->managing_stock() ) {
@@ -165,13 +164,13 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 			$data  = file_get_contents( 'php://input' );
 			$stock = json_decode( $data, true );
 
-			$object = new stdClass();
-			$object->version = $this->plugin->get_version();
-			$object->result  = false;
+			$response = new stdClass();
+			$response->version = $this->plugin->get_version();
+			$response->result  = false;
 
 			if ( is_array( $stock ) ) {
-				$object->result = true;
-				$object->stock  = $stock;
+				$response->result = true;
+				$response->stock  = $stock;
 
 				$skus = array_keys( $stock );
 
@@ -208,7 +207,7 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 
 			// Send JSON
 			// @see https://github.com/WordPress/WordPress/blob/4.0/wp-includes/functions.php#L2614-L2629
-			wp_send_json( $object );
+			wp_send_json( $response );
 		}
 	}
 
