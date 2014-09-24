@@ -14,6 +14,45 @@ from HappyWP:
 *	WordPress version 3.8 or greater
 
 
+## How does the plugin work?
+
+The plugin will do HTTP POST requests to the websites you want to syncrhonize.
+
+```
+http://www.example.com/?wc_stock_sync=1&source=http://www.example.org/&password=secret
+```
+
+### Parameters
+
+#### wc_stock_sync
+
+Type: `boolean`  
+Default: `1`
+
+#### wc_stock_sync
+
+Type: `source`  
+Default: `siteurl( '/' )`
+
+#### wc_stock_sync
+
+Type: `password`
+
+
+### Post Data
+
+Type: `JSON`  
+Example:
+
+```json
+{
+	"SKU1": 1,
+	"SKU2": 2,
+	"SKU3": 4
+}
+```
+
+
 ## Documentation and Usage Instructions
 
 [http://www.happywp.com/manuals/woocommerce-stock-synchronization/](http://www.happywp.com/manuals/woocommerce-stock-synchronization/)
