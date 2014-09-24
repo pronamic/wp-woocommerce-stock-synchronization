@@ -7,10 +7,20 @@ Please show support for this plugin if you plan on using it, by buying it
 from HappyWP: 
 [http://www.happywp.com/plugins/woocommerce-stock-synchronization/](www.happywp.com/plugins/woocommerce-stock-synchronization/)
 
+
+## Requirements
+
+*	WooCommerce version 2.1.12 or greater
+*	WordPress version 3.8 or greater
+
+
 ## Documentation and Usage Instructions
+
 [http://www.happywp.com/manuals/woocommerce-stock-synchronization/](http://www.happywp.com/manuals/woocommerce-stock-synchronization/)
 
+
 ## Credits
+
 [Pronamic](http://www.pronamic.nl/) [@pronamic](http://twitter.com/pronamic)
 
 [Remco Tolsma](http://www.remcotolsma.nl/) [@remcotolsma](http://twitter.com/remcotolsma)

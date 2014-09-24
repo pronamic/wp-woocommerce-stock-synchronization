@@ -5,5 +5,8 @@
 	<rule ref="WordPress">
 		<exclude name="WordPress.VIP.DirectDatabaseQuery" />
 		<exclude name="WordPress.VIP.PostsPerPage.posts_per_page" />
+		<exclude name="WordPress.VIP.RestrictedFunctions.file_get_contents" />
+		<exclude name="WordPress.VIP.SlowDBQuery.slow_db_query" />
+		<exclude name="WordPress.WhiteSpace.ScopeIndent.Incorrect" />
 	</rule>
 </ruleset>
