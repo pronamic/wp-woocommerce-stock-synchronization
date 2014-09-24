@@ -13,8 +13,6 @@ class Pronamic_WP_WC_StockSyncAdmin {
 		// Actions
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-
-		add_action( 'add_meta_boxes', array( $this, 'meta_boxes' ) );
 	}
 
 	//////////////////////////////////////////////////
@@ -23,7 +21,7 @@ class Pronamic_WP_WC_StockSyncAdmin {
 	 * Initializes admin
 	 */
 	public function admin_init() {
-		// Settings - Pages
+		// Settings
 		add_settings_section(
 			'woocommerce_stock_sync_general',
 			__( 'General', 'woocommerce_stock_sync' ),
@@ -33,7 +31,7 @@ class Pronamic_WP_WC_StockSyncAdmin {
 
 		add_settings_field(
 			'woocommerce_stock_sync_urls',
-			__( 'URLs', 'pronamic_companies' ),
+			__( 'URLs', 'woocommerce_stock_sync' ),
 			array( $this, 'input_urls' ),
 			'woocommerce_stock_sync',
 			'woocommerce_stock_sync_general',
@@ -52,10 +50,67 @@ class Pronamic_WP_WC_StockSyncAdmin {
 		register_setting( 'woocommerce_stock_sync', 'woocommerce_stock_sync_urls', array( $this, 'sanitize_urls' ) );
 		register_setting( 'woocommerce_stock_sync', 'woocommerce_stock_sync_password' );
 
-		// Empty log
-		if ( filter_has_var( INPUT_POST, 'pronamic_wc_stock_sync_empty_log' ) ) {
-			update_option( 'wc_stock_sync_log', array() );
+		// Action - Push Stock
+		if ( filter_has_var( INPUT_POST, 'woocommerce_stock_sync_push' ) && check_admin_referer( 'woocommerce_stock_sync_push', 'woocommerce_stock_sync_nonce' ) ) {
+			$stock = $this->get_stock();
+
+			$this->plugin->synchronizer->synchronize_stock( $stock );
+
+			wp_safe_redirect( add_query_arg( 'synced', true ) );
+
+			exit;
 		}
+
+		// Action - Empty Log
+		if ( filter_has_var( INPUT_POST, 'woocommerce_stock_sync_empty_log' ) && check_admin_referer( 'woocommerce_stock_sync_empty_log', 'woocommerce_stock_sync_nonce' ) ) {
+			update_option( 'wc_stock_sync_log', array() );
+
+			wp_safe_redirect( add_query_arg( 'deleted', true ) );
+
+			exit;
+		}
+	}
+
+	//////////////////////////////////////////////////
+
+	/**
+	 * Get the stock of all products
+	 *
+	 * @return array
+	 */
+	private function get_stock() {
+		global $wpdb;
+
+		// Result
+		$stock = array();
+
+		// Query
+		$query = "
+			SELECT
+				meta_sku.meta_value AS sku,
+				meta_qty.meta_value AS qty
+			FROM
+				$wpdb->posts AS post
+					INNER JOIN
+				$wpdb->postmeta AS meta_sku
+						ON post.ID = meta_sku.post_id AND meta_sku.meta_key = '_sku' AND meta_sku.meta_value != ''
+					INNER JOIN
+				$wpdb->postmeta AS meta_qty
+						ON post.ID = meta_qty.post_id AND meta_qty.meta_key = '_stock'
+			WHERE
+				post.post_type IN ( 'product', 'product_variation' )
+			;
+		";
+
+		$results = $wpdb->get_results( $query, ARRAY_A );
+
+		// Loop
+		foreach ( $results as $result ) {
+			$stock[ $result->sku ] = $result->qty;
+		}
+
+		// Return
+		return $stock;
 	}
 
 	//////////////////////////////////////////////////
@@ -71,7 +126,7 @@ class Pronamic_WP_WC_StockSyncAdmin {
 			esc_attr( $args['label_for'] ),
 			esc_attr( $args['label_for'] ),
 			esc_attr( get_option( $args['label_for'] ) ),
-			'regular-text code'
+			'regular-text'
 		);
 	}
 
@@ -93,7 +148,7 @@ class Pronamic_WP_WC_StockSyncAdmin {
 				esc_attr( $name ),
 				esc_attr( $name . $i ),
 				esc_attr( $url ),
-				'regular-text code'
+				'regular-text'
 			);
 
 			echo '<br />';
@@ -106,7 +161,7 @@ class Pronamic_WP_WC_StockSyncAdmin {
 			esc_attr( $name ),
 			esc_attr( $name . $i++ ),
 			esc_attr( '' ),
-			'regular-text code'
+			'regular-text'
 		);
 	}
 
@@ -122,7 +177,7 @@ class Pronamic_WP_WC_StockSyncAdmin {
 			__( 'Stock Synchronization', 'woocommerce_stock_sync' ), // menu_title
 			'manage_options', // capability
 			'woocommerce_stock_sync', // menu_slug
-			array( $this, 'settings_page' ) // function
+			array( $this, 'admin_page' ) // function
 		);
 	}
 
@@ -131,8 +186,8 @@ class Pronamic_WP_WC_StockSyncAdmin {
 	/**
 	 * Settings page
 	 */
-	public function settings_page() {
-		include $this->plugin->dir . 'admin/settings.php';
+	public function admin_page() {
+		include $this->plugin->dir . 'admin/page.php';
 	}
 
 	//////////////////////////////////////////////////
@@ -154,13 +209,5 @@ class Pronamic_WP_WC_StockSyncAdmin {
 		}
 
 		return $urls;
-	}
-
-	//////////////////////////////////////////////////
-	// Meta boxes
-	//////////////////////////////////////////////////
-
-	public function meta_boxes() {
-
 	}
 }
