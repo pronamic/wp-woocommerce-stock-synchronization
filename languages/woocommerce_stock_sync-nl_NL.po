@@ -1,121 +1,227 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Pronamic Google Maps\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-14 09:29+0100\n"
-"PO-Revision-Date: 2013-06-14 09:29+0100\n"
-"Last-Translator: \n"
+"Project-Id-Version: WooCommerce Stock Synchronization\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/stock-"
+"synchronization\n"
+"POT-Creation-Date: 2014-09-24 11:52:58+00:00\n"
+"PO-Revision-Date: 2014-09-24 13:53+0100\n"
+"Last-Translator: Remco Tolsma <info@remcotolsma.nl>\n"
 "Language-Team: Pronamic <info@pronamic.nl>\n"
 "Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: __;_e\n"
-"X-Poedit-Basepath: ../\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 1.5.5\n"
-"X-Poedit-SearchPath-0: .\n"
+"X-Generator: Poedit 1.6.9\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 
-#: admin/settings.php:29 admin/settings.php:39
-msgid "Synchronize all"
-msgstr "Synchroniseer alles"
+#: admin/page.php:4
+msgid "Settings"
+msgstr "Instellingen"
 
-#: admin/settings.php:36
-msgid ""
-"This will push the stock if all the WooCommerce products on this website to "
-"the URL's specified."
-msgstr ""
-"Dit zal de voorraad van alle WooCommerce producten op deze website doorgeven "
-"aan de gespecificeerde URL's."
+#: admin/page.php:5
+msgid "Websites"
+msgstr "Websites"
 
-#: admin/settings.php:43
-msgid "Activity log"
-msgstr "Activiteiten log"
+#: admin/page.php:6 admin/tab-stock.php:49
+msgid "Stock"
+msgstr "Voorraad"
 
-#: admin/settings.php:57
-msgid "No entries found."
-msgstr "Geen items gevonden."
+#: admin/page.php:7
+msgid "Log"
+msgstr "Log"
 
-#: classes/class-stock-synchronization-admin.php:28
+#: admin/tab-log.php:1 admin/tab-stock.php:1 admin/tab-websites.php:1
+msgid "Overview"
+msgstr "Overzicht"
+
+#: admin/tab-log.php:15
+msgid "Log deleted."
+msgstr "Log verwijderd."
+
+#: admin/tab-log.php:23
+msgid "Time"
+msgstr "Tijd"
+
+#: admin/tab-log.php:24
+msgid "Message"
+msgstr "Bericht"
+
+#: admin/tab-log.php:34
+msgid "No logs found."
+msgstr "Geen logs gevonden."
+
+#: admin/tab-log.php:49
+msgid "%s ago"
+msgstr "%s geleden"
+
+#: admin/tab-log.php:79
+msgid "Empty Log"
+msgstr "Log leegmaken"
+
+#: admin/tab-stock.php:10
+msgid "Stock synchronized."
+msgstr "Voorraad gesynchroniseerd."
+
+#: admin/tab-stock.php:46
+msgid "ID"
+msgstr "ID"
+
+#: admin/tab-stock.php:47
+msgid "Title"
+msgstr "Titel"
+
+#: admin/tab-stock.php:48
+msgid "SKU"
+msgstr "SKU"
+
+#: admin/tab-stock.php:59
+msgid "No stock found."
+msgstr "Geen voorraad gevonden."
+
+#: admin/tab-stock.php:94
+msgid "Push Stock"
+msgstr "Push voorraad"
+
+#: admin/tab-websites.php:17
+msgid "URL"
+msgstr "URL"
+
+#: admin/tab-websites.php:18
+msgid "Error"
+msgstr "Fout"
+
+#: admin/tab-websites.php:19
+msgid "Version"
+msgstr "Versie"
+
+#: admin/tab-websites.php:20
+msgid "Status"
+msgstr "Status"
+
+#: admin/tab-websites.php:30
+msgid "No websites found."
+msgstr "Geen websites gevonden."
+
+#: classes/class-admin.php:27
 msgid "General"
 msgstr "Algemeen"
 
-#: classes/class-stock-synchronization-admin.php:35
+#: classes/class-admin.php:34
 msgid "URLs"
 msgstr "URL's"
 
-#: classes/class-stock-synchronization-admin.php:44
+#: classes/class-admin.php:43
 msgid "Password"
 msgstr "Wachtwoord"
 
-#: classes/class-stock-synchronization-admin.php:111
+#. Plugin Name of the plugin/theme
 msgid "WooCommerce Stock Synchronization"
 msgstr "WooCommerce voorraad synchronisatie"
 
-#: classes/class-stock-synchronization-admin.php:112
-#: classes/class-stock-synchronization-admin.php:158
+#: classes/class-admin.php:177
 msgid "Stock Synchronization"
 msgstr "Voorraad synchronisatie"
 
-#: classes/class-stock-synchronization-admin.php:150
-msgid "Synchronization was successful!"
-msgstr "Synchronisatie was succesvol!"
+#: classes/class-synchronizer.php:108
+msgid "Succeeded - Synchronization to: %s (response code: %s)"
+msgstr "Gelukt - Synchronisatie naar: %s (antwoordcode: %s)"
 
-#: classes/class-stock-synchronization-admin.php:171
-msgid "Synchronize"
-msgstr "Synchroniseren"
+#: classes/class-synchronizer.php:123
+msgid "Failed - Synchronization to: %s (response code: %s, error: %s)"
+msgstr "Mislukt - Synchronisatie naar: %s (antwoordcode: %s, fout: %s)"
 
-#: classes/class-stock-synchronization-synchronizer.php:55
-#, fuzzy, php-format
+#: classes/class-synchronizer.php:158
+msgid "Received synchronization request from %s"
+msgstr "Synchronisatie verzoek ontvangen van %s"
+
+#. Plugin URI of the plugin/theme
+msgid "http://www.happywp.com/plugins/woocommerce-stock-synchronization/"
+msgstr "http://www.happywp.com/plugins/woocommerce-stock-synchronization/"
+
+#. Description of the plugin/theme
 msgid ""
-"Reduced order stock -[<a href=\"%s\">%d</a>]- %d out of %d sites responded "
-"with success."
+"Synchronizes stock with sites that are connected to one another, using "
+"WooCommerce Stock Synchronization."
 msgstr ""
-"Bestelling voorraad verminderd - %d van de %d websites reageerde met succes."
+"Synchroniseer voorraad met websites die met elkaar verbonden zijn met "
+"WooCommerce voorraad synchronisatie."
 
-#: classes/class-stock-synchronization-synchronizer.php:71
-#, fuzzy, php-format
-msgid ""
-"Restored order stock -[<a href=\"%s\">%d</a>]- out of %d sites responded "
-"with success."
-msgstr ""
-"Bestelling voorraad hersteld -  %d out of %d sites responded with success."
+#. Author of the plugin/theme
+msgid "Pronamic"
+msgstr "Pronamic"
 
-#: classes/class-stock-synchronization-synchronizer.php:215
-#, php-format
-msgid "Synchronized all stock - %d out of %d sites responded with success."
-msgstr ""
-"Synchroniseer alle voorraad - %d van de %d websites reageerde met succes."
+#. Author URI of the plugin/theme
+msgid "http://www.pronamic.eu/"
+msgstr "http://www.pronamic.nl/"
 
-#: classes/class-stock-synchronization-synchronizer.php:296
-msgid "unknown"
-msgstr "onbekend"
+#~ msgid "Response Code"
+#~ msgstr "Antwoordcode"
 
-#: classes/class-stock-synchronization-synchronizer.php:300
-msgid "reduce"
-msgstr "verminder"
+#~ msgid "From"
+#~ msgstr "Van"
 
-#: classes/class-stock-synchronization-synchronizer.php:306
-msgid "restore"
-msgstr "herstel"
+#~ msgid "Date"
+#~ msgstr "Datum"
 
-#: classes/class-stock-synchronization-synchronizer.php:312
-msgid "synchronization"
-msgstr "synchronisatie"
+#~ msgid "To"
+#~ msgstr "Aan"
 
-#: classes/class-stock-synchronization-synchronizer.php:328
-#, php-format
-msgid "Stock %s request by %s granted."
-msgstr "Voorraad %s verzoek door %s toegestaan."
+#~ msgid "Synchronized all stock - %d out of %d sites responded with success."
+#~ msgstr ""
+#~ "Synchroniseer alle voorraad - %d van de %d websites reageerde met succes."
+
+#~ msgid "Synchronize all"
+#~ msgstr "Synchroniseer alles"
+
+#~ msgid ""
+#~ "This will push the stock if all the WooCommerce products on this website "
+#~ "to the URL's specified."
+#~ msgstr ""
+#~ "Dit zal de voorraad van alle WooCommerce producten op deze website "
+#~ "doorgeven aan de gespecificeerde URL's."
+
+#~ msgid "Activity log"
+#~ msgstr "Activiteiten log"
+
+#~ msgid "Synchronization was successful!"
+#~ msgstr "Synchronisatie was succesvol!"
+
+#~ msgid ""
+#~ "Reduced order stock -[<a href=\"%s\">%d</a>]- %d out of %d sites "
+#~ "responded with success."
+#~ msgstr ""
+#~ "Bestelling voorraad verminderd -[<a href=\"%s\">%d</a>]- %d van de %d "
+#~ "websites reageerde met succes."
+
+#~ msgid ""
+#~ "Restored order stock -[<a href=\"%s\">%d</a>]- out of %d sites responded "
+#~ "with success."
+#~ msgstr ""
+#~ "Bestelling voorraad hersteld -[<a href=\"%s\">%d</a>]- van de %d websites "
+#~ "antwoorden met succes."
+
+#~ msgid "unknown"
+#~ msgstr "onbekend"
+
+#~ msgid "reduce"
+#~ msgstr "verminder"
+
+#~ msgid "restore"
+#~ msgstr "herstel"
+
+#~ msgid "Stock %s request by %s granted."
+#~ msgstr "Voorraad %s verzoek door %s toegestaan."
+
+#~ msgid "Synchronize"
+#~ msgstr "Synchroniseren"
 
 #~ msgid "Google Maps"
 #~ msgstr "Google Maps"
 
 #~ msgid "Geocoder"
 #~ msgstr "Geocoder"
-
-#~ msgid "Settings"
-#~ msgstr "Instellingen"
 
 #~ msgid "Use this widget to add an Google Maps as a widget."
 #~ msgstr "Gebruik deze widget om Google Maps toe te voegen."
@@ -131,9 +237,6 @@ msgstr "Voorraad %s verzoek door %s toegestaan."
 
 #~ msgid "Show Google Maps"
 #~ msgstr "Google Maps weergeven"
-
-#~ msgid "Title"
-#~ msgstr "Titel"
 
 #~ msgid "Description"
 #~ msgstr "Beschrijving"
@@ -171,12 +274,6 @@ msgstr "Voorraad %s verzoek door %s toegestaan."
 #~ msgid "Number posts to geocode: %s"
 #~ msgstr "Aantel berichten te geocoderen: %s"
 
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#~ msgid "Status"
-#~ msgstr "Status"
-
 #~ msgid "Geocode"
 #~ msgstr "Geocodeer"
 
@@ -212,9 +309,6 @@ msgstr "Voorraad %s verzoek door %s toegestaan."
 
 #~ msgid "Height"
 #~ msgstr "Hoogte"
-
-#~ msgid "Dynamic"
-#~ msgstr "Dynamisch"
 
 #~ msgid "Static"
 #~ msgstr "Statisch"

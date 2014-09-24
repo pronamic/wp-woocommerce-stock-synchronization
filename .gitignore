@@ -1,0 +1,16 @@
+# Eclipse
+/.buildpath
+/.project
+/.settings
+
+# Grunt
+/node_modules/
+
+# Deploy
+/deploy/
+
+# WordPress SVN
+/wp-svn/
+
+# PHPUnit
+/phpunit.xml
