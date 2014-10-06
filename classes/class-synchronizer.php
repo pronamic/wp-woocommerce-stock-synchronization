@@ -73,21 +73,37 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 	//////////////////////////////////////////////////
 
 	/**
+	 * Get synchronize URL, make sure we encode the parameters.
+	 *
+	 * https://core.trac.wordpress.org/browser/tags/4.0/src/wp-includes/functions.php#L720
+	 * https://core.trac.wordpress.org/browser/tags/4.0/src/wp-includes/functions.php#L654
+	 *
+	 * @param string $uri
+	 * @return string
+	 */
+	public function get_sync_url( $url ) {
+		$url = add_query_arg( urlencode_deep( array(
+			'wc_stock_sync' => true,
+			'source'        => site_url( '/' ),
+			'password'      => get_option( 'woocommerce_stock_sync_password' ),
+		) ), $url );
+
+		return $url;
+	}
+
+	//////////////////////////////////////////////////
+
+	/**
 	 * Synchronize the stock
 	 *
 	 * @param array $map
 	 */
 	public function synchronize_stock( $stock ) {
 		$urls     = get_option( 'woocommerce_stock_sync_urls', array() );
-		$password = get_option( 'woocommerce_stock_sync_password' );
 
 		if ( is_array( $urls ) ) {
 			foreach ( $urls as $url ) {
-				$request_url = add_query_arg( array(
-					'wc_stock_sync' => true,
-					'source'        => site_url( '/' ),
-					'password'      => $password,
-				), $url );
+				$request_url = $this->plugin->synchronizer->get_sync_url( $url );
 
 				$result = wp_remote_post( $request_url, array(
 					'body' => json_encode( $stock ),
