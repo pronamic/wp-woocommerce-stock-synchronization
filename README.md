@@ -29,12 +29,12 @@ http://www.example.com/?wc_stock_sync=1&source=http://www.example.org/&password=
 Type: `boolean`  
 Default: `1`
 
-#### wc_stock_sync
+#### source
 
 Type: `source`  
 Default: `siteurl( '/' )`
 
-#### wc_stock_sync
+#### password
 
 Type: `password`
 

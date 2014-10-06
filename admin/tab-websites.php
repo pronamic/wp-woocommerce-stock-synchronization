@@ -40,11 +40,7 @@ if ( ! is_array( $urls ) ) {
 				<tr class="<?php echo esc_attr( $alternate ); ?>">
 					<?php
 
-					$request_url = add_query_arg( array(
-						'wc_stock_sync' => true,
-						'source'        => site_url( '/' ),
-						'password'      => $password,
-					), $url );
+					$request_url = $this->plugin->synchronizer->get_sync_url( $url );
 
 					$result = wp_remote_post( $request_url, array(
 						'body' => json_encode( $stock ),

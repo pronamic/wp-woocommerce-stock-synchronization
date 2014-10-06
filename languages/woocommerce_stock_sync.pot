@@ -2,10 +2,10 @@
 # This file is distributed under the GPLv2.
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce Stock Synchronization 2.0.0\n"
+"Project-Id-Version: WooCommerce Stock Synchronization 2.0.1\n"
 "Report-Msgid-Bugs-To: "
 "http://wordpress.org/support/plugin/stock-synchronization\n"
-"POT-Creation-Date: 2014-09-24 11:52:58+00:00\n"
+"POT-Creation-Date: 2014-10-06 07:35:14+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -87,7 +87,7 @@ msgid "URL"
 msgstr ""
 
 #: admin/tab-websites.php:18
-msgid "Error"
+msgid "Status"
 msgstr ""
 
 #: admin/tab-websites.php:19
@@ -95,7 +95,7 @@ msgid "Version"
 msgstr ""
 
 #: admin/tab-websites.php:20
-msgid "Status"
+msgid "Error"
 msgstr ""
 
 #: admin/tab-websites.php:30
@@ -122,15 +122,15 @@ msgstr ""
 msgid "Stock Synchronization"
 msgstr ""
 
-#: classes/class-synchronizer.php:108
+#: classes/class-synchronizer.php:123
 msgid "Succeeded - Synchronization to: %s (response code: %s)"
 msgstr ""
 
-#: classes/class-synchronizer.php:123
+#: classes/class-synchronizer.php:138
 msgid "Failed - Synchronization to: %s (response code: %s, error: %s)"
 msgstr ""
 
-#: classes/class-synchronizer.php:158
+#: classes/class-synchronizer.php:173
 msgid "Received synchronization request from %s"
 msgstr ""
 
