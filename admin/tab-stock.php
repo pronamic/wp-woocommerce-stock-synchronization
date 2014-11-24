@@ -36,7 +36,7 @@ $query = "
 	;
 ";
 
-$products = $wpdb->get_results( $query, OBJECT );
+$products = $wpdb->get_results( $query );
 
 ?>
 
