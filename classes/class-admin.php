@@ -102,7 +102,7 @@ class Pronamic_WP_WC_StockSyncAdmin {
 			;
 		";
 
-		$results = $wpdb->get_results( $query, ARRAY_A );
+		$results = $wpdb->get_results( $query );
 
 		// Loop
 		foreach ( $results as $result ) {
