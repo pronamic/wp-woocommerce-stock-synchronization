@@ -84,7 +84,7 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 	public function get_sync_url( $url ) {
 		$url = add_query_arg( urlencode_deep( array(
 			'wc_stock_sync' => true,
-			'source'        => site_url( '/' ),
+			'source'        => parse_url( site_url( '/' ), PHP_URL_HOST ),
 			'password'      => get_option( 'woocommerce_stock_sync_password' ),
 		) ), $url );
 

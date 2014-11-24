@@ -3,7 +3,7 @@ Contributors: pronamic, remcotolsma
 Tags: woocommerce, stock, sync, synchronization
 Requires at least: 3.0
 Tested up to: 4.0
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,6 +23,9 @@ Synchronizes stock with sites that are connected to one another, using WooCommer
 
 
 == Changelog ==
+
+= 2.0.2 =
+*	Tweak - No longer send full site URL, instead only sent the hostname of the site URL.
 
 = 2.0.1 =
 *	Fix - Make sure we URL encode some parameters in the synchronize URL's.
