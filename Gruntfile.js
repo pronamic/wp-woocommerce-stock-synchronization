@@ -54,14 +54,97 @@ module.exports = function( grunt ) {
 				}
 			}
 		},
+
+		// Clean
+		clean: {
+			deploy: {
+				src: [ 'deploy' ]
+			},
+		},
+
+		// Copy
+		copy: {
+			deploy: {
+				src: [
+					'**',
+					'!Gruntfile.js',
+					'!package.json',
+					'!phpcs.ruleset.xml',
+					'!README.md',
+					'!build/**',
+					'!node_modules/**'
+				],
+				dest: 'deploy',
+				expand: true
+			},
+		},
+
+		// Compress
+		compress: {
+			deploy: {
+				options: {
+					archive: 'archives/<%= pkg.name %>.<%= pkg.version %>.zip'
+				},
+				expand: true,
+				cwd: 'deploy/',
+				src: ['**/*'],
+				dest: '<%= pkg.name %>/'
+			}
+		},
+
+		// S3
+		aws_s3: {
+			download_production: {
+				options: {
+					bucket: 'downloads.pronamic.eu',
+					differential: true
+				},
+				files: [
+					{
+						expand: true,
+						cwd: 'archives/',
+						dest: 'plugins/<%= pkg.name %>/'
+					}
+				]
+			}
+		},
+
+		// S3
+		s3: {
+			options: {
+				bucket: 'downloads.pronamic.eu',
+				region: 'eu-central-1'
+			},
+			deploy: {
+				upload: [
+					{
+						src: 'archives/<%= pkg.name %>.<%= pkg.version %>.zip',
+						dest: 'plugins/<%= pkg.name %>/<%= pkg.name %>.<%= pkg.version %>.zip'
+					}
+				]
+			}
+		}
 	} );
 
+	grunt.loadNpmTasks( 'grunt-contrib-clean' );
+	grunt.loadNpmTasks( 'grunt-contrib-copy' );
+	grunt.loadNpmTasks( 'grunt-contrib-compress' );
 	grunt.loadNpmTasks( 'grunt-phplint' );
 	grunt.loadNpmTasks( 'grunt-phpcs' );
 	grunt.loadNpmTasks( 'grunt-checkwpversion' );
 	grunt.loadNpmTasks( 'grunt-wp-i18n' );
+	grunt.loadNpmTasks( 'grunt-aws-s3' );
+	grunt.loadNpmTasks( 'grunt-s3' );
 
 	// Default task(s).
 	grunt.registerTask( 'default', [ 'phplint', 'phpcs', 'checkwpversion' ] );
 	grunt.registerTask( 'pot', [ 'makepot' ] );
+
+	grunt.registerTask( 'deploy', [
+		'default',
+		'clean:deploy',
+		'copy:deploy',
+		'compress:deploy',
+		's3:deploy'
+	] );
 };

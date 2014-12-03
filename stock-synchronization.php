@@ -4,7 +4,7 @@ Plugin Name: WooCommerce Stock Synchronization
 Plugin URI: http://www.happywp.com/plugins/woocommerce-stock-synchronization/
 Description: Synchronizes stock with sites that are connected to one another, using WooCommerce Stock Synchronization.
 
-Version: 2.0.3
+Version: 2.0.4
 Requires at least: 3.0
 
 Author: Pronamic
