@@ -104,15 +104,15 @@ module.exports = function( grunt ) {
 					differential: true
 				},
 				files: [
-      				{
-      					expand: true,
-      					cwd: 'archives/',
-      					src: '<%= pkg.name %>.<%= pkg.version %>.zip',
-      					dest: 'plugins/<%= pkg.name %>/'
-      				}
-    			]
-  			}
- 		}
+					{
+						expand: true,
+						cwd: 'archives/',
+						src: '<%= pkg.name %>.<%= pkg.version %>.zip',
+						dest: 'plugins/<%= pkg.name %>/'
+					}
+				]
+			}
+		}
 	} );
 
 	grunt.loadNpmTasks( 'grunt-contrib-clean' );
