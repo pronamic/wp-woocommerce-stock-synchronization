@@ -71,6 +71,7 @@ module.exports = function( grunt ) {
 					'!package.json',
 					'!phpcs.ruleset.xml',
 					'!README.md',
+					'!archives/**',
 					'!build/**',
 					'!node_modules/**'
 				],
@@ -94,36 +95,24 @@ module.exports = function( grunt ) {
 
 		// S3
 		aws_s3: {
-			download_production: {
+			options: {
+				region: 'eu-central-1'
+			},
+			deploy: {
 				options: {
 					bucket: 'downloads.pronamic.eu',
 					differential: true
 				},
 				files: [
-					{
-						expand: true,
-						cwd: 'archives/',
-						dest: 'plugins/<%= pkg.name %>/'
-					}
-				]
-			}
-		},
-
-		// S3
-		s3: {
-			options: {
-				bucket: 'downloads.pronamic.eu',
-				region: 'eu-central-1'
-			},
-			deploy: {
-				upload: [
-					{
-						src: 'archives/<%= pkg.name %>.<%= pkg.version %>.zip',
-						dest: 'plugins/<%= pkg.name %>/<%= pkg.name %>.<%= pkg.version %>.zip'
-					}
-				]
-			}
-		}
+      				{
+      					expand: true,
+      					cwd: 'archives/',
+      					src: '<%= pkg.name %>.<%= pkg.version %>.zip',
+      					dest: 'plugins/<%= pkg.name %>/'
+      				}
+    			]
+  			}
+ 		}
 	} );
 
 	grunt.loadNpmTasks( 'grunt-contrib-clean' );
@@ -145,6 +134,6 @@ module.exports = function( grunt ) {
 		'clean:deploy',
 		'copy:deploy',
 		'compress:deploy',
-		's3:deploy'
+		'aws_s3:deploy'
 	] );
 };
