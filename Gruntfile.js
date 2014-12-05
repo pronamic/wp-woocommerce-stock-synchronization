@@ -93,6 +93,19 @@ module.exports = function( grunt ) {
 			}
 		},
 
+		// Exec shell commands.
+		shell: {
+			options: {
+				stdout: true,
+				stderr: true
+			},
+			gitrelease: {
+				command: [
+					'git flow release start <%= pkg.version %>'
+				].join( '&&' )
+			}
+		},
+
 		// S3
 		aws_s3: {
 			options: {
@@ -124,6 +137,7 @@ module.exports = function( grunt ) {
 	grunt.loadNpmTasks( 'grunt-wp-i18n' );
 	grunt.loadNpmTasks( 'grunt-aws-s3' );
 	grunt.loadNpmTasks( 'grunt-s3' );
+	grunt.loadNpmTasks( 'grunt-shell' );
 
 	// Default task(s).
 	grunt.registerTask( 'default', [ 'phplint', 'phpcs', 'checkwpversion' ] );
