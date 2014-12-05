@@ -101,7 +101,8 @@ module.exports = function( grunt ) {
 			},
 			gitrelease: {
 				command: [
-					'git flow release start <%= pkg.version %>'
+					'git flow release start <%= pkg.version %>',
+					'git flow release finish <%= pkg.version %>'
 				].join( '&&' )
 			}
 		},
