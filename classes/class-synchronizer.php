@@ -163,7 +163,7 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 			$this->process_sync = ( $password == $password_input );
 		}
 
-		if ( $this->process_sync ) {
+		if ( isset( $this->process_sync ) ) {
 			// From
 			$source = filter_input( INPUT_GET, 'source', FILTER_SANITIZE_STRING );
 
