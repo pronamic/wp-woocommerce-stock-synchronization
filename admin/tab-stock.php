@@ -7,7 +7,7 @@
 if ( filter_has_var( INPUT_GET, 'synced' ) ) {
 	printf(
 		'<div id="message" class="updated"><p>%s</p></div>',
-		__( 'Stock synchronized.', 'woocommerce_stock_sync' )
+		esc_html( __( 'Stock synchronized.', 'woocommerce_stock_sync' ) )
 	);
 }
 

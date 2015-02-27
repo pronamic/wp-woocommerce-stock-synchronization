@@ -31,7 +31,7 @@ if ( empty( $tabs ) ) {
 			'<a class="nav-tab %s" href="%s">%s</a>',
 			esc_attr( implode( ' ', $classes ) ),
 			esc_attr( $url ),
-			$title
+			esc_html( $title )
 		);
 	}
 

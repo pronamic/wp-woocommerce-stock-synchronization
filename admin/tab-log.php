@@ -12,7 +12,7 @@ if ( ! is_array( $log ) ) {
 if ( filter_has_var( INPUT_GET, 'deleted' ) ) {
 	printf(
 		'<div id="message" class="updated"><p>%s</p></div>',
-		__( 'Log deleted.', 'woocommerce_stock_sync' )
+		esc_html( __( 'Log deleted.', 'woocommerce_stock_sync' ) )
 	);
 }
 
