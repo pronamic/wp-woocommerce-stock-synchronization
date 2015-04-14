@@ -155,6 +155,8 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 	public function maybe_synchronize() {
 		global $post;
 
+		$this->process_sync = false;
+
 		if ( filter_has_var( INPUT_GET, 'wc_stock_sync' ) ) {
 			$password = get_option( 'woocommerce_stock_sync_password' );
 
@@ -163,7 +165,7 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 			$this->process_sync = ( $password == $password_input );
 		}
 
-		if ( isset( $this->process_sync ) ) {
+		if ( $this->process_sync ) {
 			// From
 			$source = filter_input( INPUT_GET, 'source', FILTER_SANITIZE_STRING );
 
