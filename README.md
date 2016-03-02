@@ -5,7 +5,7 @@ stock values of the same products across multiple WooCommerce websites.
 
 Please show support for this plugin if you plan on using it, by buying it 
 from HappyWP: 
-[http://www.happywp.com/plugins/woocommerce-stock-synchronization/](www.happywp.com/plugins/woocommerce-stock-synchronization/)
+[http://www.happywp.com/plugins/woocommerce-stock-synchronization/](http://www.happywp.com/plugins/woocommerce-stock-synchronization/)
 
 
 ## Requirements
