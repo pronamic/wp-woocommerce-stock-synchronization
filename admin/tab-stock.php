@@ -62,6 +62,8 @@ $products = $wpdb->get_results( $query );
 
 		<?php else : ?>
 
+			<?php $alternate = ''; ?>
+
 			<?php foreach ( $products as $product ) : ?>
 
 				<?php $alternate = 'alternate' == $alternate ? '' : 'alternate'; ?>

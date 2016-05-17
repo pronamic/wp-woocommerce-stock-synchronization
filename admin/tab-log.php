@@ -37,6 +37,8 @@ if ( filter_has_var( INPUT_GET, 'deleted' ) ) {
 
 		<?php else : ?>
 
+			<?php $alternate = ''; ?>
+
 			<?php foreach ( $log as $item ) : ?>
 
 				<?php $alternate = 'alternate' == $alternate ? '' : 'alternate'; ?>

@@ -33,6 +33,8 @@ if ( ! is_array( $urls ) ) {
 
 		<?php else : ?>
 
+			<?php $alternate = ''; ?>
+
 			<?php foreach ( $urls as $url ) : ?>
 
 				<?php $alternate = 'alternate' == $alternate ? '' : 'alternate'; ?>
@@ -42,9 +44,7 @@ if ( ! is_array( $urls ) ) {
 
 					$request_url = $this->plugin->synchronizer->get_sync_url( $url );
 
-					$result = wp_remote_post( $request_url, array(
-						'body' => json_encode( $stock ),
-					) );
+					$result = wp_remote_post( $request_url );
 
 					// @see https://github.com/WordPress/WordPress/blob/4.0/wp-includes/http.php#L241-L256https://github.com/WordPress/WordPress/blob/4.0/wp-includes/http.php#L241-L256
 					$response_code = wp_remote_retrieve_response_code( $result );
