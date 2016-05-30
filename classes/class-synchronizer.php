@@ -193,9 +193,10 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 				$skus = array_keys( $stock );
 
 				$query = new WP_Query( array(
-					'post_type'  => array( 'product', 'product_variation' ),
-					'nopaging'   => true,
-					'meta_query' => array(
+					'post_type'        => array( 'product', 'product_variation' ),
+					'nopaging'         => true,
+					'suppress_filters' => defined( 'ICL_LANGUAGE_CODE' ),
+					'meta_query'       => array(
 						array(
 							'key'     => '_sku',
 							'value'   => $skus,
