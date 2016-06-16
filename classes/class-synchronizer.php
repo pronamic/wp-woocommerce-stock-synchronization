@@ -106,7 +106,8 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 				$request_url = $this->plugin->synchronizer->get_sync_url( $url );
 
 				$result = wp_remote_post( $request_url, array(
-					'body' => json_encode( $stock ),
+					'body'    => json_encode( $stock ),
+					'timeout' => 45,
 				) );
 
 				// @see https://github.com/WordPress/WordPress/blob/4.0/wp-includes/http.php#L241-L256https://github.com/WordPress/WordPress/blob/4.0/wp-includes/http.php#L241-L256
