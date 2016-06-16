@@ -116,33 +116,31 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 
 				$data = json_decode( $body );
 
+				$log       = new stdClass();
+				$log->time = time();
+
 				if ( ( 200 == $response_code ) && $data ) {
-					$log = new stdClass();
-					$log->time    = time();
 					$log->message = sprintf(
 						__( 'Succeeded - Synchronization to: %s (response code: %s)', 'woocommerce_stock_sync' ),
 						sprintf( '<code>%s</code>', $url ),
 						sprintf( '<code>%s</code>', $response_code )
 					);
-
-					$this->plugin->log( $log );
 				} else {
 					$error = '';
+
 					if ( is_wp_error( $result ) ) {
 						$error = $result->get_error_message();
 					}
 
-					$log = new stdClass();
-					$log->time    = time();
 					$log->message = sprintf(
 						__( 'Failed - Synchronization to: %s (response code: %s, error: %s)', 'woocommerce_stock_sync' ),
 						sprintf( '<code>%s</code>', $url ),
 						sprintf( '<code>%s</code>', $response_code ),
 						sprintf( '<code>%s</code>', $error )
 					);
-
-					$this->plugin->log( $log );
 				}
+
+				$this->plugin->log( $log );
 			}
 		}
 	}
