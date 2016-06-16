@@ -3,9 +3,9 @@ msgstr ""
 "Project-Id-Version: WooCommerce Stock Synchronization\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/stock-"
 "synchronization\n"
-"POT-Creation-Date: 2014-11-24 10:22:46+00:00\n"
-"PO-Revision-Date: 2014-11-24 11:23+0100\n"
-"Last-Translator: Remco Tolsma <info@remcotolsma.nl>\n"
+"POT-Creation-Date: 2016-06-16 09:42:31+00:00\n"
+"PO-Revision-Date: 2016-06-16 11:44+0100\n"
+"Last-Translator: Reüel van der Steege <reuel@pronamic.nl>\n"
 "Language-Team: Pronamic <info@pronamic.nl>\n"
 "Language: nl_NL\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 1.7.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin/page.php:4
@@ -52,11 +52,11 @@ msgstr "Bericht"
 msgid "No logs found."
 msgstr "Geen logs gevonden."
 
-#: admin/tab-log.php:49
+#: admin/tab-log.php:51
 msgid "%s ago"
 msgstr "%s geleden"
 
-#: admin/tab-log.php:79
+#: admin/tab-log.php:81
 msgid "Empty Log"
 msgstr "Log leegmaken"
 
@@ -80,7 +80,15 @@ msgstr "SKU"
 msgid "No stock found."
 msgstr "Geen voorraad gevonden."
 
-#: admin/tab-stock.php:94
+#: admin/tab-stock.php:95
+msgid ""
+"The number of displayed products is limited to 100. Stock quantites for all "
+"products will be synchronized during synchronization."
+msgstr ""
+"Het aantal getoond producten is gelimiteerd tot 100. Tijdens het "
+"synchroniseren zal de voorraad voor alle producten gesynchroniseerd worden."
+
+#: admin/tab-stock.php:102
 msgid "Push Stock"
 msgstr "Push voorraad"
 
@@ -124,15 +132,15 @@ msgstr "WooCommerce voorraad synchronisatie"
 msgid "Stock Synchronization"
 msgstr "Voorraad synchronisatie"
 
-#: classes/class-synchronizer.php:123
+#: classes/class-synchronizer.php:125
 msgid "Succeeded - Synchronization to: %s (response code: %s)"
 msgstr "Gelukt - Synchronisatie naar: %s (antwoordcode: %s)"
 
-#: classes/class-synchronizer.php:138
+#: classes/class-synchronizer.php:137
 msgid "Failed - Synchronization to: %s (response code: %s, error: %s)"
 msgstr "Mislukt - Synchronisatie naar: %s (antwoordcode: %s, fout: %s)"
 
-#: classes/class-synchronizer.php:173
+#: classes/class-synchronizer.php:174
 msgid "Received synchronization request from %s"
 msgstr "Synchronisatie verzoek ontvangen van %s"
 

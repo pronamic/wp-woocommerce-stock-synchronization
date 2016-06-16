@@ -90,6 +90,12 @@ $products = $wpdb->get_results( $query );
 	</tbody>
 </table>
 
+<?php if ( count( $products ) > 100 ) : ?>
+
+	<p class="description"><?php esc_html_e( 'The number of displayed products is limited to 100. Stock quantites for all products will be synchronized during synchronization.', 'woocommerce_stock_sync' ); ?></p>
+
+<?php endif; ?>
+
 <form method="post" action="">
 	<?php wp_nonce_field( 'woocommerce_stock_sync_push', 'woocommerce_stock_sync_nonce' ); ?>
 
