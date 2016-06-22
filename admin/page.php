@@ -21,7 +21,7 @@ if ( empty( $tabs ) ) {
 
 	foreach ( $tabs as $tab => $title ) {
 		$classes = array( 'nav-tab' );
-		if ( $current_tab == $tab ) {
+		if ( $current_tab === $tab ) {
 			$classes[] = 'nav-tab-active';
 		}
 
@@ -31,7 +31,7 @@ if ( empty( $tabs ) ) {
 			'<a class="nav-tab %s" href="%s">%s</a>',
 			esc_attr( implode( ' ', $classes ) ),
 			esc_attr( $url ),
-			$title
+			esc_html( $title )
 		);
 	}
 

@@ -12,6 +12,13 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 	 */
 	private $queue_stock;
 
+	/**
+	 * Flag to process synchronization.
+	 *
+	 * @var boolean
+	 */
+	private $process_sync;
+
 	//////////////////////////////////////////////////
 
 	/**
@@ -20,11 +27,10 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 	public function __construct( $plugin ) {
 		$this->plugin = $plugin;
 
-		$this->queue_stock = array();
+		$this->queue_stock  = array();
+		$this->process_sync = false;
 
 		// Actions
-		// add_action( 'init', array( $this, 'debug_response' ) );
-		// add_action( 'init',	array( $this, 'maybe_synchronize' ) );
 		add_action( 'init',	array( $this, 'maybe_synchronize' ) );
 
 		// Synchronize actions
@@ -75,8 +81,8 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 	/**
 	 * Get synchronize URL, make sure we encode the parameters.
 	 *
-	 * https://core.trac.wordpress.org/browser/tags/4.0/src/wp-includes/functions.php#L720
-	 * https://core.trac.wordpress.org/browser/tags/4.0/src/wp-includes/functions.php#L654
+	 * @see https://core.trac.wordpress.org/browser/tags/4.0/src/wp-includes/functions.php#L720
+	 * @see https://core.trac.wordpress.org/browser/tags/4.0/src/wp-includes/functions.php#L654
 	 *
 	 * @param string $uri
 	 * @return string
@@ -106,7 +112,8 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 				$request_url = $this->plugin->synchronizer->get_sync_url( $url );
 
 				$result = wp_remote_post( $request_url, array(
-					'body' => json_encode( $stock ),
+					'body'    => json_encode( $stock ),
+					'timeout' => 45,
 				) );
 
 				// @see https://github.com/WordPress/WordPress/blob/4.0/wp-includes/http.php#L241-L256https://github.com/WordPress/WordPress/blob/4.0/wp-includes/http.php#L241-L256
@@ -116,33 +123,31 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 
 				$data = json_decode( $body );
 
-				if ( ( 200 == $response_code ) && $data ) {
-					$log = new stdClass();
-					$log->time    = time();
+				$log       = new stdClass();
+				$log->time = time();
+
+				if ( ( 200 == $response_code ) && $data ) { // WPCS: loose comparison ok.
 					$log->message = sprintf(
 						__( 'Succeeded - Synchronization to: %s (response code: %s)', 'woocommerce_stock_sync' ),
 						sprintf( '<code>%s</code>', $url ),
 						sprintf( '<code>%s</code>', $response_code )
 					);
-
-					$this->plugin->log( $log );
 				} else {
 					$error = '';
+
 					if ( is_wp_error( $result ) ) {
 						$error = $result->get_error_message();
 					}
 
-					$log = new stdClass();
-					$log->time    = time();
 					$log->message = sprintf(
 						__( 'Failed - Synchronization to: %s (response code: %s, error: %s)', 'woocommerce_stock_sync' ),
 						sprintf( '<code>%s</code>', $url ),
 						sprintf( '<code>%s</code>', $response_code ),
 						sprintf( '<code>%s</code>', $error )
 					);
-
-					$this->plugin->log( $log );
 				}
+
+				$this->plugin->log( $log );
 			}
 		}
 	}
@@ -160,7 +165,7 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 
 			$password_input = filter_input( INPUT_GET, 'password', FILTER_SANITIZE_STRING );
 
-			$this->process_sync = ( $password == $password_input );
+			$this->process_sync = ( $password === $password_input );
 		}
 
 		if ( $this->process_sync ) {
@@ -191,9 +196,10 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 				$skus = array_keys( $stock );
 
 				$query = new WP_Query( array(
-					'post_type'  => array( 'product', 'product_variation' ),
-					'nopaging'   => true,
-					'meta_query' => array(
+					'post_type'        => array( 'product', 'product_variation' ),
+					'nopaging'         => true,
+					'suppress_filters' => defined( 'ICL_LANGUAGE_CODE' ),
+					'meta_query'       => array(
 						array(
 							'key'     => '_sku',
 							'value'   => $skus,

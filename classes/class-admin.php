@@ -102,14 +102,13 @@ class Pronamic_WP_WC_StockSyncAdmin {
 			;
 		";
 
-		$results = $wpdb->get_results( $query );
+		$results = $wpdb->get_results( $query ); // WPCS: unprepared SQL ok.
 
 		// Loop
 		foreach ( $results as $result ) {
 			$stock[ $result->sku ] = $result->qty;
 		}
 
-		// Return
 		return $stock;
 	}
 

@@ -16,12 +16,18 @@ module.exports = function( grunt ) {
 		// PHP Code Sniffer
 		phpcs: {
 			application: {
-				dir: [ './' ],
+				src: [
+					'**/*.php',
+					'!bower_components/**',
+					'!deploy/**',
+					'!node_modules/**',
+					'!vendor/**',
+				]
 			},
 			options: {
+				bin: 'vendor/bin/phpcs',
 				standard: 'phpcs.ruleset.xml',
-				extensions: 'php',
-				ignore: 'wp-svn,deploy,node_modules'
+				showSniffCodes: true
 			}
 		},
 
@@ -50,7 +56,7 @@ module.exports = function( grunt ) {
 					cwd: '',
 					domainPath: 'languages',
 					type: 'wp-plugin',
-					exclude: [ 'deploy/.*', 'wp-svn/.*' ],
+					exclude: [ 'deploy/.*' ],
 				}
 			}
 		},
@@ -58,7 +64,7 @@ module.exports = function( grunt ) {
 		// Clean
 		clean: {
 			deploy: {
-				src: [ 'deploy' ]
+				src: [ 'deploy/latest' ]
 			},
 		},
 
@@ -71,11 +77,10 @@ module.exports = function( grunt ) {
 					'!package.json',
 					'!phpcs.ruleset.xml',
 					'!README.md',
-					'!archives/**',
-					'!build/**',
-					'!node_modules/**'
+					'!node_modules/**',
+					'!vendor/**'
 				],
-				dest: 'deploy',
+				dest: 'deploy/latest',
 				expand: true
 			},
 		},
@@ -84,26 +89,26 @@ module.exports = function( grunt ) {
 		compress: {
 			deploy: {
 				options: {
-					archive: 'archives/<%= pkg.name %>.<%= pkg.version %>.zip'
+					archive: 'deploy/archives/<%= pkg.name %>.<%= pkg.version %>.zip'
 				},
 				expand: true,
-				cwd: 'deploy/',
+				cwd: 'deploy/latest',
 				src: ['**/*'],
 				dest: '<%= pkg.name %>/'
 			}
 		},
 
-		// Exec shell commands.
-		shell: {
-			options: {
-				stdout: true,
-				stderr: true
+		// Git checkout
+		gitcheckout: {
+			tag: {
+				options: {
+					branch: 'tags/<%= pkg.version %>'
+				}
 			},
-			gitrelease: {
-				command: [
-					'git flow release start <%= pkg.version %>',
-					'git flow release finish <%= pkg.version %>'
-				].join( '&&' )
+			develop: {
+				options: {
+					branch: 'develop'
+				}
 			}
 		},
 
@@ -120,7 +125,7 @@ module.exports = function( grunt ) {
 				files: [
 					{
 						expand: true,
-						cwd: 'archives/',
+						cwd: 'deploy/archives/',
 						src: '<%= pkg.name %>.<%= pkg.version %>.zip',
 						dest: 'plugins/<%= pkg.name %>/'
 					}
@@ -137,8 +142,7 @@ module.exports = function( grunt ) {
 	grunt.loadNpmTasks( 'grunt-checkwpversion' );
 	grunt.loadNpmTasks( 'grunt-wp-i18n' );
 	grunt.loadNpmTasks( 'grunt-aws-s3' );
-	grunt.loadNpmTasks( 'grunt-s3' );
-	grunt.loadNpmTasks( 'grunt-shell' );
+	grunt.loadNpmTasks( 'grunt-git' );
 
 	// Default task(s).
 	grunt.registerTask( 'default', [ 'phplint', 'phpcs', 'checkwpversion' ] );
@@ -149,6 +153,14 @@ module.exports = function( grunt ) {
 		'clean:deploy',
 		'copy:deploy',
 		'compress:deploy',
-		'aws_s3:deploy'
+	] );
+
+	grunt.registerTask( 'release', [
+		'gitcheckout:tag',
+		'clean:deploy',
+		'copy:deploy',
+		'compress:deploy',
+		'aws_s3:deploy',
+		'gitcheckout:develop'
 	] );
 };

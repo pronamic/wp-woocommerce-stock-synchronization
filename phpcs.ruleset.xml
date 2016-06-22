@@ -1,13 +1,15 @@
 <?xml version="1.0"?>
-<ruleset name="WooCommerce Stock Synchronization">
-	<description>A custom set of rules to check for the WooCommerce Stock Synchronization WordPress plugin.</description>
 
+<ruleset name="WooCommerce Stock Synchronization">
 	<rule ref="WordPress">
-		<exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect" />
+		<exclude name="Squiz.Commenting" />
+
+		<exclude name="WordPress.PHP.DiscouragedFunctions.DiscouragedWithAlternative" />
 
 		<exclude name="WordPress.VIP.DirectDatabaseQuery" />
 		<exclude name="WordPress.VIP.PostsPerPage.posts_per_page" />
 		<exclude name="WordPress.VIP.RestrictedFunctions.file_get_contents" />
+		<exclude name="WordPress.VIP.RestrictedFunctions.parse_url" />
 		<exclude name="WordPress.VIP.SlowDBQuery.slow_db_query" />
 	</rule>
 </ruleset>

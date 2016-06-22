@@ -1,4 +1,4 @@
-<h3><?php _e( 'Overview', 'woocommerce_stock_sync' ); ?></h3>
+<h3><?php esc_html_e( 'Overview', 'woocommerce_stock_sync' ); ?></h3>
 
 <?php
 
@@ -7,7 +7,7 @@
 if ( filter_has_var( INPUT_GET, 'synced' ) ) {
 	printf(
 		'<div id="message" class="updated"><p>%s</p></div>',
-		__( 'Stock synchronized.', 'woocommerce_stock_sync' )
+		esc_html( __( 'Stock synchronized.', 'woocommerce_stock_sync' ) )
 	);
 }
 
@@ -36,17 +36,17 @@ $query = "
 	;
 ";
 
-$products = $wpdb->get_results( $query );
+$products = $wpdb->get_results( $query ); // WPCS: unprepared SQL ok.
 
 ?>
 
 <table class="wp-list-table widefat" cellspacing="0">
 	<thead>
 		<tr>
-			<th scope="col"><?php _e( 'ID', 'woocommerce_stock_sync' ); ?></th>
-			<th scope="col"><?php _e( 'Title', 'woocommerce_stock_sync' ); ?></th>
-			<th scope="col"><?php _e( 'SKU', 'woocommerce_stock_sync' ); ?></th>
-			<th scope="col"><?php _e( 'Stock', 'woocommerce_stock_sync' ); ?></th>
+			<th scope="col"><?php esc_html_e( 'ID', 'woocommerce_stock_sync' ); ?></th>
+			<th scope="col"><?php esc_html_e( 'Title', 'woocommerce_stock_sync' ); ?></th>
+			<th scope="col"><?php esc_html_e( 'SKU', 'woocommerce_stock_sync' ); ?></th>
+			<th scope="col"><?php esc_html_e( 'Stock', 'woocommerce_stock_sync' ); ?></th>
 		</tr>
 	</thead>
 
@@ -56,15 +56,17 @@ $products = $wpdb->get_results( $query );
 
 			<tr class="no-items">
 				<td colspan="4">
-					<?php _e( 'No stock found.', 'woocommerce_stock_sync' ); ?>
+					<?php esc_html_e( 'No stock found.', 'woocommerce_stock_sync' ); ?>
 				</td>
 			</tr>
 
 		<?php else : ?>
 
+			<?php $alternate = ''; ?>
+
 			<?php foreach ( $products as $product ) : ?>
 
-				<?php $alternate = 'alternate' == $alternate ? '' : 'alternate'; ?>
+				<?php $alternate = 'alternate' === $alternate ? '' : 'alternate'; ?>
 
 				<tr class="<?php echo esc_attr( $alternate ); ?>">
 					<td>
@@ -87,6 +89,12 @@ $products = $wpdb->get_results( $query );
 
 	</tbody>
 </table>
+
+<?php if ( count( $products ) > 100 ) : ?>
+
+	<p class="description"><?php esc_html_e( 'The number of displayed products is limited to 100. Stock quantites for all products will be synchronized during synchronization.', 'woocommerce_stock_sync' ); ?></p>
+
+<?php endif; ?>
 
 <form method="post" action="">
 	<?php wp_nonce_field( 'woocommerce_stock_sync_push', 'woocommerce_stock_sync_nonce' ); ?>

@@ -7,11 +7,9 @@
 /node_modules/
 
 # Deploy
-/archives/
 /deploy/
-
-# WordPress SVN
-/wp-svn/
 
 # PHPUnit
 /phpunit.xml
+
+/vendor/
