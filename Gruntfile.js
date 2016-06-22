@@ -135,7 +135,6 @@ module.exports = function( grunt ) {
 	grunt.loadNpmTasks( 'grunt-checkwpversion' );
 	grunt.loadNpmTasks( 'grunt-wp-i18n' );
 	grunt.loadNpmTasks( 'grunt-aws-s3' );
-	grunt.loadNpmTasks( 'grunt-s3' );
 	grunt.loadNpmTasks( 'grunt-git' );
 
 	// Default task(s).
