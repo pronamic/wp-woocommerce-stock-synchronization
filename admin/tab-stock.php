@@ -1,4 +1,4 @@
-<h3><?php _e( 'Overview', 'woocommerce_stock_sync' ); ?></h3>
+<h3><?php esc_html_e( 'Overview', 'woocommerce_stock_sync' ); ?></h3>
 
 <?php
 
@@ -36,17 +36,17 @@ $query = "
 	;
 ";
 
-$products = $wpdb->get_results( $query );
+$products = $wpdb->get_results( $query ); // WPCS: unprepared SQL ok.
 
 ?>
 
 <table class="wp-list-table widefat" cellspacing="0">
 	<thead>
 		<tr>
-			<th scope="col"><?php _e( 'ID', 'woocommerce_stock_sync' ); ?></th>
-			<th scope="col"><?php _e( 'Title', 'woocommerce_stock_sync' ); ?></th>
-			<th scope="col"><?php _e( 'SKU', 'woocommerce_stock_sync' ); ?></th>
-			<th scope="col"><?php _e( 'Stock', 'woocommerce_stock_sync' ); ?></th>
+			<th scope="col"><?php esc_html_e( 'ID', 'woocommerce_stock_sync' ); ?></th>
+			<th scope="col"><?php esc_html_e( 'Title', 'woocommerce_stock_sync' ); ?></th>
+			<th scope="col"><?php esc_html_e( 'SKU', 'woocommerce_stock_sync' ); ?></th>
+			<th scope="col"><?php esc_html_e( 'Stock', 'woocommerce_stock_sync' ); ?></th>
 		</tr>
 	</thead>
 
@@ -56,7 +56,7 @@ $products = $wpdb->get_results( $query );
 
 			<tr class="no-items">
 				<td colspan="4">
-					<?php _e( 'No stock found.', 'woocommerce_stock_sync' ); ?>
+					<?php esc_html_e( 'No stock found.', 'woocommerce_stock_sync' ); ?>
 				</td>
 			</tr>
 
@@ -66,7 +66,7 @@ $products = $wpdb->get_results( $query );
 
 			<?php foreach ( $products as $product ) : ?>
 
-				<?php $alternate = 'alternate' == $alternate ? '' : 'alternate'; ?>
+				<?php $alternate = 'alternate' === $alternate ? '' : 'alternate'; ?>
 
 				<tr class="<?php echo esc_attr( $alternate ); ?>">
 					<td>

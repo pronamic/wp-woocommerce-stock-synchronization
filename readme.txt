@@ -3,7 +3,7 @@ Contributors: pronamic, remcotolsma
 Tags: woocommerce, stock, sync, synchronization
 Requires at least: 3.0
 Tested up to: 4.0
-Stable tag: 2.0.4
+Stable tag: 2.1.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,6 +23,13 @@ Synchronizes stock with sites that are connected to one another, using WooCommer
 
 
 == Changelog ==
+
+= 2.1.0 =
+*	Fixed incorrect check for undefined property process_sync.
+*	Fixed PHP notices undefined variables 'alternate' and 'stock'.
+*	Added 'suppress_filters' for WPML compatability.
+*	Increased POST request timeout to 45 seconds.
+*	Added note that displayed number of products is limited to 100.
 
 = 2.0.3 =
 *	Fix - Fixed an issue with the sync all stock function.

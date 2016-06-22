@@ -12,6 +12,13 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 	 */
 	private $queue_stock;
 
+	/**
+	 * Flag to process synchronization.
+	 *
+	 * @var boolean
+	 */
+	private $process_sync;
+
 	//////////////////////////////////////////////////
 
 	/**
@@ -20,11 +27,10 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 	public function __construct( $plugin ) {
 		$this->plugin = $plugin;
 
-		$this->queue_stock = array();
+		$this->queue_stock  = array();
+		$this->process_sync = false;
 
 		// Actions
-		// add_action( 'init', array( $this, 'debug_response' ) );
-		// add_action( 'init',	array( $this, 'maybe_synchronize' ) );
 		add_action( 'init',	array( $this, 'maybe_synchronize' ) );
 
 		// Synchronize actions
@@ -75,8 +81,8 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 	/**
 	 * Get synchronize URL, make sure we encode the parameters.
 	 *
-	 * https://core.trac.wordpress.org/browser/tags/4.0/src/wp-includes/functions.php#L720
-	 * https://core.trac.wordpress.org/browser/tags/4.0/src/wp-includes/functions.php#L654
+	 * @see https://core.trac.wordpress.org/browser/tags/4.0/src/wp-includes/functions.php#L720
+	 * @see https://core.trac.wordpress.org/browser/tags/4.0/src/wp-includes/functions.php#L654
 	 *
 	 * @param string $uri
 	 * @return string
@@ -120,7 +126,7 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 				$log       = new stdClass();
 				$log->time = time();
 
-				if ( ( 200 == $response_code ) && $data ) {
+				if ( ( 200 == $response_code ) && $data ) { // WPCS: loose comparison ok.
 					$log->message = sprintf(
 						__( 'Succeeded - Synchronization to: %s (response code: %s)', 'woocommerce_stock_sync' ),
 						sprintf( '<code>%s</code>', $url ),
@@ -154,14 +160,12 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 	public function maybe_synchronize() {
 		global $post;
 
-		$this->process_sync = false;
-
 		if ( filter_has_var( INPUT_GET, 'wc_stock_sync' ) ) {
 			$password = get_option( 'woocommerce_stock_sync_password' );
 
 			$password_input = filter_input( INPUT_GET, 'password', FILTER_SANITIZE_STRING );
 
-			$this->process_sync = ( $password == $password_input );
+			$this->process_sync = ( $password === $password_input );
 		}
 
 		if ( $this->process_sync ) {

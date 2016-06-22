@@ -1,4 +1,4 @@
-<h3><?php _e( 'Overview', 'woocommerce_stock_sync' ); ?></h3>
+<h3><?php esc_html_e( 'Overview', 'woocommerce_stock_sync' ); ?></h3>
 
 <?php
 
@@ -14,10 +14,10 @@ if ( ! is_array( $urls ) ) {
 <table class="wp-list-table widefat" cellspacing="0">
 	<thead>
 		<tr>
-			<th scope="col"><?php _e( 'URL', 'woocommerce_stock_sync' ); ?></th>
-			<th scope="col"><?php _e( 'Status', 'woocommerce_stock_sync' ); ?></th>
-			<th scope="col"><?php _e( 'Version', 'woocommerce_stock_sync' ); ?></th>
-			<th scope="col"><?php _e( 'Error', 'woocommerce_stock_sync' ); ?></th>
+			<th scope="col"><?php esc_html_e( 'URL', 'woocommerce_stock_sync' ); ?></th>
+			<th scope="col"><?php esc_html_e( 'Status', 'woocommerce_stock_sync' ); ?></th>
+			<th scope="col"><?php esc_html_e( 'Version', 'woocommerce_stock_sync' ); ?></th>
+			<th scope="col"><?php esc_html_e( 'Error', 'woocommerce_stock_sync' ); ?></th>
 		</tr>
 	</thead>
 
@@ -27,7 +27,7 @@ if ( ! is_array( $urls ) ) {
 
 			<tr class="no-items">
 				<td colspan="4">
-					<?php _e( 'No websites found.', 'woocommerce_stock_sync' ); ?>
+					<?php esc_html_e( 'No websites found.', 'woocommerce_stock_sync' ); ?>
 				</td>
 			</tr>
 
@@ -37,7 +37,7 @@ if ( ! is_array( $urls ) ) {
 
 			<?php foreach ( $urls as $url ) : ?>
 
-				<?php $alternate = 'alternate' == $alternate ? '' : 'alternate'; ?>
+				<?php $alternate = 'alternate' === $alternate ? '' : 'alternate'; ?>
 
 				<tr class="<?php echo esc_attr( $alternate ); ?>">
 					<?php
@@ -69,7 +69,7 @@ if ( ! is_array( $urls ) ) {
 						<?php
 
 						$dashicon = 'no';
-						if ( 200 == $response_code ) {
+						if ( 200 == $response_code ) { // WPCS: loose comparison ok.
 							$dashicon = 'yes';
 						}
 

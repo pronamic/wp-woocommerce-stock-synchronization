@@ -1,14 +1,14 @@
 <?php
 /*
 Plugin Name: WooCommerce Stock Synchronization
-Plugin URI: http://www.happywp.com/plugins/woocommerce-stock-synchronization/
+Plugin URI: https://www.pronamic.eu/plugins/woocommerce-stock-synchronization/
 Description: Synchronizes stock with sites that are connected to one another, using WooCommerce Stock Synchronization.
 
-Version: 2.0.4
+Version: 2.1.0
 Requires at least: 3.0
 
 Author: Pronamic
-Author URI: http://www.pronamic.eu/
+Author URI: https://www.pronamic.eu/
 
 Text Domain: woocommerce_stock_sync
 Domain Path: /languages/

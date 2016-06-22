@@ -11,3 +11,5 @@
 
 # PHPUnit
 /phpunit.xml
+
+/vendor/

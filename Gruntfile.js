@@ -16,12 +16,18 @@ module.exports = function( grunt ) {
 		// PHP Code Sniffer
 		phpcs: {
 			application: {
-				dir: [ './' ],
+				src: [
+					'**/*.php',
+					'!bower_components/**',
+					'!deploy/**',
+					'!node_modules/**',
+					'!vendor/**',
+				]
 			},
 			options: {
+				bin: 'vendor/bin/phpcs',
 				standard: 'phpcs.ruleset.xml',
-				extensions: 'php',
-				ignore: 'deploy,node_modules'
+				showSniffCodes: true
 			}
 		},
 
@@ -71,7 +77,8 @@ module.exports = function( grunt ) {
 					'!package.json',
 					'!phpcs.ruleset.xml',
 					'!README.md',
-					'!node_modules/**'
+					'!node_modules/**',
+					'!vendor/**'
 				],
 				dest: 'deploy/latest',
 				expand: true

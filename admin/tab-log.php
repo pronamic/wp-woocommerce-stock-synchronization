@@ -1,4 +1,4 @@
-<h3><?php _e( 'Overview', 'woocommerce_stock_sync' ) ?></h3>
+<h3><?php esc_html_e( 'Overview', 'woocommerce_stock_sync' ) ?></h3>
 
 <?php
 
@@ -20,8 +20,8 @@ if ( filter_has_var( INPUT_GET, 'deleted' ) ) {
 <table class="wp-list-table widefat" cellspacing="0">
 	<thead>
 		<tr>
-			<th scope="col"><?php _e( 'Time', 'woocommerce_stock_sync' ); ?></th>
-			<th scope="col"><?php _e( 'Message', 'woocommerce_stock_sync' ); ?></th>
+			<th scope="col"><?php esc_html_e( 'Time', 'woocommerce_stock_sync' ); ?></th>
+			<th scope="col"><?php esc_html_e( 'Message', 'woocommerce_stock_sync' ); ?></th>
 		</tr>
 	</thead>
 
@@ -31,7 +31,7 @@ if ( filter_has_var( INPUT_GET, 'deleted' ) ) {
 
 			<tr class="no-items">
 				<td colspan="4">
-					<?php _e( 'No logs found.', 'woocommerce_stock_sync' ); ?>
+					<?php esc_html_e( 'No logs found.', 'woocommerce_stock_sync' ); ?>
 				</td>
 			</tr>
 
@@ -41,7 +41,7 @@ if ( filter_has_var( INPUT_GET, 'deleted' ) ) {
 
 			<?php foreach ( $log as $item ) : ?>
 
-				<?php $alternate = 'alternate' == $alternate ? '' : 'alternate'; ?>
+				<?php $alternate = 'alternate' === $alternate ? '' : 'alternate'; ?>
 
 				<tr class="<?php echo esc_attr( $alternate ); ?>">
 					<td>
@@ -50,7 +50,7 @@ if ( filter_has_var( INPUT_GET, 'deleted' ) ) {
 						if ( isset( $item->time ) ) {
 							echo esc_html( sprintf( __( '%s ago', 'woocommerce_stock_sync' ), human_time_diff( $item->time ) ) );
 						} else {
-							echo '&mdash;';
+							echo '—';
 						}
 
 						?>
