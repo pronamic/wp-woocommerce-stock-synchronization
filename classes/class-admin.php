@@ -11,8 +11,9 @@ class Pronamic_WP_WC_StockSyncAdmin {
 		$this->plugin = $plugin;
 
 		// Actions
-		add_action( 'admin_init', array( $this, 'admin_init' ) );
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+		add_action( 'admin_init', array( $this, 'admin_init' ) );
+		add_action( 'admin_init', array( $this, 'push_stock' ) );
 	}
 
 	//////////////////////////////////////////////////
@@ -50,17 +51,6 @@ class Pronamic_WP_WC_StockSyncAdmin {
 		register_setting( 'woocommerce_stock_sync', 'woocommerce_stock_sync_urls', array( $this, 'sanitize_urls' ) );
 		register_setting( 'woocommerce_stock_sync', 'woocommerce_stock_sync_password' );
 
-		// Action - Push Stock
-		if ( filter_has_var( INPUT_POST, 'woocommerce_stock_sync_push' ) && check_admin_referer( 'woocommerce_stock_sync_push', 'woocommerce_stock_sync_nonce' ) ) {
-			$stock = $this->get_stock();
-
-			$this->plugin->synchronizer->synchronize_stock( $stock );
-
-			wp_safe_redirect( add_query_arg( 'synced', true ) );
-
-			exit;
-		}
-
 		// Action - Empty Log
 		if ( filter_has_var( INPUT_POST, 'woocommerce_stock_sync_empty_log' ) && check_admin_referer( 'woocommerce_stock_sync_empty_log', 'woocommerce_stock_sync_nonce' ) ) {
 			update_option( 'wc_stock_sync_log', array() );
@@ -72,6 +62,66 @@ class Pronamic_WP_WC_StockSyncAdmin {
 	}
 
 	//////////////////////////////////////////////////
+
+	/**
+	 * Action - Push Stock
+	 **/
+	public function push_stock() {
+		if ( ! filter_has_var( INPUT_POST, 'woocommerce_stock_sync_push' ) && ! filter_has_var( INPUT_GET, 'push_stock' ) ) {
+			return;
+		}
+
+		if ( ! check_admin_referer( 'woocommerce_stock_sync_push', 'woocommerce_stock_sync_nonce' ) ) {
+			return;
+		}
+
+		if ( filter_has_var( INPUT_POST, 'woocommerce_stock_sync_push' ) ) {
+			$push_stock = $this->get_stock();
+
+			update_option( 'wc_stock_sync_push_stock', $push_stock );
+		}
+
+		$push_stock = get_option( 'wc_stock_sync_push_stock' );
+
+		if ( ! is_array( $push_stock ) ) {
+			return;
+		}
+
+		$stock = array_slice( $push_stock, 0, 15 );
+
+		$this->plugin->synchronizer->synchronize_stock( $stock );
+
+		$push_stock = array_splice( $push_stock, 15 );
+
+		update_option( 'wc_stock_sync_push_stock', $push_stock );
+
+		$stock_pushed = 0;
+
+		if ( filter_has_var( INPUT_GET, 'push_stock' ) ) {
+			$stock_pushed = filter_input( INPUT_GET, 'push_stock' );
+		}
+
+		$query_args = array(
+			'push_stock' => ( $stock_pushed + 15 ),
+			'synced' => null,
+		);
+
+		if ( 0 === count( $push_stock ) ) {
+			$query_args = array(
+				'push_stock' => null,
+				'synced' => true,
+			);
+
+			delete_option( 'wc_stock_sync_push_stock' );
+		}
+
+		$query_args['woocommerce_stock_sync_nonce'] = wp_create_nonce( 'woocommerce_stock_sync_push' );
+
+		printf( // xss ok
+			'<script type="text/javascript"> setTimeout( function() { window.location.href = "%s"; }, 1250 ); </script>',
+			add_query_arg( $query_args )
+		);
+	}
 
 	/**
 	 * Get the stock of all products
