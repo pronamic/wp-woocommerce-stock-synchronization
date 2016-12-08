@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce Stock Synchronization\n"
-"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/stock-"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stock-"
 "synchronization\n"
-"POT-Creation-Date: 2016-06-16 09:42:31+00:00\n"
-"PO-Revision-Date: 2016-06-16 11:44+0100\n"
-"Last-Translator: Reüel van der Steege <reuel@pronamic.nl>\n"
+"POT-Creation-Date: 2016-11-10 09:28:18+00:00\n"
+"PO-Revision-Date: 2016-12-08 10:19+0100\n"
+"Last-Translator: Remco Tolsma <info@remcotolsma.nl>\n"
 "Language-Team: Pronamic <info@pronamic.nl>\n"
 "Language: nl_NL\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr "Instellingen"
 msgid "Websites"
 msgstr "Websites"
 
-#: admin/page.php:6 admin/tab-stock.php:49
+#: admin/page.php:6 admin/tab-stock.php:64
 msgid "Stock"
 msgstr "Voorraad"
 
@@ -64,31 +64,39 @@ msgstr "Log leegmaken"
 msgid "Stock synchronized."
 msgstr "Voorraad gesynchroniseerd."
 
-#: admin/tab-stock.php:46
+#: admin/tab-stock.php:23
+msgid "Pushing stock, please wait."
+msgstr "Even geduld, bezig met synchroniseren."
+
+#: admin/tab-stock.php:25
+msgid "products synchronized."
+msgstr "producten gesynchroniseerd."
+
+#: admin/tab-stock.php:61
 msgid "ID"
 msgstr "ID"
 
-#: admin/tab-stock.php:47
+#: admin/tab-stock.php:62
 msgid "Title"
 msgstr "Titel"
 
-#: admin/tab-stock.php:48
+#: admin/tab-stock.php:63
 msgid "SKU"
 msgstr "SKU"
 
-#: admin/tab-stock.php:59
+#: admin/tab-stock.php:74
 msgid "No stock found."
 msgstr "Geen voorraad gevonden."
 
-#: admin/tab-stock.php:95
+#: admin/tab-stock.php:110
 msgid ""
 "The number of displayed products is limited to 100. Stock quantites for all "
 "products will be synchronized during synchronization."
 msgstr ""
-"Het aantal getoond producten is gelimiteerd tot 100. Tijdens het "
+"Het aantal getoonde producten is gelimiteerd tot 100. Tijdens het "
 "synchroniseren zal de voorraad voor alle producten gesynchroniseerd worden."
 
-#: admin/tab-stock.php:102
+#: admin/tab-stock.php:117
 msgid "Push Stock"
 msgstr "Push voorraad"
 
@@ -112,15 +120,15 @@ msgstr "Fout"
 msgid "No websites found."
 msgstr "Geen websites gevonden."
 
-#: classes/class-admin.php:27
+#: classes/class-admin.php:28
 msgid "General"
 msgstr "Algemeen"
 
-#: classes/class-admin.php:34
+#: classes/class-admin.php:35
 msgid "URLs"
 msgstr "URL's"
 
-#: classes/class-admin.php:43
+#: classes/class-admin.php:44
 msgid "Password"
 msgstr "Wachtwoord"
 
@@ -128,25 +136,25 @@ msgstr "Wachtwoord"
 msgid "WooCommerce Stock Synchronization"
 msgstr "WooCommerce voorraad synchronisatie"
 
-#: classes/class-admin.php:177
+#: classes/class-admin.php:226
 msgid "Stock Synchronization"
 msgstr "Voorraad synchronisatie"
 
-#: classes/class-synchronizer.php:125
+#: classes/class-synchronizer.php:131
 msgid "Succeeded - Synchronization to: %s (response code: %s)"
 msgstr "Gelukt - Synchronisatie naar: %s (antwoordcode: %s)"
 
-#: classes/class-synchronizer.php:137
+#: classes/class-synchronizer.php:143
 msgid "Failed - Synchronization to: %s (response code: %s, error: %s)"
 msgstr "Mislukt - Synchronisatie naar: %s (antwoordcode: %s, fout: %s)"
 
-#: classes/class-synchronizer.php:174
+#: classes/class-synchronizer.php:178
 msgid "Received synchronization request from %s"
 msgstr "Synchronisatie verzoek ontvangen van %s"
 
 #. Plugin URI of the plugin/theme
-msgid "http://www.happywp.com/plugins/woocommerce-stock-synchronization/"
-msgstr "http://www.happywp.com/plugins/woocommerce-stock-synchronization/"
+msgid "https://www.pronamic.eu/plugins/woocommerce-stock-synchronization/"
+msgstr "https://www.pronamic.eu/plugins/woocommerce-stock-synchronization/"
 
 #. Description of the plugin/theme
 msgid ""
@@ -161,8 +169,8 @@ msgid "Pronamic"
 msgstr "Pronamic"
 
 #. Author URI of the plugin/theme
-msgid "http://www.pronamic.eu/"
-msgstr "http://www.pronamic.nl/"
+msgid "https://www.pronamic.eu/"
+msgstr "https://www.pronamic.eu/"
 
 #~ msgid "Response Code"
 #~ msgstr "Antwoordcode"

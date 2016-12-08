@@ -4,10 +4,25 @@
 
 // Message
 
-if ( filter_has_var( INPUT_GET, 'synced' ) ) {
+if ( filter_has_var( INPUT_GET, 'synced' ) && ! filter_has_var( INPUT_POST, 'woocommerce_stock_sync_push' ) ) {
 	printf(
 		'<div id="message" class="updated"><p>%s</p></div>',
 		esc_html( __( 'Stock synchronized.', 'woocommerce_stock_sync' ) )
+	);
+}
+
+if ( ( filter_has_var( INPUT_POST, 'woocommerce_stock_sync_push' ) || filter_has_var( INPUT_GET, 'push_stock' ) ) && check_admin_referer( 'woocommerce_stock_sync_push', 'woocommerce_stock_sync_nonce' ) ) {
+	$stock_pushed = filter_input( INPUT_GET, 'push_stock', FILTER_SANITIZE_NUMBER_INT );
+
+	if ( ! $stock_pushed ) {
+		$stock_pushed = 0;
+	}
+
+	printf(
+		'<div id="message" class="notice notice-info"><p><strong>%s</strong> %s %s</p></div>',
+		esc_html( __( 'Pushing stock, please wait.', 'woocommerce_stock_sync' ) ),
+		esc_html( $stock_pushed ),
+		esc_html( __( 'products synchronized.', 'woocommerce_stock_sync' ) )
 	);
 }
 
