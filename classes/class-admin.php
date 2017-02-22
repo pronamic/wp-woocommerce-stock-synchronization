@@ -87,11 +87,11 @@ class Pronamic_WP_WC_StockSyncAdmin {
 			return;
 		}
 
-		$stock = array_slice( $push_stock, 0, 15 );
+		$stock = array_slice( $push_stock, 0, 15, true );
 
 		$this->plugin->synchronizer->synchronize_stock( $stock );
 
-		$push_stock = array_splice( $push_stock, 15 );
+		$push_stock = array_slice( $push_stock, 15, null, true );
 
 		update_option( 'wc_stock_sync_push_stock', $push_stock );
 
