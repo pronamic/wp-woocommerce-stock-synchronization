@@ -105,7 +105,29 @@ $products = $wpdb->get_results( $query ); // WPCS: unprepared SQL ok.
 	</tbody>
 </table>
 
-<?php if ( count( $products ) > 100 ) : ?>
+<?php
+
+$query = "
+	SELECT
+		COUNT( post.ID )
+	FROM
+		$wpdb->posts AS post
+			INNER JOIN
+		$wpdb->postmeta AS meta_sku
+				ON post.ID = meta_sku.post_id AND meta_sku.meta_key = '_sku' AND meta_sku.meta_value != ''
+			INNER JOIN
+		$wpdb->postmeta AS meta_qty
+				ON post.ID = meta_qty.post_id AND meta_qty.meta_key = '_stock'
+	WHERE
+		post.post_type IN ( 'product', 'product_variation' )
+	;
+";
+
+$count_products = $wpdb->get_var( $query );
+
+if ( $count_products > 100 ) :
+
+?>
 
 	<p class="description"><?php esc_html_e( 'The number of displayed products is limited to 100. Stock quantites for all products will be synchronized during synchronization.', 'woocommerce_stock_sync' ); ?></p>
 
