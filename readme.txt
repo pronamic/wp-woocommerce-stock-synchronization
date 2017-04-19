@@ -2,7 +2,7 @@
 Contributors: pronamic, remcotolsma
 Tags: woocommerce, stock, sync, synchronization
 Requires at least: 3.0
-Tested up to: 4.0
+Tested up to: 4.7.3
 Stable tag: 2.2.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -23,6 +23,10 @@ Synchronizes stock with sites that are connected to one another, using WooCommer
 
 
 == Changelog ==
+
+= unreleased =
+*	Test - Tested up to WordPress version 4.7.3.
+*	Test - Tested up to WooCommerce version 3.0.3.
 
 = 2.2.0 =
 *	Make `Push Stock` capable of syncing an unlimited number of products.
