@@ -199,6 +199,7 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 					'post_type'        => array( 'product', 'product_variation' ),
 					'nopaging'         => true,
 					'suppress_filters' => defined( 'ICL_LANGUAGE_CODE' ),
+					'lang'             => '', // query all Polylang languages (https://polylang.pro/doc/developpers-how-to/#all)
 					'meta_query'       => array(
 						array(
 							'key'     => '_sku',
