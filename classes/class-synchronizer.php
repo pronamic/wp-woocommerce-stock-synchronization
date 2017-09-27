@@ -105,11 +105,11 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 	 * @param array $map
 	 */
 	public function synchronize_stock( $stock ) {
-		$urls     = get_option( 'woocommerce_stock_sync_urls', array() );
+		$urls = get_option( 'woocommerce_stock_sync_urls', array() );
 
 		if ( is_array( $urls ) ) {
 			foreach ( $urls as $url ) {
-				$request_url = $this->plugin->synchronizer->get_sync_url( $url );
+				$request_url = $this->get_sync_url( $url );
 
 				$result = wp_remote_post( $request_url, array(
 					'body'    => json_encode( $stock ),
