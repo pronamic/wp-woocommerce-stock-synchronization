@@ -163,7 +163,7 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 		if ( filter_has_var( INPUT_GET, 'wc_stock_sync' ) ) {
 			$password = get_option( 'woocommerce_stock_sync_password' );
 
-			$password_input = filter_input( INPUT_GET, 'password', FILTER_SANITIZE_STRING );
+			$password_input = filter_input( INPUT_GET, 'password', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES );
 
 			$this->process_sync = ( $password === $password_input );
 		}
