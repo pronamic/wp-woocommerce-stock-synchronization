@@ -31,7 +31,7 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 		$this->process_sync = false;
 
 		// Actions
-		add_action( 'init',	array( $this, 'maybe_synchronize' ) );
+		add_action( 'init', array( $this, 'maybe_synchronize' ) );
 
 		// Synchronize actions
 
@@ -90,7 +90,7 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 	public function get_sync_url( $url ) {
 		$url = add_query_arg( urlencode_deep( array(
 			'wc_stock_sync' => true,
-			'source'        => parse_url( site_url( '/' ), PHP_URL_HOST ),
+			'source'        => wp_parse_url( site_url( '/' ), PHP_URL_HOST ),
 			'password'      => get_option( 'woocommerce_stock_sync_password' ),
 		) ), $url );
 
@@ -112,7 +112,7 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 				$request_url = $this->get_sync_url( $url );
 
 				$result = wp_remote_post( $request_url, array(
-					'body'    => json_encode( $stock ),
+					'body'    => wp_json_encode( $stock ),
 					'timeout' => 45,
 				) );
 

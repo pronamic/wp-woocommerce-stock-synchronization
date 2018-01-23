@@ -123,7 +123,7 @@ $query = "
 	;
 ";
 
-$count_products = $wpdb->get_var( $query );
+$count_products = $wpdb->get_var( $query ); // WPCS: unprepared SQL ok.
 
 if ( $count_products > 100 ) :
 

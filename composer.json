@@ -10,7 +10,7 @@
     "require": {},
     "require-dev": {
         "squizlabs/php_codesniffer": "^2.6",
-        "wp-coding-standards/wpcs": "0.9.0"
+        "wp-coding-standards/wpcs": "^0.14.0"
     },
     "scripts": {
         "post-autoload-dump": [

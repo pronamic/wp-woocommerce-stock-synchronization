@@ -38,6 +38,6 @@ if ( empty( $tabs ) ) {
 	printf( '</h2>' );
 }
 
-include 'tab-' . $current_tab . '.php';
+require 'tab-' . $current_tab . '.php';
 
 printf( '</div>' );
