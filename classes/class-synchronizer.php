@@ -67,6 +67,17 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 			return;
 		}
 
+		// WooCommerce Multilingual
+		if ( defined( 'ICL_LANGUAGE_CODE' ) && defined( 'WCML_VERSION' ) ) {
+			global $woocommerce_wpml;
+
+			if ( is_object( $woocommerce_wpml ) && isset( $woocommerce_wpml->products ) && method_exists( $woocommerce_wpml->products, 'is_original_product' ) ) {
+				if ( ! $woocommerce_wpml->products->is_original_product( $product->get_id() ) ) {
+					return;
+				}
+			}
+		}
+
 		// @see https://github.com/woothemes/woocommerce/blob/v2.2.3/includes/abstracts/abstract-wc-product.php#L123-L130
 		$sku = $product->get_sku();
 
