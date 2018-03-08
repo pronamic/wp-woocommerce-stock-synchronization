@@ -57,22 +57,26 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 	public function product_set_stock( $product ) {
 		// Check if the product variable is indeed an WooCommerce product object
 		// @see https://github.com/woothemes/woocommerce/blob/v2.2.3/includes/abstracts/abstract-wc-product.php#L13
-		if ( $product instanceof WC_Product ) {
-			// Check if the stock is managed so we are sure it should be synchronized
-			// @see https://github.com/woothemes/woocommerce/blob/v2.2.3/includes/abstracts/abstract-wc-product.php#L484-L491
-			if ( $product->managing_stock() ) {
-				// @see https://github.com/woothemes/woocommerce/blob/v2.2.3/includes/abstracts/abstract-wc-product.php#L123-L130
-				$sku = $product->get_sku();
+		if ( ! ( $product instanceof WC_Product ) ) {
+			return;
+		}
 
-				// Check if the SKU is not empty so we have an unique identifier
-				if ( ! empty( $sku ) ) {
-					// @see https://github.com/woothemes/woocommerce/blob/v2.2.3/includes/abstracts/abstract-wc-product.php#L132-L139
-					$qty = $product->get_stock_quantity();
+		// Check if the stock is managed so we are sure it should be synchronized
+		// @see https://github.com/woothemes/woocommerce/blob/v2.2.3/includes/abstracts/abstract-wc-product.php#L484-L491
+		if ( ! $product->managing_stock() ) {
+			return;
+		}
 
-					// Map
-					$this->queue_stock[ $sku ] = $qty;
-				}
-			}
+		// @see https://github.com/woothemes/woocommerce/blob/v2.2.3/includes/abstracts/abstract-wc-product.php#L123-L130
+		$sku = $product->get_sku();
+
+		// Check if the SKU is not empty so we have an unique identifier
+		if ( ! empty( $sku ) ) {
+			// @see https://github.com/woothemes/woocommerce/blob/v2.2.3/includes/abstracts/abstract-wc-product.php#L132-L139
+			$qty = $product->get_stock_quantity();
+
+			// Map
+			$this->queue_stock[ $sku ] = $qty;
 		}
 	}
 
@@ -107,48 +111,50 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 	public function synchronize_stock( $stock ) {
 		$urls = get_option( 'woocommerce_stock_sync_urls', array() );
 
-		if ( is_array( $urls ) ) {
-			foreach ( $urls as $url ) {
-				$request_url = $this->get_sync_url( $url );
+		if ( ! is_array( $urls ) ) {
+			return;
+		}
 
-				$result = wp_remote_post( $request_url, array(
-					'body'    => wp_json_encode( $stock ),
-					'timeout' => 45,
-				) );
+		foreach ( $urls as $url ) {
+			$request_url = $this->get_sync_url( $url );
 
-				// @see https://github.com/WordPress/WordPress/blob/4.0/wp-includes/http.php#L241-L256https://github.com/WordPress/WordPress/blob/4.0/wp-includes/http.php#L241-L256
-				$response_code = wp_remote_retrieve_response_code( $result );
+			$result = wp_remote_post( $request_url, array(
+				'body'    => wp_json_encode( $stock ),
+				'timeout' => 45,
+			) );
 
-				$body = wp_remote_retrieve_body( $result );
+			// @see https://github.com/WordPress/WordPress/blob/4.0/wp-includes/http.php#L241-L256https://github.com/WordPress/WordPress/blob/4.0/wp-includes/http.php#L241-L256
+			$response_code = wp_remote_retrieve_response_code( $result );
 
-				$data = json_decode( $body );
+			$body = wp_remote_retrieve_body( $result );
 
-				$log       = new stdClass();
-				$log->time = time();
+			$data = json_decode( $body );
 
-				if ( ( 200 == $response_code ) && $data ) { // WPCS: loose comparison ok.
-					$log->message = sprintf(
-						__( 'Succeeded - Synchronization to: %s (response code: %s)', 'woocommerce_stock_sync' ),
-						sprintf( '<code>%s</code>', $url ),
-						sprintf( '<code>%s</code>', $response_code )
-					);
-				} else {
-					$error = '';
+			$log       = new stdClass();
+			$log->time = time();
 
-					if ( is_wp_error( $result ) ) {
-						$error = $result->get_error_message();
-					}
+			if ( ( 200 == $response_code ) && $data ) { // WPCS: loose comparison ok.
+				$log->message = sprintf(
+					__( 'Succeeded - Synchronization to: %s (response code: %s)', 'woocommerce_stock_sync' ),
+					sprintf( '<code>%s</code>', $url ),
+					sprintf( '<code>%s</code>', $response_code )
+				);
+			} else {
+				$error = '';
 
-					$log->message = sprintf(
-						__( 'Failed - Synchronization to: %s (response code: %s, error: %s)', 'woocommerce_stock_sync' ),
-						sprintf( '<code>%s</code>', $url ),
-						sprintf( '<code>%s</code>', $response_code ),
-						sprintf( '<code>%s</code>', $error )
-					);
+				if ( is_wp_error( $result ) ) {
+					$error = $result->get_error_message();
 				}
 
-				$this->plugin->log( $log );
+				$log->message = sprintf(
+					__( 'Failed - Synchronization to: %s (response code: %s, error: %s)', 'woocommerce_stock_sync' ),
+					sprintf( '<code>%s</code>', $url ),
+					sprintf( '<code>%s</code>', $response_code ),
+					sprintf( '<code>%s</code>', $error )
+				);
 			}
+
+			$this->plugin->log( $log );
 		}
 	}
 
@@ -168,70 +174,84 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 			$this->process_sync = ( $password === $password_input );
 		}
 
-		if ( $this->process_sync ) {
-			// From
-			$source = filter_input( INPUT_GET, 'source', FILTER_SANITIZE_STRING );
+		if ( ! $this->process_sync ) {
+			return;
+		}
 
-			$log = new stdClass();
-			$log->time    = time();
-			$log->message = sprintf(
-				__( 'Received synchronization request from %s', 'woocommerce_stock_sync' ),
-				sprintf( '<code>%s</code>', $source )
-			);
+		// From
+		$source = filter_input( INPUT_GET, 'source', FILTER_SANITIZE_STRING );
 
-			$this->plugin->log( $log );
+		$log = new stdClass();
+		$log->time    = time();
+		$log->message = sprintf(
+			__( 'Received synchronization request from %s', 'woocommerce_stock_sync' ),
+			sprintf( '<code>%s</code>', $source )
+		);
 
-			// Stock
-			$data  = file_get_contents( 'php://input' );
-			$stock = json_decode( $data, true );
+		$this->plugin->log( $log );
 
-			$response = new stdClass();
-			$response->version = $this->plugin->get_version();
-			$response->result  = false;
+		// Stock
+		$data  = file_get_contents( 'php://input' );
+		$stock = json_decode( $data, true );
 
-			if ( is_array( $stock ) ) {
-				$response->result = true;
-				$response->stock  = $stock;
+		$response = new stdClass();
+		$response->version = $this->plugin->get_version();
+		$response->result  = false;
 
-				$skus = array_keys( $stock );
+		if ( ! is_array( $stock ) ) {
+			return;
+		}
 
-				$query = new WP_Query( array(
-					'post_type'        => array( 'product', 'product_variation' ),
-					'nopaging'         => true,
-					'suppress_filters' => defined( 'ICL_LANGUAGE_CODE' ),
-					'lang'             => '', // query all Polylang languages (https://polylang.pro/doc/developpers-how-to/#all)
-					'meta_query'       => array(
-						array(
-							'key'     => '_sku',
-							'value'   => $skus,
-							'compare' => 'IN',
-						),
-					),
-				) );
+		$response->result = true;
+		$response->stock  = $stock;
 
-				if ( $query->have_posts() ) {
-					while ( $query->have_posts() ) {
-						$query->the_post();
+		$skus = array_keys( $stock );
 
-						$product = get_product( $post );
+		$query = new WP_Query( array(
+			'post_type'        => array( 'product', 'product_variation' ),
+			'nopaging'         => true,
+			'suppress_filters' => defined( 'ICL_LANGUAGE_CODE' ),
+			'lang'             => '', // query all Polylang languages (https://polylang.pro/doc/developpers-how-to/#all)
+			'meta_query'       => array(
+				array(
+					'key'     => '_sku',
+					'value'   => $skus,
+					'compare' => 'IN',
+				),
+			),
+		) );
 
-						if ( $product ) {
-							$sku = $product->get_sku();
+		if ( $query->have_posts() ) {
+			while ( $query->have_posts() ) {
+				$query->the_post();
 
-							if ( isset( $stock[ $sku ] ) ) {
-								$qty = $stock[ $sku ];
+				if ( function_exists( 'wc_get_product' ) ) {
+					$product = wc_get_product( $post );
+				} else {
+					$product = get_product( $post );
+				}
 
-								$product->set_stock( $qty );
-							}
-						}
+				if ( ! $product ) {
+					continue;
+				}
+
+				$sku = $product->get_sku();
+
+				if ( isset( $stock[ $sku ] ) ) {
+					$qty = $stock[ $sku ];
+
+					if ( function_exists( 'wc_update_product_stock' ) ) {
+						wc_update_product_stock( $product, $qty );
+					} else {
+						$product->set_stock( $qty );
 					}
 				}
 			}
-
-			// Send JSON
-			// @see https://github.com/WordPress/WordPress/blob/4.0/wp-includes/functions.php#L2614-L2629
-			wp_send_json( $response );
 		}
+
+		// Send JSON
+		// @see https://github.com/WordPress/WordPress/blob/4.0/wp-includes/functions.php#L2614-L2629
+		wp_send_json( $response );
 	}
 
 	//////////////////////////////////////////////////
