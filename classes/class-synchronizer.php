@@ -86,6 +86,10 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 			// @see https://github.com/woothemes/woocommerce/blob/v2.2.3/includes/abstracts/abstract-wc-product.php#L132-L139
 			$qty = $product->get_stock_quantity();
 
+			if ( is_null( $qty ) ) {
+				$qty = 0;
+			}
+
 			// Map
 			$this->queue_stock[ $sku ] = $qty;
 		}
