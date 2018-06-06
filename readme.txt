@@ -1,9 +1,9 @@
 === WooCommerce Stock Synchronization ===
 Contributors: pronamic, remcotolsma
 Tags: woocommerce, stock, sync, synchronization
-Stable tag: 2.2.0
 Requires at least: 3.8
 Tested up to: 4.9.6
+Stable tag: 2.3.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,11 +24,18 @@ Synchronizes stock with sites that are connected to one another, using WooCommer
 
 == Changelog ==
 
-= unreleased =
-*	Test - Tested up to WordPress version 4.7.3.
-*	Test - Tested up to WooCommerce version 3.0.3.
+= 2.3.0 - 2018-06-06 =
+*	Fix - Fixed syncing zero stock through quick edit.
+*	Fix - Fixed syncing issue with numbers only SKUs.
+*	Fix - Fixed limited products notice on Stock tab not displayed.
+*	Fix - Fixed ability to use single or double quotes in passwords.
+*	Tweak - Added WooCommerce Multilingual support.
+*	Tweak - Added 'lang' parameter to query all Polylang languages.
+*	Tweak - Added WooCommerce version check headers.
+*	Test - Tested up to WooCommerce version 3.4.2.
+*	Test - Tested up to WordPress version 4.9.6.
 
-= 2.2.0 =
+= 2.2.0 - 2016-12-08 =
 *	Make `Push Stock` capable of syncing an unlimited number of products.
 
 = 2.1.0 - 2016-06-22 =
