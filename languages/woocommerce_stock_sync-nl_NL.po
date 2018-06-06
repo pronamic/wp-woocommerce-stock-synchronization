@@ -3,9 +3,9 @@ msgstr ""
 "Project-Id-Version: WooCommerce Stock Synchronization\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stock-"
 "synchronization\n"
-"POT-Creation-Date: 2016-11-10 09:28:18+00:00\n"
-"PO-Revision-Date: 2016-12-08 10:19+0100\n"
-"Last-Translator: Remco Tolsma <info@remcotolsma.nl>\n"
+"POT-Creation-Date: 2018-06-06 07:48:24+00:00\n"
+"PO-Revision-Date: 2018-06-06 09:52+0200\n"
+"Last-Translator: Reüel van der Steege <reuel@pronamic.nl>\n"
 "Language-Team: Pronamic <info@pronamic.nl>\n"
 "Language: nl_NL\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 1.7.4\n"
+"X-Generator: Poedit 2.0.8\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin/page.php:4
@@ -88,7 +88,7 @@ msgstr "SKU"
 msgid "No stock found."
 msgstr "Geen voorraad gevonden."
 
-#: admin/tab-stock.php:110
+#: admin/tab-stock.php:132
 msgid ""
 "The number of displayed products is limited to 100. Stock quantites for all "
 "products will be synchronized during synchronization."
@@ -96,7 +96,7 @@ msgstr ""
 "Het aantal getoonde producten is gelimiteerd tot 100. Tijdens het "
 "synchroniseren zal de voorraad voor alle producten gesynchroniseerd worden."
 
-#: admin/tab-stock.php:117
+#: admin/tab-stock.php:139
 msgid "Push Stock"
 msgstr "Push voorraad"
 
@@ -140,15 +140,15 @@ msgstr "WooCommerce voorraad synchronisatie"
 msgid "Stock Synchronization"
 msgstr "Voorraad synchronisatie"
 
-#: classes/class-synchronizer.php:131
+#: classes/class-synchronizer.php:153
 msgid "Succeeded - Synchronization to: %s (response code: %s)"
 msgstr "Gelukt - Synchronisatie naar: %s (antwoordcode: %s)"
 
-#: classes/class-synchronizer.php:143
+#: classes/class-synchronizer.php:165
 msgid "Failed - Synchronization to: %s (response code: %s, error: %s)"
 msgstr "Mislukt - Synchronisatie naar: %s (antwoordcode: %s, fout: %s)"
 
-#: classes/class-synchronizer.php:178
+#: classes/class-synchronizer.php:202
 msgid "Received synchronization request from %s"
 msgstr "Synchronisatie verzoek ontvangen van %s"
 
