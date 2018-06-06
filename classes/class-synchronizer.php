@@ -150,7 +150,8 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 
 			if ( ( 200 == $response_code ) && $data ) { // WPCS: loose comparison ok.
 				$log->message = sprintf(
-					__( 'Succeeded - Synchronization to: %s (response code: %s)', 'woocommerce_stock_sync' ),
+					/* translators: 1: url, 2: response code */
+					__( 'Succeeded - Synchronization to: %1$s (response code: %2$s)', 'woocommerce_stock_sync' ),
 					sprintf( '<code>%s</code>', $url ),
 					sprintf( '<code>%s</code>', $response_code )
 				);
@@ -162,7 +163,8 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 				}
 
 				$log->message = sprintf(
-					__( 'Failed - Synchronization to: %s (response code: %s, error: %s)', 'woocommerce_stock_sync' ),
+					/* translators: 1: url, 2: response code, 3: error */
+					__( 'Failed - Synchronization to: %1$s (response code: %2$s, error: %3$s)', 'woocommerce_stock_sync' ),
 					sprintf( '<code>%s</code>', $url ),
 					sprintf( '<code>%s</code>', $response_code ),
 					sprintf( '<code>%s</code>', $error )
@@ -196,9 +198,10 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 		// From
 		$source = filter_input( INPUT_GET, 'source', FILTER_SANITIZE_STRING );
 
-		$log = new stdClass();
+		$log          = new stdClass();
 		$log->time    = time();
 		$log->message = sprintf(
+			/* translators: %s: <code>source URL</code> */
 			__( 'Received synchronization request from %s', 'woocommerce_stock_sync' ),
 			sprintf( '<code>%s</code>', $source )
 		);
@@ -209,7 +212,7 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 		$data  = file_get_contents( 'php://input' );
 		$stock = json_decode( $data, true );
 
-		$response = new stdClass();
+		$response          = new stdClass();
 		$response->version = $this->plugin->get_version();
 		$response->result  = false;
 
