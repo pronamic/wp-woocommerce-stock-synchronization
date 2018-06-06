@@ -1,4 +1,4 @@
-<h3><?php esc_html_e( 'Overview', 'woocommerce_stock_sync' ) ?></h3>
+<h3><?php esc_html_e( 'Overview', 'woocommerce_stock_sync' ); ?></h3>
 
 <?php
 

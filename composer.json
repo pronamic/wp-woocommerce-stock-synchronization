@@ -9,8 +9,8 @@
     ],
     "require": {},
     "require-dev": {
-        "squizlabs/php_codesniffer": "^2.6",
-        "wp-coding-standards/wpcs": "0.9.0"
+        "squizlabs/php_codesniffer": "^2.9",
+        "wp-coding-standards/wpcs": "^0.14.1"
     },
     "scripts": {
         "post-autoload-dump": [
