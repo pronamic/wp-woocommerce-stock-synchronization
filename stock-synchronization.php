@@ -7,6 +7,9 @@ Description: Synchronizes stock with sites that are connected to one another, us
 Version: 2.2.0
 Requires at least: 3.0
 
+WC requires at least: 2.2.0
+WC tested up to: 3.4.2
+
 Author: Pronamic
 Author URI: https://www.pronamic.eu/
 
