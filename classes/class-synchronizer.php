@@ -227,6 +227,7 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 
 		$query = new WP_Query( array(
 			'post_type'        => array( 'product', 'product_variation' ),
+			'post_status'      => 'any',
 			'nopaging'         => true,
 			'suppress_filters' => defined( 'ICL_LANGUAGE_CODE' ),
 			'lang'             => '', // query all Polylang languages (https://polylang.pro/doc/developpers-how-to/#all)
