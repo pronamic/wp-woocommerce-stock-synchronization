@@ -223,49 +223,10 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 		$response->result = true;
 		$response->stock  = $stock;
 
-		$skus = array_keys( $stock );
+		foreach ( $stock as $sku => $quantity ) {
+			$product_id = wc_get_product_id_by_sku( $sku );
 
-		$query = new WP_Query( array(
-			'post_type'        => array( 'product', 'product_variation' ),
-			'post_status'      => 'any',
-			'nopaging'         => true,
-			'suppress_filters' => defined( 'ICL_LANGUAGE_CODE' ),
-			'lang'             => '', // query all Polylang languages (https://polylang.pro/doc/developpers-how-to/#all)
-			'meta_query'       => array(
-				array(
-					'key'     => '_sku',
-					'value'   => $skus,
-					'compare' => 'IN',
-				),
-			),
-		) );
-
-		if ( $query->have_posts() ) {
-			while ( $query->have_posts() ) {
-				$query->the_post();
-
-				if ( function_exists( 'wc_get_product' ) ) {
-					$product = wc_get_product( $post );
-				} else {
-					$product = get_product( $post );
-				}
-
-				if ( ! $product ) {
-					continue;
-				}
-
-				$sku = $product->get_sku();
-
-				if ( isset( $stock[ $sku ] ) ) {
-					$qty = $stock[ $sku ];
-
-					if ( function_exists( 'wc_update_product_stock' ) ) {
-						wc_update_product_stock( $product, $qty );
-					} else {
-						$product->set_stock( $qty );
-					}
-				}
-			}
+			wc_update_product_stock( $product_id, $quantity );
 		}
 
 		// Send JSON
