@@ -1,6 +1,6 @@
 {
   "name": "woocommerce-stock-synchronization",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Synchronizes stock with sites that are connected to one another, using WooCommerce Stock Synchronization.",
   "repository": {
     "type": "git",
@@ -19,15 +19,16 @@
   },
   "homepage": "https://github.com/pronamic/wp-woocommerce-stock-synchronization",
   "devDependencies": {
-    "grunt": "^1.0.1",
-    "grunt-aws-s3": "^0.14.5",
+    "grunt": "^1.0.3",
+    "grunt-aws-s3": "^2.0.0",
     "grunt-checkwpversion": "^0.3.0",
-    "grunt-contrib-clean": "^1.0.0",
-    "grunt-contrib-compress": "^1.3.0",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-compress": "^1.4.3",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-git": "^1.0.2",
+    "grunt-git": "^1.0.9",
     "grunt-phpcs": "^0.4.0",
-    "grunt-phplint": "0.0.8",
-    "grunt-wp-i18n": "^0.5.4"
+    "grunt-phplint": "0.1.0",
+    "grunt-wp-i18n": "^1.0.2",
+    "load-grunt-tasks": "^4.0.0"
   }
 }
