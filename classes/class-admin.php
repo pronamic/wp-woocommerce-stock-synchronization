@@ -103,13 +103,13 @@ class Pronamic_WP_WC_StockSyncAdmin {
 
 		$query_args = array(
 			'push_stock' => ( $stock_pushed + 15 ),
-			'synced' => null,
+			'synced'     => null,
 		);
 
 		if ( 0 === count( $push_stock ) ) {
 			$query_args = array(
 				'push_stock' => null,
-				'synced' => true,
+				'synced'     => true,
 			);
 
 			delete_option( 'wc_stock_sync_push_stock' );
@@ -208,7 +208,7 @@ class Pronamic_WP_WC_StockSyncAdmin {
 		printf(
 			'<input name="%s[]" id="%s" type="url" value="%s" class="%s" />',
 			esc_attr( $name ),
-			esc_attr( $name . $i++ ),
+			esc_attr( $name . ( $i++ ) ),
 			esc_attr( '' ),
 			'regular-text'
 		);

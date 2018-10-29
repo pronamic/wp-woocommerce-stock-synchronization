@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<ruleset name="WooCommerce Stock Synchronization">
+	<config name="installed_paths" value="vendor/wp-coding-standards/wpcs,vendor/wimg/php-compatibility" />
+
+	<config name="minimum_supported_wp_version" value="4.7" />
+
+	<config name="testVersion" value="5.3-99.0" />
+
+	<exclude-pattern>node_modules/*</exclude-pattern>
+	<exclude-pattern>tests/wp-config.php</exclude-pattern>
+	<exclude-pattern>vendor/*</exclude-pattern>
+	<exclude-pattern>wordpress/*</exclude-pattern>
+	<exclude-pattern>wp-content/*</exclude-pattern>
+
+	<rule ref="PHPCompatibility" />
+
+	<rule ref="WordPress">
+		<exclude name="Squiz.Commenting" />
+
+		<exclude name="WordPress.DB.DirectDatabaseQuery.DirectQuery" />
+		<exclude name="WordPress.DB.DirectDatabaseQuery.NoCaching" />
+
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+
+		<exclude name="WordPress.PHP.DiscouragedFunctions.DiscouragedWithAlternative" />
+
+		<exclude name="WordPress.VIP.DirectDatabaseQuery" />
+		<exclude name="WordPress.VIP.PostsPerPage.posts_per_page" />
+		<exclude name="WordPress.VIP.PostsPerPage.posts_per_page_nopaging" />
+		<exclude name="WordPress.VIP.RestrictedFunctions.file_get_contents" />
+		<exclude name="WordPress.VIP.RestrictedFunctions.file_get_contents_file_get_contents" />
+		<exclude name="WordPress.VIP.RestrictedFunctions.parse_url" />
+		<exclude name="WordPress.VIP.SlowDBQuery.slow_db_query" />
+		<exclude name="WordPress.VIP.SlowDBQuery.slow_db_query_meta_key" />
+		<exclude name="WordPress.VIP.SlowDBQuery.slow_db_query_meta_query" />
+
+		<exclude name="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents" />
+		<exclude name="WordPress.WP.AlternativeFunctions.file_system_read_file_get_contents" />
+	</rule>
+</ruleset>

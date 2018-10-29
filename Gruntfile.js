@@ -1,16 +1,20 @@
 module.exports = function( grunt ) {
+	require( 'load-grunt-tasks' )( grunt );
+
 	// Project configuration.
 	grunt.initConfig( {
 		pkg: grunt.file.readJSON( 'package.json' ),
 
 		// PHPLint
 		phplint: {
-			options: {
-				phpArgs: {
-					'-lf': null
-				}
-			},
-			all: [ '**/*.php' ]
+			all: [
+				'**/*.php',
+				'!bower_components/**',
+				'!deploy/**',
+				'!node_modules/**',
+				'!vendor/**',
+				'!wordpress/**'
+			]
 		},
 
 		// PHP Code Sniffer
@@ -22,11 +26,12 @@ module.exports = function( grunt ) {
 					'!deploy/**',
 					'!node_modules/**',
 					'!vendor/**',
+					'!wordpress/**'
 				]
 			},
 			options: {
 				bin: 'vendor/bin/phpcs',
-				standard: 'phpcs.ruleset.xml',
+				standard: 'phpcs.xml.dist',
 				showSniffCodes: true
 			}
 		},
@@ -56,7 +61,12 @@ module.exports = function( grunt ) {
 					cwd: '',
 					domainPath: 'languages',
 					type: 'wp-plugin',
-					exclude: [ 'deploy/.*' ],
+					exclude: [
+						'deploy/.*',
+						'node_modules/.*',
+						'vendor/.*',
+						'wordpress/.*'
+					],
 				}
 			}
 		},
@@ -74,11 +84,17 @@ module.exports = function( grunt ) {
 				src: [
 					'**',
 					'!Gruntfile.js',
+					'!composer.json',
+					'!composer.lock',
 					'!package.json',
-					'!phpcs.ruleset.xml',
+					'!package-lock.json',
+					'!phpcs.xml.dist',
 					'!README.md',
+					'!yarn.lock',
+					'!deploy/**',
 					'!node_modules/**',
-					'!vendor/**'
+					'!vendor/**',
+					'!wordpress/**'
 				],
 				dest: 'deploy/latest',
 				expand: true
@@ -133,16 +149,6 @@ module.exports = function( grunt ) {
 			}
 		}
 	} );
-
-	grunt.loadNpmTasks( 'grunt-contrib-clean' );
-	grunt.loadNpmTasks( 'grunt-contrib-copy' );
-	grunt.loadNpmTasks( 'grunt-contrib-compress' );
-	grunt.loadNpmTasks( 'grunt-phplint' );
-	grunt.loadNpmTasks( 'grunt-phpcs' );
-	grunt.loadNpmTasks( 'grunt-checkwpversion' );
-	grunt.loadNpmTasks( 'grunt-wp-i18n' );
-	grunt.loadNpmTasks( 'grunt-aws-s3' );
-	grunt.loadNpmTasks( 'grunt-git' );
 
 	// Default task(s).
 	grunt.registerTask( 'default', [ 'phplint', 'phpcs', 'checkwpversion' ] );

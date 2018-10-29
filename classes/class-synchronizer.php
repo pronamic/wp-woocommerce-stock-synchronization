@@ -67,17 +67,6 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 			return;
 		}
 
-		// WooCommerce Multilingual
-		if ( defined( 'ICL_LANGUAGE_CODE' ) && defined( 'WCML_VERSION' ) ) {
-			global $woocommerce_wpml;
-
-			if ( is_object( $woocommerce_wpml ) && isset( $woocommerce_wpml->products ) && method_exists( $woocommerce_wpml->products, 'is_original_product' ) ) {
-				if ( ! $woocommerce_wpml->products->is_original_product( $product->get_id() ) ) {
-					return;
-				}
-			}
-		}
-
 		// @see https://github.com/woothemes/woocommerce/blob/v2.2.3/includes/abstracts/abstract-wc-product.php#L123-L130
 		$sku = $product->get_sku();
 
@@ -150,7 +139,8 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 
 			if ( ( 200 == $response_code ) && $data ) { // WPCS: loose comparison ok.
 				$log->message = sprintf(
-					__( 'Succeeded - Synchronization to: %s (response code: %s)', 'woocommerce_stock_sync' ),
+					/* translators: 1: url, 2: response code */
+					__( 'Succeeded - Synchronization to: %1$s (response code: %2$s)', 'woocommerce_stock_sync' ),
 					sprintf( '<code>%s</code>', $url ),
 					sprintf( '<code>%s</code>', $response_code )
 				);
@@ -162,7 +152,8 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 				}
 
 				$log->message = sprintf(
-					__( 'Failed - Synchronization to: %s (response code: %s, error: %s)', 'woocommerce_stock_sync' ),
+					/* translators: 1: url, 2: response code, 3: error */
+					__( 'Failed - Synchronization to: %1$s (response code: %2$s, error: %3$s)', 'woocommerce_stock_sync' ),
 					sprintf( '<code>%s</code>', $url ),
 					sprintf( '<code>%s</code>', $response_code ),
 					sprintf( '<code>%s</code>', $error )
@@ -196,9 +187,10 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 		// From
 		$source = filter_input( INPUT_GET, 'source', FILTER_SANITIZE_STRING );
 
-		$log = new stdClass();
+		$log          = new stdClass();
 		$log->time    = time();
 		$log->message = sprintf(
+			/* translators: %s: <code>source URL</code> */
 			__( 'Received synchronization request from %s', 'woocommerce_stock_sync' ),
 			sprintf( '<code>%s</code>', $source )
 		);
@@ -209,58 +201,18 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 		$data  = file_get_contents( 'php://input' );
 		$stock = json_decode( $data, true );
 
-		$response = new stdClass();
+		$response          = new stdClass();
 		$response->version = $this->plugin->get_version();
 		$response->result  = false;
 
-		if ( ! is_array( $stock ) ) {
-			return;
-		}
+		if ( is_array( $stock ) ) {
+			$response->result = true;
+			$response->stock  = $stock;
 
-		$response->result = true;
-		$response->stock  = $stock;
+			foreach ( $stock as $sku => $quantity ) {
+				$product_id = wc_get_product_id_by_sku( $sku );
 
-		$skus = array_keys( $stock );
-
-		$query = new WP_Query( array(
-			'post_type'        => array( 'product', 'product_variation' ),
-			'nopaging'         => true,
-			'suppress_filters' => defined( 'ICL_LANGUAGE_CODE' ),
-			'lang'             => '', // query all Polylang languages (https://polylang.pro/doc/developpers-how-to/#all)
-			'meta_query'       => array(
-				array(
-					'key'     => '_sku',
-					'value'   => $skus,
-					'compare' => 'IN',
-				),
-			),
-		) );
-
-		if ( $query->have_posts() ) {
-			while ( $query->have_posts() ) {
-				$query->the_post();
-
-				if ( function_exists( 'wc_get_product' ) ) {
-					$product = wc_get_product( $post );
-				} else {
-					$product = get_product( $post );
-				}
-
-				if ( ! $product ) {
-					continue;
-				}
-
-				$sku = $product->get_sku();
-
-				if ( isset( $stock[ $sku ] ) ) {
-					$qty = $stock[ $sku ];
-
-					if ( function_exists( 'wc_update_product_stock' ) ) {
-						wc_update_product_stock( $product, $qty );
-					} else {
-						$product->set_stock( $qty );
-					}
-				}
+				wc_update_product_stock( $product_id, $quantity );
 			}
 		}
 

@@ -77,7 +77,15 @@ if ( ! is_array( $urls ) ) {
 						<div class="dashicons dashicons-<?php echo esc_attr( $dashicon ); ?>"></div>
 					</td>
 					<td>
-						<?php echo esc_html( $version ); ?>
+						<?php
+
+						if ( null === $version ) {
+							echo '&mdash;';
+						} else {
+							echo esc_html( $version );
+						}
+
+						?>
 					</td>
 					<td>
 						<?php

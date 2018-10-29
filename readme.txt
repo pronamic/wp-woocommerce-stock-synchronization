@@ -3,7 +3,7 @@ Contributors: pronamic, remcotolsma
 Tags: woocommerce, stock, sync, synchronization
 Requires at least: 3.8
 Tested up to: 4.9.6
-Stable tag: 2.3.0
+Stable tag: 2.4.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,6 +23,10 @@ Synchronizes stock with sites that are connected to one another, using WooCommer
 
 
 == Changelog ==
+
+= 2.4.0 - 2018-10-29 = 
+*	Improved support for newer WooCommerce versions.
+*	Update product stock quantity independent of post status.
 
 = 2.3.0 - 2018-06-06 =
 *	Fix - Fixed syncing zero stock through quick edit.

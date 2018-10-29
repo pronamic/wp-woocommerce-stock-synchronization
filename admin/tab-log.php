@@ -48,6 +48,7 @@ if ( filter_has_var( INPUT_GET, 'deleted' ) ) {
 						<?php
 
 						if ( isset( $item->time ) ) {
+							/* translators: %s: time difference */
 							echo esc_html( sprintf( __( '%s ago', 'woocommerce_stock_sync' ), human_time_diff( $item->time ) ) );
 						} else {
 							echo '—';

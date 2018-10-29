@@ -10,11 +10,9 @@
     "require": {},
     "require-dev": {
         "squizlabs/php_codesniffer": "^2.9",
-        "wp-coding-standards/wpcs": "^0.14.1"
-    },
-    "scripts": {
-        "post-autoload-dump": [
-            "if [[ -d vendor/wp-coding-standards/wpcs ]]; then vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs; fi"
-        ]
+        "wp-coding-standards/wpcs": "^1.0",
+        "wimg/php-compatibility": "^8.2",
+        "johnpbloch/wordpress": "^4.9",
+        "wp-phpunit/wp-phpunit": "^4.9"
     }
 }

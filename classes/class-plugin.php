@@ -23,7 +23,7 @@ class Pronamic_WP_WC_StockSyncPlugin {
 	 *
 	 * @var string
 	 */
-	public $version = '2.1.0';
+	public $version = '2.4.0';
 
 	//////////////////////////////////////////////////
 
