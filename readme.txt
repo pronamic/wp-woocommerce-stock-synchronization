@@ -24,8 +24,9 @@ Synchronizes stock with sites that are connected to one another, using WooCommer
 
 == Changelog ==
 
-= 2.4.0 - Unreleased = 
+= 2.4.0 - 2018-10-29 = 
 *	Improved support for newer WooCommerce versions.
+*	Update product stock quantity independent of post status.
 
 = 2.3.0 - 2018-06-06 =
 *	Fix - Fixed syncing zero stock through quick edit.
