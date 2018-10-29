@@ -205,17 +205,15 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 		$response->version = $this->plugin->get_version();
 		$response->result  = false;
 
-		if ( ! is_array( $stock ) ) {
-			return;
-		}
+		if ( is_array( $stock ) ) {
+			$response->result = true;
+			$response->stock  = $stock;
 
-		$response->result = true;
-		$response->stock  = $stock;
+			foreach ( $stock as $sku => $quantity ) {
+				$product_id = wc_get_product_id_by_sku( $sku );
 
-		foreach ( $stock as $sku => $quantity ) {
-			$product_id = wc_get_product_id_by_sku( $sku );
-
-			wc_update_product_stock( $product_id, $quantity );
+				wc_update_product_stock( $product_id, $quantity );
+			}
 		}
 
 		// Send JSON
