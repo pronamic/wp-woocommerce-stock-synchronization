@@ -94,7 +94,7 @@ $products = $wpdb->get_results( $query ); // WPCS: unprepared SQL ok.
 						<?php echo esc_html( $product->sku ); ?>
 					</td>
 					<td>
-						<?php echo esc_html( $product->qty ); ?>
+						<?php echo esc_html( wc_stock_amount( $product->qty ) ); ?>
 					</td>
 				</tr>
 
