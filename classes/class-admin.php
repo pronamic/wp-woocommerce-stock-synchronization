@@ -224,7 +224,7 @@ class Pronamic_WP_WC_StockSyncAdmin {
 			'woocommerce', // parent_slug
 			__( 'WooCommerce Stock Synchronization', 'woocommerce_stock_sync' ), // page_title
 			__( 'Stock Synchronization', 'woocommerce_stock_sync' ), // menu_title
-			'manage_options', // capability
+			'manage_woocommerce', // capability
 			'woocommerce_stock_sync', // menu_slug
 			array( $this, 'admin_page' ) // function
 		);
