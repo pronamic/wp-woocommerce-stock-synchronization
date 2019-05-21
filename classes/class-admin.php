@@ -14,6 +14,8 @@ class Pronamic_WP_WC_StockSyncAdmin {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 		add_action( 'admin_init', array( $this, 'push_stock' ) );
+
+		add_filter( 'option_page_capability_woocommerce_stock_sync', array( $this, 'option_page_capability' ) );
 	}
 
 	//////////////////////////////////////////////////
@@ -59,6 +61,16 @@ class Pronamic_WP_WC_StockSyncAdmin {
 
 			exit;
 		}
+	}
+
+	/**
+	 * Filter required capability for option page.
+	 *
+	 * @return string
+	 */
+	public function option_page_capability() {
+		// WooCommerce shop manager.
+		return 'manage_woocommerce';
 	}
 
 	//////////////////////////////////////////////////
