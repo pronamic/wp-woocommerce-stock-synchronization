@@ -131,7 +131,7 @@ if ( $count_products > 100 ) :
 
 	?>
 
-	<p class="description"><?php esc_html_e( 'The number of displayed products is limited to 100. Stock quantites for all products will be synchronized during synchronization.', 'woocommerce_stock_sync' ); ?></p>
+	<p class="description"><?php esc_html_e( 'The number of displayed products is limited to 100. Stock quantities for all products will be synchronized during synchronization.', 'woocommerce_stock_sync' ); ?></p>
 
 <?php endif; ?>
 

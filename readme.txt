@@ -49,7 +49,7 @@ Synchronizes stock with sites that are connected to one another, using WooCommer
 = 2.1.0 - 2016-06-22 =
 *	Fixed incorrect check for undefined property process_sync.
 *	Fixed PHP notices undefined variables 'alternate' and 'stock'.
-*	Added 'suppress_filters' for WPML compatability.
+*	Added 'suppress_filters' for WPML compatibility.
 *	Increased POST request timeout to 45 seconds.
 *	Added note that displayed number of products is limited to 100.
 
@@ -67,7 +67,7 @@ Synchronizes stock with sites that are connected to one another, using WooCommer
 *	Test - Tested up to WordPress version 4.0.
 *	Test - Test up to WooCommerce version 2.1.12.
 *	Feature - Added overview of all the synchronization websites with status and version.
-*	Feature - Addded overview of all the products with SKU and stock quantity.
+*	Feature - Added overview of all the products with SKU and stock quantity.
 *	Tweak - Improved the log overview.
 *	Feature - Added an empty log button.
 *	Tweak - Removed the synchronize stock meta box on edit product page. 

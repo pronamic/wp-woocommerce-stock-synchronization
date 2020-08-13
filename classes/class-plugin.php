@@ -26,7 +26,7 @@ class Pronamic_WP_WC_StockSyncPlugin {
 	public $version = '2.5.0';
 
 	/**
-	 * Syncrhonizer object
+	 * Synchronizer object
 	 *
 	 * @var Pronamic_WP_WC_StockSyncSynchronizer
 	 */
@@ -78,7 +78,7 @@ class Pronamic_WP_WC_StockSyncPlugin {
 	/**
 	 * Logs a message as a comment that can be read back from the admin screen
 	 *
-	 * @param string $message
+	 * @param string $item Log item message.
 	 */
 	public function log( $item ) {
 		$log = get_option( 'wc_stock_sync_log', array() );

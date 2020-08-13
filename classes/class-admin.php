@@ -5,7 +5,16 @@
  */
 class Pronamic_WP_WC_StockSyncAdmin {
 	/**
+	 * Plugin.
+	 *
+	 * @var Pronamic_WP_WC_StockSyncPlugin
+	 */
+	protected $plugin;
+
+	/**
 	 * Bootstraps the admin part
+	 *
+	 * @param Pronamic_WP_WC_StockSyncPlugin $plugin Plugin.
 	 */
 	public function __construct( $plugin ) {
 		$this->plugin = $plugin;
@@ -252,6 +261,10 @@ class Pronamic_WP_WC_StockSyncAdmin {
 
 	/**
 	 * Sanitizes list of synced sites, unifying all newline characters to the same newline character
+	 *
+	 * @param array $data URLs data.
+	 *
+	 * @return array
 	 */
 	public function sanitize_urls( $data ) {
 		$urls = array();

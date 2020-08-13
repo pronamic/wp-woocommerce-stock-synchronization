@@ -16,7 +16,8 @@
         "wp-coding-standards/wpcs": "^2.3",
         "wimg/php-compatibility": "^9.3",
         "roots/wordpress": "^5.5",
-        "wp-phpunit/wp-phpunit": "^5.5"
+        "wp-phpunit/wp-phpunit": "^5.5",
+        "woocommerce/woocommerce": "^4.3"
     },
     "scripts": {
         "phpcs": "vendor/bin/phpcs -s -v"

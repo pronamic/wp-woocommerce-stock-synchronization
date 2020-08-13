@@ -6,6 +6,13 @@
  */
 class Pronamic_WP_WC_StockSyncSynchronizer {
 	/**
+	 * Plugin.
+	 *
+	 * @var Pronamic_WP_WC_StockSyncPlugin
+	 */
+	protected $plugin;
+
+	/**
 	 * Queue for the stock to synchronize
 	 *
 	 * @var string
@@ -21,6 +28,8 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 
 	/**
 	 * Bootstraps the synchronizer
+	 *
+	 * @param Pronamic_WP_WC_StockSyncPlugin $plugin Plugin.
 	 */
 	public function __construct( $plugin ) {
 		$this->plugin = $plugin;
@@ -107,7 +116,7 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 	/**
 	 * Synchronize the stock
 	 *
-	 * @param array $map
+	 * @param array $stock Stock to synchronize.
 	 */
 	public function synchronize_stock( $stock ) {
 		$urls = get_option( 'woocommerce_stock_sync_urls', array() );
