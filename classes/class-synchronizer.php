@@ -19,8 +19,6 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 	 */
 	private $process_sync;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Bootstraps the synchronizer
 	 */
@@ -46,8 +44,6 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 		// Shutdown
 		add_action( 'shutdown', array( $this, 'shutdown' ) );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Product set stock
@@ -84,8 +80,6 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 		}
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get synchronize URL, make sure we encode the parameters.
 	 *
@@ -104,8 +98,6 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 
 		return $url;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Synchronize the stock
@@ -164,8 +156,6 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 		}
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Maybe synchronize
 	 */
@@ -220,8 +210,6 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 		// @see https://github.com/WordPress/WordPress/blob/4.0/wp-includes/functions.php#L2614-L2629
 		wp_send_json( $response );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Shutdown

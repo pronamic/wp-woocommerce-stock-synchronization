@@ -18,8 +18,6 @@ class Pronamic_WP_WC_StockSyncAdmin {
 		add_filter( 'option_page_capability_woocommerce_stock_sync', array( $this, 'option_page_capability' ) );
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Initializes admin
 	 */
@@ -72,8 +70,6 @@ class Pronamic_WP_WC_StockSyncAdmin {
 		// WooCommerce shop manager.
 		return 'manage_woocommerce';
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Action - Push Stock
@@ -174,8 +170,6 @@ class Pronamic_WP_WC_StockSyncAdmin {
 		return $stock;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Input text
 	 *
@@ -226,8 +220,6 @@ class Pronamic_WP_WC_StockSyncAdmin {
 		);
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Should be called on admin_menu hook. Adds settings pages to the admin menu.
 	 */
@@ -242,16 +234,12 @@ class Pronamic_WP_WC_StockSyncAdmin {
 		);
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Settings page
 	 */
 	public function admin_page() {
 		include $this->plugin->dir . 'admin/page.php';
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Sanitizes list of synched sites, unifying all newline characters to the same newline character

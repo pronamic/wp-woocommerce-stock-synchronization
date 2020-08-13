@@ -25,8 +25,6 @@ class Pronamic_WP_WC_StockSyncPlugin {
 	 */
 	public $version = '2.5.0';
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Syncrhonizer object
 	 *
@@ -40,8 +38,6 @@ class Pronamic_WP_WC_StockSyncPlugin {
 	 * @var Pronamic_WP_WC_StockSyncAdmin
 	 */
 	public $admin;
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Bootstrap
@@ -63,16 +59,12 @@ class Pronamic_WP_WC_StockSyncPlugin {
 		}
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Initialize
 	 */
 	public function init() {
 		load_plugin_textdomain( 'woocommerce_stock_sync', false, dirname( plugin_basename( $this->file ) ) . '/languages/' );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get version
@@ -82,8 +74,6 @@ class Pronamic_WP_WC_StockSyncPlugin {
 	public function get_version() {
 		return $this->version;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Logs a message as a comment that can be read back from the admin screen
