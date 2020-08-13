@@ -1,6 +1,6 @@
 {
   "name": "woocommerce-stock-synchronization",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "Synchronizes stock with sites that are connected to one another, using WooCommerce Stock Synchronization.",
   "repository": {
     "type": "git",
