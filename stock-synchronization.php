@@ -4,11 +4,11 @@ Plugin Name: WooCommerce Stock Synchronization
 Plugin URI: https://www.pronamic.eu/plugins/woocommerce-stock-synchronization/
 Description: Synchronizes stock with sites that are connected to one another, using WooCommerce Stock Synchronization.
 
-Version: 2.4.0
-Requires at least: 3.0
+Version: 2.5.0
+Requires at least: 4.7
 
 WC requires at least: 2.2.0
-WC tested up to: 3.4.2
+WC tested up to: 4.3.2
 
 Author: Pronamic
 Author URI: https://www.pronamic.eu/

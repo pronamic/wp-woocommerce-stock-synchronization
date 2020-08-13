@@ -6,6 +6,13 @@
  */
 class Pronamic_WP_WC_StockSyncSynchronizer {
 	/**
+	 * Plugin.
+	 *
+	 * @var Pronamic_WP_WC_StockSyncPlugin
+	 */
+	protected $plugin;
+
+	/**
 	 * Queue for the stock to synchronize
 	 *
 	 * @var string
@@ -19,10 +26,10 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 	 */
 	private $process_sync;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Bootstraps the synchronizer
+	 *
+	 * @param Pronamic_WP_WC_StockSyncPlugin $plugin Plugin.
 	 */
 	public function __construct( $plugin ) {
 		$this->plugin = $plugin;
@@ -46,8 +53,6 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 		// Shutdown
 		add_action( 'shutdown', array( $this, 'shutdown' ) );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Product set stock
@@ -84,33 +89,34 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 		}
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get synchronize URL, make sure we encode the parameters.
 	 *
 	 * @see https://core.trac.wordpress.org/browser/tags/4.0/src/wp-includes/functions.php#L720
 	 * @see https://core.trac.wordpress.org/browser/tags/4.0/src/wp-includes/functions.php#L654
 	 *
-	 * @param string $uri
+	 * @param string $url URL.
 	 * @return string
 	 */
 	public function get_sync_url( $url ) {
-		$url = add_query_arg( urlencode_deep( array(
-			'wc_stock_sync' => true,
-			'source'        => wp_parse_url( site_url( '/' ), PHP_URL_HOST ),
-			'password'      => get_option( 'woocommerce_stock_sync_password' ),
-		) ), $url );
+		$url = add_query_arg(
+			urlencode_deep(
+				array(
+					'wc_stock_sync' => true,
+					'source'        => wp_parse_url( site_url( '/' ), PHP_URL_HOST ),
+					'password'      => get_option( 'woocommerce_stock_sync_password' ),
+				)
+			),
+			$url
+		);
 
 		return $url;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Synchronize the stock
 	 *
-	 * @param array $map
+	 * @param array $stock Stock to synchronize.
 	 */
 	public function synchronize_stock( $stock ) {
 		$urls = get_option( 'woocommerce_stock_sync_urls', array() );
@@ -122,10 +128,13 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 		foreach ( $urls as $url ) {
 			$request_url = $this->get_sync_url( $url );
 
-			$result = wp_remote_post( $request_url, array(
-				'body'    => wp_json_encode( $stock ),
-				'timeout' => 45,
-			) );
+			$result = wp_remote_post(
+				$request_url,
+				array(
+					'body'    => wp_json_encode( $stock ),
+					'timeout' => 45,
+				)
+			);
 
 			// @see https://github.com/WordPress/WordPress/blob/4.0/wp-includes/http.php#L241-L256https://github.com/WordPress/WordPress/blob/4.0/wp-includes/http.php#L241-L256
 			$response_code = wp_remote_retrieve_response_code( $result );
@@ -137,7 +146,7 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 			$log       = new stdClass();
 			$log->time = time();
 
-			if ( ( 200 == $response_code ) && $data ) { // WPCS: loose comparison ok.
+			if ( ( 200 === intval( $response_code ) ) && $data ) {
 				$log->message = sprintf(
 					/* translators: 1: url, 2: response code */
 					__( 'Succeeded - Synchronization to: %1$s (response code: %2$s)', 'woocommerce_stock_sync' ),
@@ -163,8 +172,6 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 			$this->plugin->log( $log );
 		}
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Maybe synchronize
@@ -220,8 +227,6 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 		// @see https://github.com/WordPress/WordPress/blob/4.0/wp-includes/functions.php#L2614-L2629
 		wp_send_json( $response );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Shutdown

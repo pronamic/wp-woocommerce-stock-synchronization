@@ -1,22 +1,22 @@
 # WooCommerce Stock Synchronization
 
 The WooCommerce Stock Synchronization Plugin allows you to synchronize the 
-stock values of the same products across multiple WooCommerce websites.
+stock values of the products with the same SKU across multiple WooCommerce websites.
 
 Please show support for this plugin if you plan on using it, by buying it 
-from HappyWP: 
-[http://www.happywp.com/plugins/woocommerce-stock-synchronization/](http://www.happywp.com/plugins/woocommerce-stock-synchronization/)
+from Pronamic: 
+[https://www.pronamic.eu/plugins/woocommerce-stock-synchronization/](https://www.pronamic.eu/plugins/woocommerce-stock-synchronization/)
 
 
 ## Requirements
 
 *	WooCommerce version 2.1.12 or greater
-*	WordPress version 3.8 or greater
+*	WordPress version 4.7 or greater
 
 
 ## How does the plugin work?
 
-The plugin will do HTTP POST requests to the websites you want to syncrhonize.
+The plugin will do HTTP POST requests to the websites you want to synchronize.
 
 ```
 http://www.example.com/?wc_stock_sync=1&source=http://www.example.org/&password=secret
@@ -55,13 +55,11 @@ Example:
 
 ## Documentation and Usage Instructions
 
-[http://www.happywp.com/manuals/woocommerce-stock-synchronization/](http://www.happywp.com/manuals/woocommerce-stock-synchronization/)
+[https://www.pronamic.eu/support/woocommerce-stock-synchronization/](https://www.pronamic.eu/support/woocommerce-stock-synchronization/)
 
 
 ## Credits
 
-[Pronamic](http://www.pronamic.nl/) [@pronamic](http://twitter.com/pronamic)
+[Pronamic](https://www.pronamic.nl/) [@pronamic](https://twitter.com/pronamic)
 
-[Remco Tolsma](http://www.remcotolsma.nl/) [@remcotolsma](http://twitter.com/remcotolsma)
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/pronamic/wp-woocommerce-stock-synchronization/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+[Remco Tolsma](https://www.remcotolsma.nl/) [@remcotolsma](https://twitter.com/remcotolsma)

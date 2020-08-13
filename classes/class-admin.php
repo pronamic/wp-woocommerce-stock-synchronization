@@ -5,7 +5,16 @@
  */
 class Pronamic_WP_WC_StockSyncAdmin {
 	/**
+	 * Plugin.
+	 *
+	 * @var Pronamic_WP_WC_StockSyncPlugin
+	 */
+	protected $plugin;
+
+	/**
 	 * Bootstraps the admin part
+	 *
+	 * @param Pronamic_WP_WC_StockSyncPlugin $plugin Plugin.
 	 */
 	public function __construct( $plugin ) {
 		$this->plugin = $plugin;
@@ -14,9 +23,9 @@ class Pronamic_WP_WC_StockSyncAdmin {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 		add_action( 'admin_init', array( $this, 'push_stock' ) );
-	}
 
-	//////////////////////////////////////////////////
+		add_filter( 'option_page_capability_woocommerce_stock_sync', array( $this, 'option_page_capability' ) );
+	}
 
 	/**
 	 * Initializes admin
@@ -61,7 +70,15 @@ class Pronamic_WP_WC_StockSyncAdmin {
 		}
 	}
 
-	//////////////////////////////////////////////////
+	/**
+	 * Filter required capability for option page.
+	 *
+	 * @return string
+	 */
+	public function option_page_capability() {
+		// WooCommerce shop manager.
+		return 'manage_woocommerce';
+	}
 
 	/**
 	 * Action - Push Stock
@@ -117,10 +134,18 @@ class Pronamic_WP_WC_StockSyncAdmin {
 
 		$query_args['woocommerce_stock_sync_nonce'] = wp_create_nonce( 'woocommerce_stock_sync_push' );
 
-		printf( // xss ok
-			'<script type="text/javascript"> setTimeout( function() { window.location.href = "%s"; }, 1250 ); </script>',
-			add_query_arg( $query_args )
-		);
+		?>
+
+		<script type="text/javascript">
+			setTimeout(
+				function() {
+					window.location.href = "<?php echo esc_url_raw( add_query_arg( $query_args ) ); ?>";
+				},
+				1250
+			);
+		</script>
+
+		<?php
 	}
 
 	/**
@@ -152,7 +177,8 @@ class Pronamic_WP_WC_StockSyncAdmin {
 			;
 		";
 
-		$results = $wpdb->get_results( $query ); // WPCS: unprepared SQL ok.
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Prepare is OK.
+		$results = $wpdb->get_results( $query );
 
 		// Loop
 		foreach ( $results as $result ) {
@@ -161,8 +187,6 @@ class Pronamic_WP_WC_StockSyncAdmin {
 
 		return $stock;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Input text
@@ -214,8 +238,6 @@ class Pronamic_WP_WC_StockSyncAdmin {
 		);
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Should be called on admin_menu hook. Adds settings pages to the admin menu.
 	 */
@@ -224,13 +246,11 @@ class Pronamic_WP_WC_StockSyncAdmin {
 			'woocommerce', // parent_slug
 			__( 'WooCommerce Stock Synchronization', 'woocommerce_stock_sync' ), // page_title
 			__( 'Stock Synchronization', 'woocommerce_stock_sync' ), // menu_title
-			'manage_options', // capability
+			'manage_woocommerce', // capability
 			'woocommerce_stock_sync', // menu_slug
 			array( $this, 'admin_page' ) // function
 		);
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Settings page
@@ -239,10 +259,12 @@ class Pronamic_WP_WC_StockSyncAdmin {
 		include $this->plugin->dir . 'admin/page.php';
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
-	 * Sanitizes list of synched sites, unifying all newline characters to the same newline character
+	 * Sanitizes list of synced sites, unifying all newline characters to the same newline character
+	 *
+	 * @param array $data URLs data.
+	 *
+	 * @return array
 	 */
 	public function sanitize_urls( $data ) {
 		$urls = array();

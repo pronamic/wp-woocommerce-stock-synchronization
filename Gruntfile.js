@@ -65,7 +65,8 @@ module.exports = function( grunt ) {
 						'deploy/.*',
 						'node_modules/.*',
 						'vendor/.*',
-						'wordpress/.*'
+						'wordpress/.*',
+						'wp-content/.*'
 					],
 				}
 			}

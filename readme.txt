@@ -1,9 +1,9 @@
 === WooCommerce Stock Synchronization ===
 Contributors: pronamic, remcotolsma
 Tags: woocommerce, stock, sync, synchronization
-Requires at least: 3.8
-Tested up to: 4.9.6
-Stable tag: 2.4.0
+Requires at least: 4.7
+Tested up to: 5.5
+Stable tag: 2.5.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,7 +24,11 @@ Synchronizes stock with sites that are connected to one another, using WooCommer
 
 == Changelog ==
 
-= 2.4.0 - 2018-10-29 = 
+= 2.5.0 - 2020-08-13 =
+*	Require `manage_woocommerce` capability (instead of `manage_options`).
+*	Improved stock quantity display.
+
+= 2.4.0 - 2018-10-29 =
 *	Improved support for newer WooCommerce versions.
 *	Update product stock quantity independent of post status.
 
@@ -45,7 +49,7 @@ Synchronizes stock with sites that are connected to one another, using WooCommer
 = 2.1.0 - 2016-06-22 =
 *	Fixed incorrect check for undefined property process_sync.
 *	Fixed PHP notices undefined variables 'alternate' and 'stock'.
-*	Added 'suppress_filters' for WPML compatability.
+*	Added 'suppress_filters' for WPML compatibility.
 *	Increased POST request timeout to 45 seconds.
 *	Added note that displayed number of products is limited to 100.
 
@@ -63,7 +67,7 @@ Synchronizes stock with sites that are connected to one another, using WooCommer
 *	Test - Tested up to WordPress version 4.0.
 *	Test - Test up to WooCommerce version 2.1.12.
 *	Feature - Added overview of all the synchronization websites with status and version.
-*	Feature - Addded overview of all the products with SKU and stock quantity.
+*	Feature - Added overview of all the products with SKU and stock quantity.
 *	Tweak - Improved the log overview.
 *	Feature - Added an empty log button.
 *	Tweak - Removed the synchronize stock meta box on edit product page. 

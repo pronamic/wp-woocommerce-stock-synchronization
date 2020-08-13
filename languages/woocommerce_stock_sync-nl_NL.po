@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: WooCommerce Stock Synchronization\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-woocommerce-"
 "stock-synchronization\n"
-"POT-Creation-Date: 2018-10-29 13:25:51+00:00\n"
-"PO-Revision-Date: 2018-10-29 14:28+0100\n"
+"POT-Creation-Date: 2020-08-13 09:36:50+00:00\n"
+"PO-Revision-Date: 2020-08-13 11:38+0200\n"
 "Last-Translator: Reüel van der Steege <reuel@pronamic.nl>\n"
 "Language-Team: Pronamic <info@pronamic.nl>\n"
 "Language: nl_NL\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin/page.php:4
@@ -24,7 +24,7 @@ msgstr "Instellingen"
 msgid "Websites"
 msgstr "Websites"
 
-#: admin/page.php:6 admin/tab-stock.php:64
+#: admin/page.php:6 admin/tab-stock.php:65
 msgid "Stock"
 msgstr "Voorraad"
 
@@ -73,31 +73,31 @@ msgstr "Even geduld, bezig met synchroniseren."
 msgid "products synchronized."
 msgstr "producten gesynchroniseerd."
 
-#: admin/tab-stock.php:61
+#: admin/tab-stock.php:62
 msgid "ID"
 msgstr "ID"
 
-#: admin/tab-stock.php:62
+#: admin/tab-stock.php:63
 msgid "Title"
 msgstr "Titel"
 
-#: admin/tab-stock.php:63
+#: admin/tab-stock.php:64
 msgid "SKU"
 msgstr "SKU"
 
-#: admin/tab-stock.php:74
+#: admin/tab-stock.php:75
 msgid "No stock found."
 msgstr "Geen voorraad gevonden."
 
-#: admin/tab-stock.php:132
+#: admin/tab-stock.php:134
 msgid ""
-"The number of displayed products is limited to 100. Stock quantites for all "
+"The number of displayed products is limited to 100. Stock quantities for all "
 "products will be synchronized during synchronization."
 msgstr ""
 "Het aantal getoonde producten is gelimiteerd tot 100. Tijdens het "
 "synchroniseren zal de voorraad voor alle producten gesynchroniseerd worden."
 
-#: admin/tab-stock.php:139
+#: admin/tab-stock.php:141
 msgid "Push Stock"
 msgstr "Push voorraad"
 
@@ -121,15 +121,15 @@ msgstr "Fout"
 msgid "No websites found."
 msgstr "Geen websites gevonden."
 
-#: classes/class-admin.php:28
+#: classes/class-admin.php:37
 msgid "General"
 msgstr "Algemeen"
 
-#: classes/class-admin.php:35
+#: classes/class-admin.php:44
 msgid "URLs"
 msgstr "URL's"
 
-#: classes/class-admin.php:44
+#: classes/class-admin.php:53
 msgid "Password"
 msgstr "Wachtwoord"
 
@@ -137,22 +137,22 @@ msgstr "Wachtwoord"
 msgid "WooCommerce Stock Synchronization"
 msgstr "WooCommerce voorraad synchronisatie"
 
-#: classes/class-admin.php:226
+#: classes/class-admin.php:248
 msgid "Stock Synchronization"
 msgstr "Voorraad synchronisatie"
 
 #. translators: 1: url, 2: response code
-#: classes/class-synchronizer.php:143
+#: classes/class-synchronizer.php:152
 msgid "Succeeded - Synchronization to: %1$s (response code: %2$s)"
 msgstr "Geslaagd - Synchronisatie naar: %1$s (antwoordcode: %2$s)"
 
 #. translators: 1: url, 2: response code, 3: error
-#: classes/class-synchronizer.php:156
+#: classes/class-synchronizer.php:165
 msgid "Failed - Synchronization to: %1$s (response code: %2$s, error: %3$s)"
 msgstr "Mislukt - Synchronisatie naar: %1$s (antwoordcode: %2$s, fout: %3$s)"
 
 #. translators: %s: <code>source URL</code>
-#: classes/class-synchronizer.php:194
+#: classes/class-synchronizer.php:201
 msgid "Received synchronization request from %s"
 msgstr "Synchronisatie verzoek ontvangen van %s"
 
@@ -176,14 +176,1089 @@ msgstr "Pronamic"
 msgid "https://www.pronamic.eu/"
 msgstr "https://www.pronamic.eu/"
 
-#~ msgid "Response Code"
-#~ msgstr "Antwoordcode"
+#, fuzzy
+#~| msgid "Activity log"
+#~ msgid "Activity log for the action."
+#~ msgstr "Activiteiten log"
 
-#~ msgid "From"
-#~ msgstr "Van"
+#, fuzzy
+#~| msgid "Delete plugin"
+#~ msgid "Delete"
+#~ msgstr "Verwijder plugin"
+
+#, fuzzy
+#~| msgid "%s ago"
+#~ msgid " (%s ago)"
+#~ msgstr "%s geleden"
+
+#, fuzzy
+#~| msgid "Version"
+#~ msgid "Version:"
+#~ msgstr "Versie"
+
+#, fuzzy
+#~| msgid "Status"
+#~ msgid "Action Status"
+#~ msgstr "Status"
+
+#~ msgid "Search"
+#~ msgstr "Zoeken"
+
+#, fuzzy
+#~| msgid "Address"
+#~ msgid "Add"
+#~ msgstr "Adres"
+
+#, fuzzy
+#~| msgid "No logs found."
+#~ msgid "No actions found"
+#~ msgstr "Geen logs gevonden."
+
+#, fuzzy
+#~| msgid "Static"
+#~ msgid "Vatican"
+#~ msgstr "Statisch"
+
+#, fuzzy
+#~| msgid "restore"
+#~ msgid "Natore"
+#~ msgstr "herstel"
+
+#, fuzzy
+#~| msgid "General"
+#~ msgid "Geneva"
+#~ msgstr "Algemeen"
+
+#, fuzzy
+#~| msgid "General"
+#~ msgid "Kerala"
+#~ msgstr "Algemeen"
+
+#, fuzzy
+#~| msgid "Message"
+#~ msgid "Messina"
+#~ msgstr "Bericht"
+
+#, fuzzy
+#~| msgid "Uninstall"
+#~ msgid "Installed"
+#~ msgstr "Verwijderen"
+
+#, fuzzy
+#~| msgid "No logs found."
+#~ msgid "No keys found."
+#~ msgstr "Geen logs gevonden."
+
+#~ msgid "Description"
+#~ msgstr "Beschrijving"
+
+#, fuzzy
+#~| msgid "Version"
+#~ msgid "Permissions"
+#~ msgstr "Versie"
+
+#, fuzzy
+#~| msgid "unknown"
+#~ msgid "Unknown"
+#~ msgstr "onbekend"
+
+#, fuzzy
+#~| msgid "Search"
+#~ msgid "Search key"
+#~ msgstr "Zoeken"
+
+#~ msgid "Click to toggle"
+#~ msgstr "Klik om te wisselen"
+
+#, fuzzy
+#~| msgid "Configuration"
+#~ msgid "Configure terms"
+#~ msgstr "Configuratie"
+
+#, fuzzy
+#~| msgid "WooCommerce Stock Synchronization"
+#~ msgid "WooCommerce Endpoint"
+#~ msgstr "WooCommerce voorraad synchronisatie"
+
+#, fuzzy
+#~| msgid "Password"
+#~ msgid "Lost password"
+#~ msgstr "Wachtwoord"
+
+#, fuzzy
+#~| msgid "WooCommerce Stock Synchronization"
+#~ msgid "WooCommerce Status"
+#~ msgstr "WooCommerce voorraad synchronisatie"
+
+#, fuzzy
+#~| msgid "No logs found."
+#~ msgid "No orders found"
+#~ msgstr "Geen logs gevonden."
+
+#, fuzzy
+#~| msgid "Status"
+#~ msgid "System status"
+#~ msgstr "Status"
+
+#~ msgid "Found a bug?"
+#~ msgstr "Bug gevonden?"
+
+#, fuzzy
+#~| msgid "Time"
+#~ msgid "Timestamp"
+#~ msgstr "Tijd"
+
+#, fuzzy
+#~| msgid "WooCommerce Stock Synchronization"
+#~ msgid "WooCommerce settings"
+#~ msgstr "WooCommerce voorraad synchronisatie"
+
+#, fuzzy
+#~| msgid "WooCommerce Stock Synchronization"
+#~ msgid "WooCommerce extensions"
+#~ msgstr "WooCommerce voorraad synchronisatie"
+
+#, fuzzy
+#~| msgid "%s ago"
+#~ msgid "%s actions"
+#~ msgstr "%s geleden"
+
+#, fuzzy
+#~| msgid "Overview"
+#~ msgid "Reviews"
+#~ msgstr "Overzicht"
+
+#, fuzzy
+#~| msgid "Description"
+#~ msgid "Product description"
+#~ msgstr "Beschrijving"
+
+#, fuzzy
+#~| msgid "Log deleted."
+#~ msgid "Custom field deleted."
+#~ msgstr "Log verwijderd."
+
+#, fuzzy
+#~| msgid "products synchronized."
+#~ msgid "Product saved."
+#~ msgstr "producten gesynchroniseerd."
+
+#, fuzzy
+#~| msgid "Description"
+#~ msgid "Description (optional)"
+#~ msgstr "Beschrijving"
+
+#, fuzzy
+#~| msgid "Address"
+#~ msgid "Address line 1"
+#~ msgstr "Adres"
+
+#, fuzzy
+#~| msgid "Address"
+#~ msgid "Address line 2"
+#~ msgstr "Adres"
+
+#, fuzzy
+#~| msgid "Address"
+#~ msgid "Email address"
+#~ msgstr "Adres"
+
+#, fuzzy
+#~| msgid "Active"
+#~ msgid "Activate"
+#~ msgstr "Actief"
+
+#~ msgid "Address"
+#~ msgstr "Adres"
+
+#, fuzzy
+#~| msgid "Status"
+#~ msgid "State"
+#~ msgstr "Status"
+
+#, fuzzy
+#~| msgid "WooCommerce Stock Synchronization"
+#~ msgid "WooCommerce Services icon"
+#~ msgstr "WooCommerce voorraad synchronisatie"
+
+#, fuzzy
+#~| msgid "WooCommerce Stock Synchronization"
+#~ msgid "WooCommerce Stripe Gateway"
+#~ msgstr "WooCommerce voorraad synchronisatie"
+
+#, fuzzy
+#~| msgid "Settings"
+#~ msgid "Review Settings"
+#~ msgstr "Instellingen"
+
+#, fuzzy
+#~| msgid "No websites found."
+#~ msgid "No webhooks found."
+#~ msgstr "Geen websites gevonden."
+
+#~ msgid "Active"
+#~ msgstr "Actief"
+
+#, fuzzy
+#~| msgid "Active"
+#~ msgid "Inactive"
+#~ msgstr "Actief"
+
+#, fuzzy
+#~| msgid "WooCommerce Stock Synchronization"
+#~ msgid "WooCommerce Extensions"
+#~ msgstr "WooCommerce voorraad synchronisatie"
+
+#, fuzzy
+#~| msgid "Description"
+#~ msgid "Subscriptions"
+#~ msgstr "Beschrijving"
+
+#, fuzzy
+#~| msgid "Description"
+#~ msgid "Lifetime Subscription"
+#~ msgstr "Beschrijving"
+
+#, fuzzy
+#~| msgid "Description"
+#~ msgid "My Subscriptions"
+#~ msgstr "Beschrijving"
+
+#, fuzzy
+#~| msgid "WooCommerce Stock Synchronization"
+#~ msgid "WooCommerce.com Subscriptions %s"
+#~ msgstr "WooCommerce voorraad synchronisatie"
+
+#, fuzzy
+#~| msgid "Description"
+#~ msgid "Short description"
+#~ msgstr "Beschrijving"
+
+#, fuzzy
+#~| msgid "Status"
+#~ msgid "Tax status"
+#~ msgstr "Status"
+
+#, fuzzy
+#~| msgid "No stock found."
+#~ msgid "Low stock amount"
+#~ msgstr "Geen voorraad gevonden."
+
+#, fuzzy
+#~| msgid "Width"
+#~ msgid "Width (%s)"
+#~ msgstr "Breedte"
+
+#, fuzzy
+#~| msgid "Height"
+#~ msgid "Height (%s)"
+#~ msgstr "Hoogte"
+
+#, fuzzy
+#~| msgid "Description"
+#~ msgid "Position"
+#~ msgstr "Beschrijving"
+
+#, fuzzy
+#~| msgid "Post type"
+#~ msgid "Coupon type"
+#~ msgstr "Bericht type"
+
+#, fuzzy
+#~| msgid "Show Google Maps"
+#~ msgid "Show all types"
+#~ msgstr "Google Maps weergeven"
 
 #~ msgid "Date"
 #~ msgstr "Datum"
+
+#, fuzzy
+#~| msgid "Location"
+#~ msgid "Actions"
+#~ msgstr "Locatie"
+
+#, fuzzy
+#~| msgid "Overview"
+#~ msgid "Preview"
+#~ msgstr "Overzicht"
+
+#, fuzzy
+#~| msgid "Stock"
+#~ msgid "In stock"
+#~ msgstr "Voorraad"
+
+#, fuzzy
+#~| msgid "Settings"
+#~ msgid "Sorting"
+#~ msgstr "Instellingen"
+
+#, fuzzy
+#~| msgid "Post type"
+#~ msgid "Discount type"
+#~ msgstr "Bericht type"
+
+#, fuzzy
+#~| msgid "Description"
+#~ msgid "No restrictions"
+#~ msgstr "Beschrijving"
+
+#, fuzzy
+#~| msgid "Status"
+#~ msgid "Status:"
+#~ msgstr "Status"
+
+#, fuzzy
+#~| msgid "Address"
+#~ msgid "Address:"
+#~ msgstr "Adres"
+
+#, fuzzy
+#~| msgid "Post type"
+#~ msgid "Note type"
+#~ msgstr "Bericht type"
+
+#, fuzzy
+#~| msgid "Delete plugin"
+#~ msgid "Delete image"
+#~ msgstr "Verwijder plugin"
+
+#, fuzzy
+#~| msgid "Delete plugin"
+#~ msgid "Delete item"
+#~ msgstr "Verwijder plugin"
+
+#, fuzzy
+#~| msgid "Geocode"
+#~ msgid "Rate code"
+#~ msgstr "Geocodeer"
+
+#, fuzzy
+#~| msgid "Delete plugin"
+#~ msgid "Delete note"
+#~ msgstr "Verwijder plugin"
+
+#, fuzzy
+#~| msgid "Status"
+#~ msgid "Stock status"
+#~ msgstr "Status"
+
+#, fuzzy
+#~| msgid "Height"
+#~ msgid "Weight"
+#~ msgstr "Hoogte"
+
+#~ msgid "Width"
+#~ msgstr "Breedte"
+
+#~ msgid "Height"
+#~ msgstr "Hoogte"
+
+#, fuzzy
+#~| msgid "Save Changes"
+#~ msgid "Save changes"
+#~ msgstr "Wijzigingen opslaan"
+
+#~ msgid "unknown"
+#~ msgstr "onbekend"
+
+#, fuzzy
+#~| msgid "Configuration"
+#~ msgid "Confirm navigation"
+#~ msgstr "Configuratie"
+
+#, fuzzy
+#~| msgid "No logs found."
+#~ msgid "No used coupons found"
+#~ msgstr "Geen logs gevonden."
+
+#, fuzzy
+#~| msgid "No stock found."
+#~ msgid "No customers found."
+#~ msgstr "Geen voorraad gevonden."
+
+#~ msgid "Location"
+#~ msgstr "Locatie"
+
+#, fuzzy
+#~| msgid "Version"
+#~ msgid "Permission ID"
+#~ msgstr "Versie"
+
+#, fuzzy
+#~| msgid "Address"
+#~ msgid "IP address"
+#~ msgstr "Adres"
+
+#, fuzzy
+#~| msgid "Active"
+#~ msgid "Active filters"
+#~ msgstr "Actief"
+
+#, fuzzy
+#~| msgid "No logs found."
+#~ msgid "No customer downloads found."
+#~ msgstr "Geen logs gevonden."
+
+#, fuzzy
+#~| msgid "No stock found."
+#~ msgid "No low in stock products found."
+#~ msgstr "Geen voorraad gevonden."
+
+#, fuzzy
+#~| msgid "No stock found."
+#~ msgid "No out of stock products found."
+#~ msgstr "Geen voorraad gevonden."
+
+#, fuzzy
+#~| msgid "Number posts to geocode: %s"
+#~ msgid "Number of orders"
+#~ msgstr "Aantel berichten te geocoderen: %s"
+
+#, fuzzy
+#~| msgid "No logs found."
+#~ msgid "No products found."
+#~ msgstr "Geen logs gevonden."
+
+#, fuzzy
+#~| msgid "Address"
+#~ msgid "Addresses"
+#~ msgstr "Adres"
+
+#, fuzzy
+#~| msgid "Post type"
+#~ msgid "Content type"
+#~ msgstr "Bericht type"
+
+#, fuzzy
+#~| msgid "Address"
+#~ msgid "Store Address"
+#~ msgstr "Adres"
+
+#, fuzzy
+#~| msgid "General"
+#~ msgid "General options"
+#~ msgstr "Algemeen"
+
+#, fuzzy
+#~| msgid "Height"
+#~ msgid "Right"
+#~ msgstr "Hoogte"
+
+#, fuzzy
+#~| msgid "Configuration"
+#~ msgid "Integration"
+#~ msgstr "Configuratie"
+
+#, fuzzy
+#~| msgid "Location"
+#~ msgid "Notifications"
+#~ msgstr "Locatie"
+
+#, fuzzy
+#~| msgid "Location"
+#~ msgid "Calculations"
+#~ msgstr "Locatie"
+
+#, fuzzy
+#~| msgid "Static"
+#~ msgid "State code"
+#~ msgstr "Statisch"
+
+#, fuzzy
+#~| msgid "Save Changes"
+#~ msgid "Save shipping classes"
+#~ msgstr "Wijzigingen opslaan"
+
+#, fuzzy
+#~| msgid "Save Changes"
+#~ msgid "Cancel changes"
+#~ msgstr "Wijzigingen opslaan"
+
+#, fuzzy
+#~| msgid "Settings"
+#~ msgid "%s Settings"
+#~ msgstr "Instellingen"
+
+#, fuzzy
+#~| msgid "Search"
+#~ msgid "Search&hellip;"
+#~ msgstr "Zoeken"
+
+#, fuzzy
+#~| msgid "No websites found."
+#~ msgid "No matching tax rates found."
+#~ msgstr "Geen websites gevonden."
+
+#, fuzzy
+#~| msgid "Log deleted."
+#~ msgid "Coupon deleted"
+#~ msgstr "Log verwijderd."
+
+#, fuzzy
+#~| msgid "restore"
+#~ msgid "Coupon restored"
+#~ msgstr "herstel"
+
+#, fuzzy
+#~| msgid "Log deleted."
+#~ msgid "Customer deleted"
+#~ msgstr "Log verwijderd."
+
+#, fuzzy
+#~| msgid "Log deleted."
+#~ msgid "Order deleted"
+#~ msgstr "Log verwijderd."
+
+#, fuzzy
+#~| msgid "restore"
+#~ msgid "Order restored"
+#~ msgstr "herstel"
+
+#, fuzzy
+#~| msgid "Log deleted."
+#~ msgid "Product deleted"
+#~ msgstr "Log verwijderd."
+
+#, fuzzy
+#~| msgid "restore"
+#~ msgid "Product restored"
+#~ msgstr "herstel"
+
+#, fuzzy
+#~| msgid "Location"
+#~ msgid "Action"
+#~ msgstr "Locatie"
+
+#, fuzzy
+#~| msgid "Active"
+#~ msgid "Action event"
+#~ msgstr "Actief"
+
+#, fuzzy
+#~| msgid "Version"
+#~ msgid "API Version"
+#~ msgstr "Versie"
+
+#, fuzzy
+#~| msgid "General"
+#~ msgid "Generate CSV"
+#~ msgstr "Algemeen"
+
+#, fuzzy
+#~| msgid "Search"
+#~ msgid "Search logs"
+#~ msgstr "Zoeken"
+
+#, fuzzy
+#~| msgid "Delete plugin"
+#~ msgid "Delete log"
+#~ msgstr "Verwijder plugin"
+
+#, fuzzy
+#~| msgid "WooCommerce Stock Synchronization"
+#~ msgid "WooCommerce version"
+#~ msgstr "WooCommerce voorraad synchronisatie"
+
+#, fuzzy
+#~| msgid "WooCommerce Stock Synchronization"
+#~ msgid "WooCommerce Blocks package"
+#~ msgstr "WooCommerce voorraad synchronisatie"
+
+#, fuzzy
+#~| msgid "Activity log"
+#~ msgid "Active Plugin"
+#~ msgstr "Activiteiten log"
+
+#, fuzzy
+#~| msgid "Version"
+#~ msgid "PHP version"
+#~ msgstr "Versie"
+
+#, fuzzy
+#~| msgid "Version"
+#~ msgid "cURL version"
+#~ msgstr "Versie"
+
+#, fuzzy
+#~| msgid "Uninstall"
+#~ msgid "SUHOSIN installed"
+#~ msgstr "Verwijderen"
+
+#, fuzzy
+#~| msgid "Version"
+#~ msgid "MySQL version"
+#~ msgstr "Versie"
+
+#, fuzzy
+#~| msgid "Post type"
+#~ msgid "Post Type Counts"
+#~ msgstr "Bericht type"
+
+#, fuzzy
+#~| msgid "Delete plugin"
+#~ msgid "Active plugins"
+#~ msgstr "Verwijder plugin"
+
+#, fuzzy
+#~| msgid "Delete plugin"
+#~ msgid "Inactive plugins"
+#~ msgstr "Verwijder plugin"
+
+#, fuzzy
+#~| msgid "Overview"
+#~ msgid "Overrides"
+#~ msgstr "Overzicht"
+
+#, fuzzy
+#~| msgid "Stock"
+#~ msgid "Stock qty"
+#~ msgstr "Voorraad"
+
+#, fuzzy
+#~| msgid "Error"
+#~ msgid "Error:"
+#~ msgstr "Fout"
+
+#, fuzzy
+#~| msgid "Delete plugin"
+#~ msgid "Deleted %s"
+#~ msgstr "Verwijder plugin"
+
+#, fuzzy
+#~| msgid "Stock"
+#~ msgid "Stock: %d"
+#~ msgstr "Voorraad"
+
+#, fuzzy
+#~| msgid "Description"
+#~ msgid "Description is missing."
+#~ msgstr "Beschrijving"
+
+#, fuzzy
+#~| msgid "Error"
+#~ msgid "Error: %s."
+#~ msgstr "Fout"
+
+#, fuzzy
+#~| msgid "Error"
+#~ msgid "Error 404"
+#~ msgstr "Fout"
+
+#, fuzzy
+#~| msgid "Geocode"
+#~ msgid "Postcode"
+#~ msgstr "Geocodeer"
+
+#, fuzzy
+#~| msgid "Post type"
+#~ msgid "Postal code"
+#~ msgstr "Bericht type"
+
+#, fuzzy
+#~| msgid "Location"
+#~ msgid "optional"
+#~ msgstr "Locatie"
+
+#, fuzzy
+#~| msgid "Zero results"
+#~ msgid "Zero rate"
+#~ msgstr "Geen resultaten"
+
+#, fuzzy
+#~| msgid "WooCommerce Stock Synchronization"
+#~ msgid "View WooCommerce documentation"
+#~ msgstr "WooCommerce voorraad synchronisatie"
+
+#, fuzzy
+#~| msgid "No websites found."
+#~ msgid "No categories found"
+#~ msgstr "Geen websites gevonden."
+
+#, fuzzy
+#~| msgid "Search"
+#~ msgid "Search tags"
+#~ msgstr "Zoeken"
+
+#, fuzzy
+#~| msgid "No logs found."
+#~ msgid "No tags found"
+#~ msgstr "Geen logs gevonden."
+
+#, fuzzy
+#~| msgid "Search"
+#~ msgid "Search %s"
+#~ msgstr "Zoeken"
+
+#, fuzzy
+#~| msgid "No logs found."
+#~ msgid "No products found"
+#~ msgstr "Geen logs gevonden."
+
+#, fuzzy
+#~| msgid "Search"
+#~ msgid "Search orders"
+#~ msgstr "Zoeken"
+
+#, fuzzy
+#~| msgid "Search"
+#~ msgid "Search coupons"
+#~ msgstr "Zoeken"
+
+#, fuzzy
+#~| msgid "No logs found."
+#~ msgid "No coupons found"
+#~ msgstr "Geen logs gevonden."
+
+#, fuzzy
+#~| msgid "Configuration"
+#~ msgid "Coupons navigation"
+#~ msgstr "Configuratie"
+
+#, fuzzy
+#~| msgid "Address"
+#~ msgid "Email Address"
+#~ msgstr "Adres"
+
+#, fuzzy
+#~| msgid "Address"
+#~ msgid "IP Address"
+#~ msgstr "Adres"
+
+#, fuzzy
+#~| msgid "Address"
+#~ msgid "Billing Address"
+#~ msgstr "Adres"
+
+#, fuzzy
+#~| msgid "Address"
+#~ msgid "Shipping Address"
+#~ msgstr "Adres"
+
+#, fuzzy
+#~| msgid "Log deleted."
+#~ msgid "Deleted"
+#~ msgstr "Log verwijderd."
+
+#, fuzzy
+#~| msgid "ID"
+#~ msgid "ID."
+#~ msgstr "ID"
+
+#, fuzzy
+#~| msgid "Password"
+#~ msgid "Reset password"
+#~ msgstr "Wachtwoord"
+
+#, fuzzy
+#~| msgid "Delete plugin"
+#~ msgid "Delete template file"
+#~ msgstr "Verwijder plugin"
+
+#, fuzzy
+#~| msgid "Geocode"
+#~ msgid "Sort code"
+#~ msgstr "Geocodeer"
+
+#, fuzzy
+#~| msgid "Location"
+#~ msgid "Other locations"
+#~ msgstr "Locatie"
+
+#, fuzzy
+#~| msgid "Address"
+#~ msgid "Address override"
+#~ msgstr "Adres"
+
+#, fuzzy
+#~| msgid "Password"
+#~ msgid "Live API password"
+#~ msgstr "Wachtwoord"
+
+#, fuzzy
+#~| msgid "Zero results"
+#~ msgid "Search results only"
+#~ msgstr "Geen resultaten"
+
+#, fuzzy
+#~| msgid "Error"
+#~ msgid "Error: %s"
+#~ msgstr "Fout"
+
+#, fuzzy
+#~| msgid "Search"
+#~ msgid "Show hierarchy"
+#~ msgstr "Zoeken"
+
+#, fuzzy
+#~| msgid "Search"
+#~ msgid "Product Search"
+#~ msgstr "Zoeken"
+
+#, fuzzy
+#~| msgid "Number posts to geocode: %s"
+#~ msgid "Number of products to show"
+#~ msgstr "Aantel berichten te geocoderen: %s"
+
+#, fuzzy
+#~| msgid "Address"
+#~ msgid "IP address."
+#~ msgstr "Adres"
+
+#, fuzzy
+#~| msgid "Response Code"
+#~ msgid "Coupon Code"
+#~ msgstr "Antwoordcode"
+
+#, fuzzy
+#~| msgid "Number posts to geocode: %s"
+#~ msgid "Number of products to be added."
+#~ msgstr "Aantel berichten te geocoderen: %s"
+
+#, fuzzy
+#~| msgid "Post type"
+#~ msgid "Product type."
+#~ msgstr "Bericht type"
+
+#, fuzzy
+#~| msgid "Active"
+#~ msgid "Last Active"
+#~ msgstr "Actief"
+
+#, fuzzy
+#~| msgid "Post type"
+#~ msgid "Postal Code"
+#~ msgstr "Bericht type"
+
+#, fuzzy
+#~| msgid "products synchronized."
+#~ msgid "Product price."
+#~ msgstr "producten gesynchroniseerd."
+
+#, fuzzy
+#~| msgid "products synchronized."
+#~ msgid "Products sold."
+#~ msgstr "producten gesynchroniseerd."
+
+#, fuzzy
+#~| msgid "Status"
+#~ msgid "Stock status."
+#~ msgstr "Status"
+
+#, fuzzy
+#~| msgid "Status"
+#~ msgid "State."
+#~ msgstr "Status"
+
+#, fuzzy
+#~| msgid "WooCommerce Stock Synchronization"
+#~ msgid "WooCommerce Onboarding"
+#~ msgstr "WooCommerce voorraad synchronisatie"
+
+#, fuzzy
+#~| msgid "Active"
+#~ msgid "Deactivate"
+#~ msgstr "Actief"
+
+#, fuzzy
+#~| msgid "Activate Google Maps"
+#~ msgid "Activate usage tracking"
+#~ msgstr "Activeer Google Maps"
+
+#, fuzzy
+#~| msgid "Uninstall"
+#~ msgid "Install now"
+#~ msgstr "Verwijderen"
+
+#, fuzzy
+#~| msgid "Description"
+#~ msgid "Renew Subscription"
+#~ msgstr "Beschrijving"
+
+#, fuzzy
+#~| msgid "Log deleted."
+#~ msgid "[deleted]"
+#~ msgstr "Log verwijderd."
+
+#, fuzzy
+#~| msgid "Error"
+#~ msgid "Error code"
+#~ msgstr "Fout"
+
+#, fuzzy
+#~| msgid "Message"
+#~ msgid "Error message"
+#~ msgstr "Bericht"
+
+#, fuzzy
+#~| msgid "Description"
+#~ msgid "Button description."
+#~ msgstr "Beschrijving"
+
+#, fuzzy
+#~| msgid "Description"
+#~ msgid "Term description."
+#~ msgstr "Beschrijving"
+
+#, fuzzy
+#~| msgid "Description"
+#~ msgid "Coupon description."
+#~ msgstr "Beschrijving"
+
+#, fuzzy
+#~| msgid "Address"
+#~ msgid "Address line 1."
+#~ msgstr "Adres"
+
+#, fuzzy
+#~| msgid "Address"
+#~ msgid "Address line 2."
+#~ msgstr "Adres"
+
+#, fuzzy
+#~| msgid "Description"
+#~ msgid "Product description."
+#~ msgstr "Beschrijving"
+
+#, fuzzy
+#~| msgid "Post type"
+#~ msgid "Group type."
+#~ msgstr "Bericht type"
+
+#, fuzzy
+#~| msgid "Status"
+#~ msgid "Order Status"
+#~ msgstr "Status"
+
+#, fuzzy
+#~| msgid "Settings"
+#~ msgid "Setting value."
+#~ msgstr "Instellingen"
+
+#, fuzzy
+#~| msgid "Description"
+#~ msgid "Variation description."
+#~ msgstr "Beschrijving"
+
+#, fuzzy
+#~| msgid "Settings"
+#~ msgid "Settings group ID."
+#~ msgstr "Instellingen"
+
+#, fuzzy
+#~| msgid "WooCommerce Stock Synchronization"
+#~ msgid "WooCommerce transients"
+#~ msgstr "WooCommerce voorraad synchronisatie"
+
+#, fuzzy
+#~| msgid "Description"
+#~ msgid "Tool description."
+#~ msgstr "Beschrijving"
+
+#, fuzzy
+#~| msgid "WooCommerce Stock Synchronization"
+#~ msgid "WooCommerce version."
+#~ msgstr "WooCommerce voorraad synchronisatie"
+
+#, fuzzy
+#~| msgid "Log deleted."
+#~ msgid "Log directory."
+#~ msgstr "Log verwijderd."
+
+#, fuzzy
+#~| msgid "Version"
+#~ msgid "PHP version."
+#~ msgstr "Versie"
+
+#, fuzzy
+#~| msgid "Version"
+#~ msgid "cURL version."
+#~ msgstr "Versie"
+
+#, fuzzy
+#~| msgid "Delete plugin"
+#~ msgid "Active plugins."
+#~ msgstr "Verwijder plugin"
+
+#, fuzzy
+#~| msgid "Delete plugin"
+#~ msgid "Inactive plugins."
+#~ msgstr "Verwijder plugin"
+
+#, fuzzy
+#~| msgid "Settings"
+#~ msgid "Settings."
+#~ msgstr "Instellingen"
+
+#, fuzzy
+#~| msgid "Click to toggle"
+#~ msgid "Click here to login"
+#~ msgstr "Klik om te wisselen"
+
+#, fuzzy
+#~| msgid "Date"
+#~ msgid "Date:"
+#~ msgstr "Datum"
+
+#, fuzzy
+#~| msgid "Password"
+#~ msgid "Password change"
+#~ msgstr "Wachtwoord"
+
+#, fuzzy
+#~| msgid "Save Changes"
+#~ msgid "Save address"
+#~ msgstr "Wijzigingen opslaan"
+
+#, fuzzy
+#~| msgid "Password"
+#~ msgid "New password"
+#~ msgstr "Wachtwoord"
+
+#, fuzzy
+#~| msgid "No stock found."
+#~ msgid "No saved methods found."
+#~ msgstr "Geen voorraad gevonden."
+
+#, fuzzy
+#~| msgid "Search"
+#~ msgid "Search for:"
+#~ msgstr "Zoeken"
+
+#, fuzzy
+#~| msgid "No stock found."
+#~ msgctxt "enhanced select"
+#~ msgid "No matches found"
+#~ msgstr "Geen voorraad gevonden."
+
+#, fuzzy
+#~| msgid "Stock"
+#~ msgctxt "Quantity in stock"
+#~ msgid "Stock"
+#~ msgstr "Voorraad"
+
+#, fuzzy
+#~| msgid "%s ago"
+#~ msgctxt "%s = human-readable time difference"
+#~ msgid "%s ago"
+#~ msgstr "%s geleden"
+
+#, fuzzy
+#~| msgid "From"
+#~ msgctxt "min_price"
+#~ msgid "From:"
+#~ msgstr "Van"
+
+#, fuzzy
+#~| msgid "Password"
+#~ msgctxt "Word count type. Do not translate!"
+#~ msgid "words"
+#~ msgstr "Wachtwoord"
+
+#, fuzzy
+#~| msgid "Search"
+#~ msgctxt "submit button"
+#~ msgid "Search"
+#~ msgstr "Zoeken"
 
 #~ msgid "To"
 #~ msgstr "Aan"
@@ -202,9 +1277,6 @@ msgstr "https://www.pronamic.eu/"
 #~ "Dit zal de voorraad van alle WooCommerce producten op deze website "
 #~ "doorgeven aan de gespecificeerde URL's."
 
-#~ msgid "Activity log"
-#~ msgstr "Activiteiten log"
-
 #~ msgid "Synchronization was successful!"
 #~ msgstr "Synchronisatie was succesvol!"
 
@@ -222,14 +1294,8 @@ msgstr "https://www.pronamic.eu/"
 #~ "Bestelling voorraad hersteld -[<a href=\"%s\">%d</a>]- van de %d websites "
 #~ "antwoorden met succes."
 
-#~ msgid "unknown"
-#~ msgstr "onbekend"
-
 #~ msgid "reduce"
 #~ msgstr "verminder"
-
-#~ msgid "restore"
-#~ msgstr "herstel"
 
 #~ msgid "Stock %s request by %s granted."
 #~ msgstr "Voorraad %s verzoek door %s toegestaan."
@@ -252,26 +1318,11 @@ msgstr "https://www.pronamic.eu/"
 #~ msgid "percent"
 #~ msgstr "procent"
 
-#~ msgid "Active"
-#~ msgstr "Actief"
-
-#~ msgid "Show Google Maps"
-#~ msgstr "Google Maps weergeven"
-
-#~ msgid "Description"
-#~ msgstr "Beschrijving"
-
-#~ msgid "Address"
-#~ msgstr "Adres"
-
 #~ msgid "Geocode &darr;"
 #~ msgstr "Geocoderen &darr;"
 
 #~ msgid "Reverse Geocode &uarr;"
 #~ msgstr "Omgekeerd geocoderen &uarr;"
-
-#~ msgid "Location"
-#~ msgstr "Locatie"
 
 #~ msgid "Tip: Change the zoom level and map type to your own wishes."
 #~ msgstr "Tip: wijzig het zoomniveau en map type naar je eigen wens."
@@ -279,26 +1330,8 @@ msgstr "https://www.pronamic.eu/"
 #~ msgid "Configuration - Pronamic Google Maps"
 #~ msgstr "Configuratie - Pronamic Google Maps"
 
-#~ msgid "Post type"
-#~ msgstr "Bericht type"
-
-#~ msgid "Activate Google Maps"
-#~ msgstr "Activeer Google Maps"
-
-#~ msgid "Save Changes"
-#~ msgstr "Wijzigingen opslaan"
-
 #~ msgid "Geocoder - Pronamic Google Maps"
 #~ msgstr "Geocoder - Pronamic Google Maps"
-
-#~ msgid "Number posts to geocode: %s"
-#~ msgstr "Aantel berichten te geocoderen: %s"
-
-#~ msgid "Geocode"
-#~ msgstr "Geocodeer"
-
-#~ msgid "Zero results"
-#~ msgstr "Geen resultaten"
 
 #~ msgid ""
 #~ "We found no geocoding results for the following %s posts, adjust them "
@@ -307,37 +1340,16 @@ msgstr "https://www.pronamic.eu/"
 #~ "We konden geen gecode resultaten vinden voor de volgende%s berichten, pas "
 #~ "deze handmatig aan wanneer nodig."
 
-#~ msgid "Delete plugin"
-#~ msgstr "Verwijder plugin"
-
 #~ msgid "Warning! This will delete all Pronamic Google Maps data and options."
 #~ msgstr ""
 #~ "Waarschuwing! Dit zal alle Pronamic Google Maps data en opties "
 #~ "verwijderen."
-
-#~ msgid "Uninstall"
-#~ msgstr "Verwijderen"
 
 #~ msgid "Latitude"
 #~ msgstr "Breedtegraad"
 
 #~ msgid "Longitude"
 #~ msgstr "Lengtegraad"
-
-#~ msgid "Width"
-#~ msgstr "Breedte"
-
-#~ msgid "Height"
-#~ msgstr "Hoogte"
-
-#~ msgid "Static"
-#~ msgstr "Statisch"
-
-#~ msgid "Search"
-#~ msgstr "Zoeken"
-
-#~ msgid "Click to toggle"
-#~ msgstr "Klik om te wisselen"
 
 #~ msgid "Donate $10, $20 or $50!"
 #~ msgstr "Doneer $10, $20 of $50!"
@@ -372,9 +1384,3 @@ msgstr "https://www.pronamic.eu/"
 
 #~ msgid "Let other people know that it works with your WordPress setup."
 #~ msgstr "Laat anderen weten dat het werk op je WordPress installatie."
-
-#~ msgid "Found a bug?"
-#~ msgstr "Bug gevonden?"
-
-#~ msgid "Configuration"
-#~ msgstr "Configuratie"
