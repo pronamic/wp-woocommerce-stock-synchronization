@@ -13,7 +13,8 @@ module.exports = function( grunt ) {
 				'!deploy/**',
 				'!node_modules/**',
 				'!vendor/**',
-				'!wordpress/**'
+				'!wordpress/**',
+				'!wp-content/**'
 			]
 		},
 
@@ -26,7 +27,8 @@ module.exports = function( grunt ) {
 					'!deploy/**',
 					'!node_modules/**',
 					'!vendor/**',
-					'!wordpress/**'
+					'!wordpress/**',
+					'!wp-content/**'
 				]
 			},
 			options: {
@@ -95,7 +97,8 @@ module.exports = function( grunt ) {
 					'!deploy/**',
 					'!node_modules/**',
 					'!vendor/**',
-					'!wordpress/**'
+					'!wordpress/**',
+					'!wp-content/**'
 				],
 				dest: 'deploy/latest',
 				expand: true
