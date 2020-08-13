@@ -1,7 +1,7 @@
 === WooCommerce Stock Synchronization ===
 Contributors: pronamic, remcotolsma
 Tags: woocommerce, stock, sync, synchronization
-Requires at least: 3.8
+Requires at least: 4.7
 Tested up to: 5.5
 Stable tag: 2.5.0
 License: GPLv2
