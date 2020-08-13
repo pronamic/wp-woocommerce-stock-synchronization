@@ -125,10 +125,18 @@ class Pronamic_WP_WC_StockSyncAdmin {
 
 		$query_args['woocommerce_stock_sync_nonce'] = wp_create_nonce( 'woocommerce_stock_sync_push' );
 
-		printf( // xss ok
-			'<script type="text/javascript"> setTimeout( function() { window.location.href = "%s"; }, 1250 ); </script>',
-			add_query_arg( $query_args )
-		);
+		?>
+
+		<script type="text/javascript">
+			setTimeout(
+				function() {
+					window.location.href = "<?php echo esc_url_raw( add_query_arg( $query_args ) ); ?>";
+				},
+				1250
+			);
+		</script>
+
+		<?php
 	}
 
 	/**
@@ -160,7 +168,8 @@ class Pronamic_WP_WC_StockSyncAdmin {
 			;
 		";
 
-		$results = $wpdb->get_results( $query ); // WPCS: unprepared SQL ok.
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Prepare is OK.
+		$results = $wpdb->get_results( $query );
 
 		// Loop
 		foreach ( $results as $result ) {
@@ -242,7 +251,7 @@ class Pronamic_WP_WC_StockSyncAdmin {
 	}
 
 	/**
-	 * Sanitizes list of synched sites, unifying all newline characters to the same newline character
+	 * Sanitizes list of synced sites, unifying all newline characters to the same newline character
 	 */
 	public function sanitize_urls( $data ) {
 		$urls = array();

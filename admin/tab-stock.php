@@ -51,7 +51,8 @@ $query = "
 	;
 ";
 
-$products = $wpdb->get_results( $query ); // WPCS: unprepared SQL ok.
+// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Prepare is OK.
+$products = $wpdb->get_results( $query );
 
 ?>
 
@@ -123,11 +124,12 @@ $query = "
 	;
 ";
 
-$count_products = $wpdb->get_var( $query ); // WPCS: unprepared SQL ok.
+// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Prepare is OK.
+$count_products = $wpdb->get_var( $query );
 
 if ( $count_products > 100 ) :
 
-?>
+	?>
 
 	<p class="description"><?php esc_html_e( 'The number of displayed products is limited to 100. Stock quantites for all products will be synchronized during synchronization.', 'woocommerce_stock_sync' ); ?></p>
 

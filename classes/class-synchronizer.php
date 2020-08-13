@@ -86,15 +86,20 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 	 * @see https://core.trac.wordpress.org/browser/tags/4.0/src/wp-includes/functions.php#L720
 	 * @see https://core.trac.wordpress.org/browser/tags/4.0/src/wp-includes/functions.php#L654
 	 *
-	 * @param string $uri
+	 * @param string $url URL.
 	 * @return string
 	 */
 	public function get_sync_url( $url ) {
-		$url = add_query_arg( urlencode_deep( array(
-			'wc_stock_sync' => true,
-			'source'        => wp_parse_url( site_url( '/' ), PHP_URL_HOST ),
-			'password'      => get_option( 'woocommerce_stock_sync_password' ),
-		) ), $url );
+		$url = add_query_arg(
+			urlencode_deep(
+				array(
+					'wc_stock_sync' => true,
+					'source'        => wp_parse_url( site_url( '/' ), PHP_URL_HOST ),
+					'password'      => get_option( 'woocommerce_stock_sync_password' ),
+				)
+			),
+			$url
+		);
 
 		return $url;
 	}
@@ -114,10 +119,13 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 		foreach ( $urls as $url ) {
 			$request_url = $this->get_sync_url( $url );
 
-			$result = wp_remote_post( $request_url, array(
-				'body'    => wp_json_encode( $stock ),
-				'timeout' => 45,
-			) );
+			$result = wp_remote_post(
+				$request_url,
+				array(
+					'body'    => wp_json_encode( $stock ),
+					'timeout' => 45,
+				)
+			);
 
 			// @see https://github.com/WordPress/WordPress/blob/4.0/wp-includes/http.php#L241-L256https://github.com/WordPress/WordPress/blob/4.0/wp-includes/http.php#L241-L256
 			$response_code = wp_remote_retrieve_response_code( $result );
@@ -129,7 +137,7 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 			$log       = new stdClass();
 			$log->time = time();
 
-			if ( ( 200 == $response_code ) && $data ) { // WPCS: loose comparison ok.
+			if ( ( 200 === intval( $response_code ) ) && $data ) {
 				$log->message = sprintf(
 					/* translators: 1: url, 2: response code */
 					__( 'Succeeded - Synchronization to: %1$s (response code: %2$s)', 'woocommerce_stock_sync' ),

@@ -7,7 +7,9 @@
             "email": "info@pronamic.nl"
         }
     ],
-    "require": {},
+    "require": {
+        "ext-json": "*"
+    },
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2",
         "squizlabs/php_codesniffer": "^3.5",

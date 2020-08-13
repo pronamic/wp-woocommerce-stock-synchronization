@@ -2,11 +2,11 @@
 
 <?php
 
-$urls     = get_option( 'woocommerce_stock_sync_urls', array() );
-$password = get_option( 'woocommerce_stock_sync_password' );
+$sites_urls = get_option( 'woocommerce_stock_sync_urls', array() );
+$password   = get_option( 'woocommerce_stock_sync_password' );
 
-if ( ! is_array( $urls ) ) {
-	$urls = array();
+if ( ! is_array( $sites_urls ) ) {
+	$sites_urls = array();
 }
 
 ?>
@@ -23,7 +23,7 @@ if ( ! is_array( $urls ) ) {
 
 	<tbody>
 
-		<?php if ( empty( $urls ) ) : ?>
+		<?php if ( empty( $sites_urls ) ) : ?>
 
 			<tr class="no-items">
 				<td colspan="4">
@@ -35,7 +35,7 @@ if ( ! is_array( $urls ) ) {
 
 			<?php $alternate = ''; ?>
 
-			<?php foreach ( $urls as $url ) : ?>
+			<?php foreach ( $sites_urls as $url ) : ?>
 
 				<?php $alternate = 'alternate' === $alternate ? '' : 'alternate'; ?>
 
@@ -69,7 +69,8 @@ if ( ! is_array( $urls ) ) {
 						<?php
 
 						$dashicon = 'no';
-						if ( 200 == $response_code ) { // WPCS: loose comparison ok.
+
+						if ( 200 === intval( $response_code ) ) {
 							$dashicon = 'yes';
 						}
 
