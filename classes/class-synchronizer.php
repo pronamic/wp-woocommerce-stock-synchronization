@@ -15,7 +15,7 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 	/**
 	 * Queue for the stock to synchronize
 	 *
-	 * @var string
+	 * @var array<string, int>
 	 */
 	private $queue_stock;
 
@@ -125,45 +125,56 @@ class Pronamic_WP_WC_StockSyncSynchronizer {
 			return;
 		}
 
-		foreach ( $urls as $url ) {
-			$request_url = $this->get_sync_url( $url );
+		$requests = array();
 
-			$result = wp_remote_post(
-				$request_url,
-				array(
-					'body'    => wp_json_encode( $stock ),
-					'timeout' => 45,
-				)
+		$data = wp_json_encode( $stock );
+
+		foreach ( $urls as $key => $url ) {
+			$requests[ $key ] = array(
+				'url'  => $this->get_sync_url( $url ),
+				'data' => $data,
+				'type' => 'POST',
 			);
+		}
 
-			// @see https://github.com/WordPress/WordPress/blob/4.0/wp-includes/http.php#L241-L256https://github.com/WordPress/WordPress/blob/4.0/wp-includes/http.php#L241-L256
-			$response_code = wp_remote_retrieve_response_code( $result );
+		$responses = \Requests::request_multiple(
+			$requests,
+			array(
+				'timeout' => 45,
+			)
+		);
 
-			$body = wp_remote_retrieve_body( $result );
+		foreach ( $responses as $key => $response ) {
+			$response_code = null;
+			$data          = null;
 
-			$data = json_decode( $body );
+			if ( $response instanceof \Requests_Response ) {
+				$response_code = $response->status_code;
+
+				$data = json_decode( $response->body );
+			}
 
 			$log       = new stdClass();
 			$log->time = time();
 
-			if ( ( 200 === intval( $response_code ) ) && $data ) {
+			if ( 200 === intval( $response_code ) && null !== $data ) {
 				$log->message = sprintf(
 					/* translators: 1: url, 2: response code */
 					__( 'Succeeded - Synchronization to: %1$s (response code: %2$s)', 'woocommerce_stock_sync' ),
-					sprintf( '<code>%s</code>', $url ),
+					sprintf( '<code>%s</code>', $urls[ $key ] ),
 					sprintf( '<code>%s</code>', $response_code )
 				);
 			} else {
 				$error = '';
 
-				if ( is_wp_error( $result ) ) {
-					$error = $result->get_error_message();
+				if ( $response instanceof \Requests_Exception ) {
+					$error = $response->getMessage();
 				}
 
 				$log->message = sprintf(
 					/* translators: 1: url, 2: response code, 3: error */
 					__( 'Failed - Synchronization to: %1$s (response code: %2$s, error: %3$s)', 'woocommerce_stock_sync' ),
-					sprintf( '<code>%s</code>', $url ),
+					sprintf( '<code>%s</code>', $urls[ $key ] ),
 					sprintf( '<code>%s</code>', $response_code ),
 					sprintf( '<code>%s</code>', $error )
 				);

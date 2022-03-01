@@ -9,6 +9,17 @@ if ( ! is_array( $sites_urls ) ) {
 	$sites_urls = array();
 }
 
+$requests = array();
+
+foreach ( $sites_urls as $key => $site_url ) {
+	$requests[ $key ] = array(
+		'url'  => $this->plugin->synchronizer->get_sync_url( $site_url ),
+		'type' => 'POST',
+	);
+}
+
+$responses = \Requests::request_multiple( $requests );
+
 ?>
 
 <table class="wp-list-table widefat" cellspacing="0">
@@ -35,44 +46,34 @@ if ( ! is_array( $sites_urls ) ) {
 
 			<?php $alternate = ''; ?>
 
-			<?php foreach ( $sites_urls as $url ) : ?>
+			<?php foreach ( $responses as $key => $response ) : ?>
 
 				<?php $alternate = 'alternate' === $alternate ? '' : 'alternate'; ?>
 
 				<tr class="<?php echo esc_attr( $alternate ); ?>">
 					<?php
 
-					$request_url = $this->plugin->synchronizer->get_sync_url( $url );
+					$status_code = null;
+					$version     = null;
 
-					$result = wp_remote_post( $request_url );
+					if ( $response instanceof \Requests_Response ) {
+						$status_code = $response->status_code;
 
-					// @see https://github.com/WordPress/WordPress/blob/4.0/wp-includes/http.php#L241-L256https://github.com/WordPress/WordPress/blob/4.0/wp-includes/http.php#L241-L256
-					$response_code = wp_remote_retrieve_response_code( $result );
+						$data = json_decode( $response->body );
 
-					$body = wp_remote_retrieve_body( $result );
-
-					$data = json_decode( $body );
-
-					$version = null;
-
-					if ( $data ) {
-						if ( isset( $data->version ) ) {
+						if ( $data && isset( $data->version ) ) {
 							$version = $data->version;
 						}
 					}
 
 					?>
 					<td>
-						<?php echo esc_html( $url ); ?>
+						<?php echo esc_html( $sites_urls[ $key ] ); ?>
 					</td>
 					<td>
 						<?php
 
-						$dashicon = 'no';
-
-						if ( 200 === intval( $response_code ) ) {
-							$dashicon = 'yes';
-						}
+						$dashicon = 200 === intval( $status_code ) ? 'yes' : 'no';
 
 						?>
 						<div class="dashicons dashicons-<?php echo esc_attr( $dashicon ); ?>"></div>
@@ -91,8 +92,8 @@ if ( ! is_array( $sites_urls ) ) {
 					<td>
 						<?php
 
-						if ( is_wp_error( $result ) ) {
-							echo esc_html( $result->get_error_message() );
+						if ( $response instanceof \Requests_Exception ) {
+							echo esc_html( $response->getMessage() );
 						} else {
 							echo '&mdash;';
 						}
